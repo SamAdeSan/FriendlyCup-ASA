@@ -15,14 +15,14 @@ final class PageController extends AbstractController
             'controller_name' => 'PageController',
         ]);
     }
-    #[Route('/liga', name: 'liga')]
+    #[Route('/torneo', name: 'torneo')]
     public function ligas(): Response
     {
         return $this->render('page/index.html.twig', [
             'controller_name' => 'PageController',
         ]);
     }
-    #[Route('/creacionliga', name: 'creacionliga')]
+    #[Route('/creaciontorneo', name: 'creaciontorneo')]
     public function creacionligas(): Response
     {
         return $this->render('page/index.html.twig', [
