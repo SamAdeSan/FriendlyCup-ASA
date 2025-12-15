@@ -42,9 +42,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Torneo::class, mappedBy: 'organizador')]
     private Collection $torneos;
 
+    /**
+     * @var Collection<int, EquipoFantasy>
+     */
+    #[ORM\OneToMany(targetEntity: EquipoFantasy::class, mappedBy: 'entrenador')]
+    private Collection $equipoFantasies;
+
     public function __construct()
     {
         $this->torneos = new ArrayCollection();
+        $this->equipoFantasies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,6 +148,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($torneo->getOrganizador() === $this) {
                 $torneo->setOrganizador(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EquipoFantasy>
+     */
+    public function getEquipoFantasies(): Collection
+    {
+        return $this->equipoFantasies;
+    }
+
+    public function addEquipoFantasy(EquipoFantasy $equipoFantasy): static
+    {
+        if (!$this->equipoFantasies->contains($equipoFantasy)) {
+            $this->equipoFantasies->add($equipoFantasy);
+            $equipoFantasy->setEntrenador($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipoFantasy(EquipoFantasy $equipoFantasy): static
+    {
+        if ($this->equipoFantasies->removeElement($equipoFantasy)) {
+            // set the owning side to null (unless already changed)
+            if ($equipoFantasy->getEntrenador() === $this) {
+                $equipoFantasy->setEntrenador(null);
             }
         }
 

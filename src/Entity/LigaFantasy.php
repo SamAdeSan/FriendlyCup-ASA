@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\LigaFantasyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: LigaFantasyRepository::class)]
+class LigaFantasy
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nombre = null;
+
+    #[ORM\ManyToOne(inversedBy: 'ligaFantasies')]
+    private ?Torneo $torneo = null;
+
+    #[ORM\Column]
+    private ?int $puntuaje = null;
+
+    /**
+     * @var Collection<int, EquipoFantasy>
+     */
+    #[ORM\OneToMany(targetEntity: EquipoFantasy::class, mappedBy: 'ligafantasy')]
+    private Collection $equipoFantasies;
+
+    public function __construct()
+    {
+        $this->equipoFantasies = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(string $nombre): static
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getTorneo(): ?Torneo
+    {
+        return $this->torneo;
+    }
+
+    public function setTorneo(?Torneo $torneo): static
+    {
+        $this->torneo = $torneo;
+
+        return $this;
+    }
+
+    public function getPuntuaje(): ?int
+    {
+        return $this->puntuaje;
+    }
+
+    public function setPuntuaje(int $puntuaje): static
+    {
+        $this->puntuaje = $puntuaje;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EquipoFantasy>
+     */
+    public function getEquipoFantasies(): Collection
+    {
+        return $this->equipoFantasies;
+    }
+
+    public function addEquipoFantasy(EquipoFantasy $equipoFantasy): static
+    {
+        if (!$this->equipoFantasies->contains($equipoFantasy)) {
+            $this->equipoFantasies->add($equipoFantasy);
+            $equipoFantasy->setLigafantasy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipoFantasy(EquipoFantasy $equipoFantasy): static
+    {
+        if ($this->equipoFantasies->removeElement($equipoFantasy)) {
+            // set the owning side to null (unless already changed)
+            if ($equipoFantasy->getLigafantasy() === $this) {
+                $equipoFantasy->setLigafantasy(null);
+            }
+        }
+
+        return $this;
+    }
+}

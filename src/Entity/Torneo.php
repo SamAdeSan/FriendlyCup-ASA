@@ -37,10 +37,17 @@ class Torneo
     #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'torneo')]
     private Collection $disputas;
 
+    /**
+     * @var Collection<int, LigaFantasy>
+     */
+    #[ORM\OneToMany(targetEntity: LigaFantasy::class, mappedBy: 'torneo')]
+    private Collection $ligaFantasies;
+
     public function __construct()
     {
         $this->equipos = new ArrayCollection();
         $this->disputas = new ArrayCollection();
+        $this->ligaFantasies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,6 +145,36 @@ class Torneo
             // set the owning side to null (unless already changed)
             if ($disputa->getTorneo() === $this) {
                 $disputa->setTorneo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LigaFantasy>
+     */
+    public function getLigaFantasies(): Collection
+    {
+        return $this->ligaFantasies;
+    }
+
+    public function addLigaFantasy(LigaFantasy $ligaFantasy): static
+    {
+        if (!$this->ligaFantasies->contains($ligaFantasy)) {
+            $this->ligaFantasies->add($ligaFantasy);
+            $ligaFantasy->setTorneo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigaFantasy(LigaFantasy $ligaFantasy): static
+    {
+        if ($this->ligaFantasies->removeElement($ligaFantasy)) {
+            // set the owning side to null (unless already changed)
+            if ($ligaFantasy->getTorneo() === $this) {
+                $ligaFantasy->setTorneo(null);
             }
         }
 
