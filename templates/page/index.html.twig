@@ -1,29 +1,65 @@
-{% extends base.html.twig %}
+{% extends 'base.html.twig' %}
 {% block title %} Inicio {% endblock title %}
 {% block body %}
-    <nav class="navigator-bar">
-        <ul>
-            <li class="logoFC"><a href="#"><img src="../../public/img/logo.png" alt="friendlyLogo"></a></li>
-            <li><search>Buscar Torneo</search></li>
-            <li class="crear-torneo"></li>
-            <li class="myaccount"></li>
-        </ul>
+   <nav class="navigator-bar">
+        <div class="nav-content">
+            <div class="logoFC">
+                <img src="public/img/logo.png" alt="FriendlyCup Logo" class="main-logo">
+                <span class="logo-text">Logo</span>
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Buscar torneos">
+            </div>
+            <div class="nav-buttons">
+                <a href="#" class="btn-cta">Crear torneo (CTA)</a>
+                <a href="#" class="btn-secondary">Mi cuenta</a>
+            </div>
+        </div>
     </nav>
+
     <section class="hero-section">
-        <div class="hero-text">
-            <h1>¡Crea tu torneo YA en 2 minutos!</h1>
-            <button type="button"><a href="crear-torneo.html.twig"></a>Crear Torneo</button>
+        <div class="hero-content">
+            <h1>Crea tu torneo<br>en 2 minutos</h1>
+            <a href="#" class="hero-cta">CTA: Nuevo torneo</a>
         </div>
     </section>
-    <div class="main-container">
-        <section class="mis-torneos">
 
+    <main class="main-container">
+        <section class="section-container">
+            <h2>Mis torneos</h2>
+            <hr>
+            <div class="grid-layout">
+                {# Ejemplo de tarjeta #}
+                <div class="card">
+                    <div class="card-img">Image</div>
+                    <div class="card-info">
+                        <strong>Nombre Torneo</strong>
+                        <p>Fecha / Estado</p>
+                    </div>
+                </div>
+                <div class="card"><div class="card-img">Image</div><div class="card-info"><strong>Nombre Torneo</strong><p>Fecha / Estado</p></div></div>
+                <div class="card"><div class="card-img">Image</div><div class="card-info"><strong>Nombre Torneo</strong><p>Fecha / Estado</p></div></div>
+            </div>
         </section>
-        <section class="torneos-seguidos">
 
-        </section>
-        <section class="ligas-populares">
+        <div class="lower-sections">
+            <section class="section-container">
+                <h2>Torneos seguidos</h2>
+                <hr>
+                <div class="card">
+                    <div class="card-img">Image</div>
+                    <div class="card-info"><strong>Nombre Torneo</strong><p>Fecha / Estado</p></div>
+                </div>
+            </section>
 
-        </section>
-    </div>
+            <section class="section-container">
+                <h2>Ligas populares / Fantasy</h2>
+                <hr>
+                <div class="card">
+                    <div class="card-img">Image</div>
+                    <div class="card-info"><strong>Fútbol Fantasy</strong></div>
+                </div>
+            </section>
+        </div>
+    </main>
 {% endblock %}
