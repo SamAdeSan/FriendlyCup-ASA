@@ -22,7 +22,7 @@ final class PageController extends AbstractController
             'controller_name' => 'PageController',
         ]);
     }
-    #[Route('/creaciontorneo', name: 'creaciontorneo')]
+    #[Route('/creaciontorneo', name: 'crear-torneo')]
     public function creacionligas(): Response
     {
         return $this->render('page/crear-torneo.html.twig', [
