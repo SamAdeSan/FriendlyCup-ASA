@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Torneo;
 use App\Form\TorneoFormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,37 @@ final class PageController extends AbstractController
             'seguidos'=>$seguidos,
             'controller_name' => 'PageController',
         ]);
+    }
+    #[Route('/torneo/update/{id}', name: 'modificartorneo')]
+    public function updatetorneo(ManagerRegistry $doctrine, Request $request, $id): Response 
+    {
+    $entityManager = $doctrine->getManager();
+    $repositorio = $doctrine->getRepository(Torneo::class);
+    $torneo = $repositorio->find($id);
+    if ($torneo) {
+        $formulario = $this->createForm(TorneoFormType::class, $torneo);
+        $formulario->handleRequest($request);
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+            $entityManager->flush(); 
+            return $this->redirectToRoute('torneo', ["id" => $torneo->getId()]);
+        }
+        return $this->render('page/crear-torneo.html.twig', [
+            'formulario' => $formulario->createView(),
+            'torneo' => $torneo
+        ]);
+    }
+    return $this->redirectToRoute('inicio');
+    }
+    #[Route('/torneo/delete/{id}', name: 'torneoeliminado')]
+    public function delete(ManagerRegistry $doctrine, $id): Response{
+        $entityManager = $doctrine->getManager();
+        $repositorio = $doctrine->getRepository(Torneo::class);
+        $torneo = $repositorio->find($id);
+        if ($torneo) {
+            $entityManager->remove($torneo);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('inicio');
     }
     #[Route('/torneo/{id}', name: 'torneo')]
     public function ligas(int $id,ManagerRegistry $doctrine): Response

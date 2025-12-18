@@ -1,11 +1,12 @@
 
 {% extends 'base.html.twig' %}
-{% block title %} Crear Torneo {% endblock title %}
+{% block title %}{{ torneo.id ? 'Editar Torneo' : 'Crear Nuevo Torneo' }}{% endblock title %}
 {% block body %}
-    <h2>Crear Nuevo Torneo</h2>
+    <h2>{{ torneo.id ? 'Editar Torneo' : 'Crear Nuevo Torneo' }}</h2>
             <hr>
-
             {{ form_start(formulario) }}
             {{ form_end(formulario) }}
+            <a>Añadir equipo</a>
+            <a href="{{ path('torneo',{'id': torneo.id}) }}">Cancelar</a>
 {% endblock %}
 
