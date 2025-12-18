@@ -11,17 +11,23 @@
         <section class="section-container">
             <h2>Mis torneos</h2>
             <hr>
-            <div class="grid-layout">
-                {# Ejemplo de tarjeta #}
-                <div class="card">
-                    <div class="card-img">Image</div>
-                    <div class="card-info">
-                        <strong>Nombre Torneo</strong>
-                        <p>Fecha / Estado</p>
-                    </div>
+            {% for torneo in torneos %}
+            <div class="card">
+                <div class="card-img">
+                    {# Si tienes una propiedad imagen, la pones aquí #}
+                    <img src="{{ asset('uploads/torneos/' ~ torneo.imagen) }}" alt="Imagen Torneo" style="width:100%">
                 </div>
-                <div class="card"><div class="card-img">Image</div><div class="card-info"><strong>Nombre Torneo</strong><p>Fecha / Estado</p></div></div>
-                <div class="card"><div class="card-img">Image</div><div class="card-info"><strong>Nombre Torneo</strong><p>Fecha / Estado</p></div></div>
+                <div class="card-info">
+                    <strong>{{ torneo.nombre }}</strong>
+                    <p>
+                        {{ torneo.fecha|date('d/m/Y') }} / 
+                        <span class="badge">{{ torneo.estado }}</span>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <p>Aún no has creado ningún torneo.</p>
+        {% endfor %}
             </div>
         </section>
 
@@ -29,19 +35,14 @@
             <section class="section-container">
                 <h2>Torneos seguidos</h2>
                 <hr>
+                {% for seguido in seguidos %}
                 <div class="card">
                     <div class="card-img">Image</div>
                     <div class="card-info"><strong>Nombre Torneo</strong><p>Fecha / Estado</p></div>
                 </div>
-            </section>
-
-            <section class="section-container">
-                <h2>Ligas populares / Fantasy</h2>
-                <hr>
-                <div class="card">
-                    <div class="card-img">Image</div>
-                    <div class="card-info"><strong>Fútbol Fantasy</strong></div>
-                </div>
+                {% else %}
+            <p>Aún no has creado ningún torneo.</p>
+        {% endfor %}
             </section>
         </div>
     </main>

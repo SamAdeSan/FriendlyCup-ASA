@@ -46,11 +46,18 @@ class Torneo
     #[ORM\Column]
     private ?int $seguidores = null;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'seguidos')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->equipos = new ArrayCollection();
         $this->disputas = new ArrayCollection();
         $this->ligaFantasies = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,6 +199,33 @@ class Torneo
     public function setSeguidores(int $seguidores): static
     {
         $this->seguidores = $seguidores;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addSeguido($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeSeguido($this);
+        }
 
         return $this;
     }

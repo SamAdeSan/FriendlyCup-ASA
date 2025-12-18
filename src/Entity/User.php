@@ -54,10 +54,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $foto = null;
 
+    /**
+     * @var Collection<int, Torneo>
+     */
+    #[ORM\ManyToMany(targetEntity: Torneo::class, inversedBy: 'users')]
+    private Collection $seguidos;
+
     public function __construct()
     {
         $this->torneos = new ArrayCollection();
         $this->equipoFantasies = new ArrayCollection();
+        $this->seguidos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -210,6 +217,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFoto(?string $foto): static
     {
         $this->foto = $foto;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Torneo>
+     */
+    public function getSeguidos(): Collection
+    {
+        return $this->seguidos;
+    }
+
+    public function addSeguido(Torneo $seguido): static
+    {
+        if (!$this->seguidos->contains($seguido)) {
+            $this->seguidos->add($seguido);
+        }
+
+        return $this;
+    }
+
+    public function removeSeguido(Torneo $seguido): static
+    {
+        $this->seguidos->removeElement($seguido);
 
         return $this;
     }
