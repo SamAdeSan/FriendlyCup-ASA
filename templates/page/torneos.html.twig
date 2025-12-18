@@ -9,8 +9,10 @@
                     <p class="fecha-text">Fecha</p>
                 </div>
                 <div class="header-actions">
-                    <a href="#" class="btn-secondary">Unirse/Inscribirse</a>
-                    <a href="#" class="btn-cta-round">Seguir</a>
+                    <a href="#" class="btn-secondary">Seguir</a>
+                    {% if app.user == admin %}
+                    <a href="#" class="btn-secondary">Modificar Torneo</a>
+                    {% endif %}
                 </div>
             </section>
 

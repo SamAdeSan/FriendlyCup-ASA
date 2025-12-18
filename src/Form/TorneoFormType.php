@@ -2,12 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Torneo;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Torneo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TorneoFormType extends AbstractType
 {
@@ -16,11 +17,7 @@ class TorneoFormType extends AbstractType
         $builder
             ->add('name')
             ->add('tipo')
-            ->add('seguidores')
-            ->add('organizador', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+            ->add('save', SubmitType::class, array('label' => 'Enviar'));
         ;
     }
 

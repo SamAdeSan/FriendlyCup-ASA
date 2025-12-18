@@ -44,7 +44,7 @@ class Torneo
     private Collection $ligaFantasies;
 
     #[ORM\Column]
-    private ?int $seguidores = null;
+    private ?int $seguidores = 0;
 
     /**
      * @var Collection<int, User>
@@ -58,6 +58,7 @@ class Torneo
         $this->disputas = new ArrayCollection();
         $this->ligaFantasies = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->seguidores = 0;
     }
 
     public function getId(): ?int

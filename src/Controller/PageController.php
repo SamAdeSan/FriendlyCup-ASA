@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Torneo;
+use App\Form\TorneoFormType;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,22 +27,39 @@ final class PageController extends AbstractController
             'controller_name' => 'PageController',
         ]);
     }
-    #[Route('/torneo', name: 'torneo')]
-    public function ligas(): Response
+    #[Route('/torneo/{id}', name: 'torneo')]
+    public function ligas(int $id,ManagerRegistry $doctrine): Response
     {
+        $repositorio = $doctrine->getRepository(Torneo::class);
+        $torneo=$repositorio->find($id);
+        $admin=$torneo->getOrganizador();
         return $this->render('page/torneos.html.twig', [
-            'controller_name' => 'PageController',
+            'torneo' => $torneo,
+            'admin'  => $admin,
         ]);
     }
     #[Route('/creaciontorneo', name: 'crear-torneo')]
-    public function creacionligas(): Response
+    public function creacionligas(ManagerRegistry $doctrine, Request $request): Response
     {
+        $user = $this->getUser();
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-
+        $entityManager = $doctrine ->getManager();
+        $torneo = new Torneo();
+        $formulario = $this->createForm(TorneoFormType::class, $torneo);
+        $formulario->handleRequest($request);
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+            $torneo->setOrganizador($user);
+            $torneo->setSeguidores(0);
+            $torneo = $formulario->getData();
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($torneo);
+            $entityManager->flush();
+            return $this->redirectToRoute('torneo', ["id" => $torneo->getId()]);        }
         return $this->render('page/crear-torneo.html.twig', [
             'controller_name' => 'PageController',
+            'formulario' => $formulario->createView()
         ]);
     }
     #[Route('/fantasy', name: 'fantasy')]

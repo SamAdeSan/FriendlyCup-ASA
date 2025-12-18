@@ -13,16 +13,8 @@
             <hr>
             {% for torneo in torneos %}
             <div class="card">
-                <div class="card-img">
-                    {# Si tienes una propiedad imagen, la pones aquí #}
-                    <img src="{{ asset('uploads/torneos/' ~ torneo.imagen) }}" alt="Imagen Torneo" style="width:100%">
-                </div>
                 <div class="card-info">
-                    <strong>{{ torneo.nombre }}</strong>
-                    <p>
-                        {{ torneo.fecha|date('d/m/Y') }} / 
-                        <span class="badge">{{ torneo.estado }}</span>
-                    </p>
+                    <a href="{{ path('torneo',{'id': torneo.id}) }}" class="hero-cta"><strong>{{ torneo.name }}</strong></a>
                 </div>
             </div>
         {% else %}
