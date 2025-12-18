@@ -68,12 +68,24 @@ body {
     transition: 50ms ease;
     background: #38649c;
 }
-
+.btn-danger:hover {
+    transition: 50ms ease;
+    background: #c91a1a;
+}
 .btn-secondary a{
     color: #eee;
     text-decoration: none;
 }
-
+.btn-danger {
+    text-decoration: none;
+    padding: 8px 15px;
+    border: 1px solid #939393;
+    border-radius: 4px;
+    color: black;
+    margin-left: 10px;
+    font-size: 14px;
+    background: #7e0e14;
+}
 /* Hero Section */
 .hero-section {
     padding: 60px 20px;

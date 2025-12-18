@@ -5,13 +5,15 @@
         <main class="torneo-content">
             <section class="torneo-header-card">
                 <div class="header-info">
-                    <h1>Nombre Torneo</h1>
+                    <h1>{{torneo.name}}</h1>
                     <p class="fecha-text">Fecha</p>
                 </div>
                 <div class="header-actions">
-                    <a href="#" class="btn-secondary">Seguir</a>
                     {% if app.user == admin %}
                     <a href="#" class="btn-secondary">Modificar Torneo</a>
+                    <a href="#" class="btn-danger">Terminar Torneo</a>
+                    {% else %}
+                    <a href="#" class="btn-secondary">Seguir</a>
                     {% endif %}
                 </div>
             </section>

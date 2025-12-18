@@ -1,41 +1,65 @@
 {% extends 'base.html.twig' %}
-{% block title %} Inicio {% endblock title %}
+
 {% block body %}
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1>Crea tu torneo<br>en 2 minutos</h1>
-            <a href="{{ path('crear-torneo') }}" class="hero-cta">Nuevo torneo</a>
-        </div>
+    <section class="fc-title">
+        <h1>FriendlyCup</h1>
+        <p>Bienvenido a tu página de torneos</p>
     </section>
-    <main class="main-container">
-        <section class="section-container">
-            <h2>Mis torneos</h2>
-            <hr>
-            {% for torneo in torneos %}
-            <div class="card">
-                <div class="card-info">
-                    <a href="{{ path('torneo',{'id': torneo.id}) }}" class="hero-cta"><strong>{{ torneo.name }}</strong></a>
-                </div>
-            </div>
-        {% else %}
-            <p>Aún no has creado ningún torneo.</p>
-        {% endfor %}
+
+    <main class="body-content">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Crea tu torneo<br>en 2 minutos</h1>
+                <a href="{{ path('crear-torneo') }}" class="hero-cta">Nuevo torneo</a>
             </div>
         </section>
 
-        <div class="lower-sections">
+        <main class="main-container">
             <section class="section-container">
-                <h2>Torneos seguidos</h2>
+                <h2>Mis torneos</h2>
                 <hr>
-                {% for seguido in seguidos %}
-                <div class="card">
-                    <div class="card-img">Image</div>
-                    <div class="card-info"><strong>Nombre Torneo</strong><p>Fecha / Estado</p></div>
+                <div class="grid-layout">
+                    {% for torneo in torneos %}
+                        <div class="card">
+                            <div class="card-img">Torneo</div>
+                            <div class="card-info">
+                                <a href="{{ path('torneo', {'id': torneo.id}) }}">
+                                    <strong>{{ torneo.name }}</strong>
+                                </a>
+                                <p>{{ torneo.tipo|capitalize }} / {{ torneo.seguidores }} seguidores</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>No has creado ningún torneo todavía.</p>
+                    {% endfor %}
                 </div>
-                {% else %}
-            <p>Aún no has creado ningún torneo.</p>
-        {% endfor %}
             </section>
-        </div>
+
+            {# SECCIÓN: TORNEOS SEGUIDOS #}
+            <div class="lower-sections">
+                <section class="section-container">
+                    <h2>Torneos seguidos</h2>
+                    <hr>
+                    <div class="grid-layout">
+                        {# app.user.users es la relación ManyToMany que definiste en tu entidad #}
+                        {% if app.user %}
+                            {% for seguido in app.user.seguidos %}
+                                <div class="card">
+                                    <div class="card-img">Siguiendo</div>
+                                    <div class="card-info">
+                                        <strong>{{ seguido.name }}</strong>
+                                        <p>{{ seguido.tipo }}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <p>Aún no sigues ningún torneo.</p>
+                            {% endfor %}
+                        {% else %}
+                            <p><a href="{{ path('app_login') }}">Inicia sesión</a> para ver tus torneos seguidos.</p>
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+        </main>
     </main>
 {% endblock %}

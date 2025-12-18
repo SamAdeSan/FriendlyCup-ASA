@@ -52,6 +52,9 @@ class Torneo
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'seguidos')]
     private Collection $users;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagen = null;
+
     public function __construct()
     {
         $this->equipos = new ArrayCollection();
@@ -227,6 +230,18 @@ class Torneo
         if ($this->users->removeElement($user)) {
             $user->removeSeguido($this);
         }
+
+        return $this;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(?string $imagen): static
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }
