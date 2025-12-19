@@ -88,7 +88,7 @@ final class PageController extends AbstractController
             'formulario' => $formulario->createView()
         ]);
     }
-    #[Route('/torneo/{id}/crearequipo', name: 'crear-equipo')]
+    #[Route('/torneo/{id}/crearequipo', name: 'crearequipo')]
     public function crearEquipo(int $id,ManagerRegistry $doctrine,Request $request): Response {
         $entityManager = $doctrine->getManager();
         $torneoRepo = $doctrine->getRepository(Torneo::class);
@@ -99,7 +99,7 @@ final class PageController extends AbstractController
         $equipo = new Equipos();
         $equipo->setTorneo($torneo);
         $equipo->setPuntos(0);
-        $formulario = $this->createForm(EquiposFormType::class, $equipo);
+        $formulario = $this->createForm(EquipoFormType::class, $equipo);
         $formulario->handleRequest($request);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $entityManager->persist($equipo);
@@ -203,7 +203,7 @@ final class PageController extends AbstractController
         }
         return $this->redirectToRoute('inicio');
     }
-    #[Route('/equipo/{id}/crearjugador', name: 'crear-jugador')]
+    #[Route('/equipo/{id}/crearjugador', name: 'crearjugador')]
     public function crearJugador(int $id,ManagerRegistry $doctrine,Request $request): Response {
         $entityManager = $doctrine->getManager();
         $equipoRepo = $doctrine->getRepository(Equipos::class);
