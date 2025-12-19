@@ -28,19 +28,19 @@ class Torneo
     /**
      * @var Collection<int, Equipos>
      */
-    #[ORM\OneToMany(targetEntity: Equipos::class, mappedBy: 'torneo')]
+    #[ORM\OneToMany(targetEntity: Equipos::class, mappedBy: 'torneo',cascade: ['persist', 'remove'])]
     private Collection $equipos;
 
     /**
      * @var Collection<int, Disputas>
      */
-    #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'torneo')]
+    #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'torneo',cascade: ['persist', 'remove'])]
     private Collection $disputas;
 
     /**
      * @var Collection<int, LigaFantasy>
      */
-    #[ORM\OneToMany(targetEntity: LigaFantasy::class, mappedBy: 'torneo')]
+    #[ORM\OneToMany(targetEntity: LigaFantasy::class, mappedBy: 'torneo',cascade: ['persist', 'remove'])]
     private Collection $ligaFantasies;
 
     #[ORM\Column]

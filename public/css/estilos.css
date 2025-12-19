@@ -330,3 +330,60 @@ footer p {
     text-decoration: none;
     color: black;
 }
+/*  RESPONSIVIDAD  */
+
+/*Menos de 768px */
+@media (max-width: 768px) {
+    
+    /*Navbar*/
+    .nav-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .search-container {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .search-container input {
+        width: 100%; /* El buscador se enchanza */
+    }
+
+    /*Texto más pequeño */
+    .hero-content h1 {
+        font-size: 28px;
+    }
+
+    /*Página de Torneo */
+    .main-container-torneo {
+        flex-direction: column; /* La columna lateral baja al final */
+    }
+
+    .torneo-content, 
+    .sidebar-organizador {
+        flex: none;
+        width: 100%;
+    }
+
+    /*Pestañas del Torneo: Permitir deslizar horizontal*/
+    .navigator-torneos ul {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 5px;
+    }
+
+    /*Ajustar botones */
+    .torneo-header-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .header-actions {
+        align-items: center;
+        width: 100%;
+        margin-top: 15px;
+    }
+}

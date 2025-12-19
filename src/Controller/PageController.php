@@ -77,7 +77,6 @@ final class PageController extends AbstractController
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $torneo->setOrganizador($user);
             $torneo->setSeguidores(0);
-            $torneo = $formulario->getData();
             $entityManager = $doctrine->getManager();
             $entityManager->persist($torneo);
             $entityManager->flush();
@@ -99,30 +98,6 @@ final class PageController extends AbstractController
         ]);
     }
     
-    #[Route('/equipo/guardar', name: 'equipo_guardar', methods: ['POST'])]
-    public function guardar(Request $request, EntityManagerInterface $em,TorneoRepository $torneoRepo): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-        $equipo = new Equipos();
-        $equipo->setNombre($data['nombre']);
-        $equipo->setPuntos(0);
-
-        $torneoId = $data['torneoId'] ?? null;
-        $torneo = $torneoRepo->find($torneoId);
-        $equipo->setTorneo($torneo);
-
-        foreach ($data['jugadores'] as $nombreJugador) {
-            $jugador = new Jugadores();
-            $jugador->setNombre($nombreJugador);
-            $jugador->setEstadisticas(0);
-            $equipo->addJugadores($jugador);
-        }
-        $em->persist($equipo);
-        $em->flush();
-        return new JsonResponse(['status' => 'success', 'id' => $equipo->getId()]);
-    }
-    
-
     #[Route('/fantasy', name: 'fantasy')]
     public function fantasy(): Response
     {

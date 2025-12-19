@@ -25,7 +25,7 @@ class Equipos
     /**
      * @var Collection<int, Jugadores>
      */
-    #[ORM\OneToMany(targetEntity: Jugadores::class, mappedBy: 'equipo')]
+    #[ORM\OneToMany(targetEntity: Jugadores::class, mappedBy: 'equipo', cascade: ['persist', 'remove'])]
     private Collection $jugadores;
 
     #[ORM\OneToOne(mappedBy: 'equipo1', cascade: ['persist', 'remove'])]
