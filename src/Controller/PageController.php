@@ -48,6 +48,7 @@ final class PageController extends AbstractController
             return $this->redirectToRoute('torneo', ["id" => $torneo->getId()]);
         }
         return $this->render('page/editar-torneo.html.twig', [
+            'equipos' => $torneo->getEquipos(),
             'formulario' => $formulario->createView(),
             'torneo' => $torneo
         ]);

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FantasyController!{% endblock %}
+
+{% block body %}
+<h1>Equipo: {{ equipo.entrenador.name }}</h1>
+<h2>Presupuesto: <span id="budget">{{ equipo.presupuesto | number_format }}</span> €</h2>
+
+<div class="campo-futbol">
+    <h3>Titulares</h3>
+    {% for jugador in misJugadores %}
+        {# Comprobamos si el ID de este jugador está en la lista de titulares del JSON #}
+        {% if jugador.id in datosAlineacion.titulares %}
+            <div class="jugador-card titular">
+                {{ jugador.nombre }}
+                <button onclick="cambiarPosicion({{ equipo.id }}, {{ jugador.id }})">Banquillo</button>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="banquillo">
+    <h3>Suplentes</h3>
+    {% for jugador in misJugadores %}
+        {% if jugador.id in datosAlineacion.suplentes %}
+            <div class="jugador-card suplente">
+                {{ jugador.nombre }}
+                <button onclick="cambiarPosicion({{ equipo.id }}, {{ jugador.id }})">Titular</button>
+                <button onclick="venderJugador({{ equipo.id }}, {{ jugador.id }}, {{ jugador.precio }})">Vender</button>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

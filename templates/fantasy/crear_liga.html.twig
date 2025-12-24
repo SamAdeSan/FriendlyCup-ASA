@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Crear Fantasy basada en: <span class="text-primary">{{ torneo.name }}</span></h2>
+    <hr>
+    
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

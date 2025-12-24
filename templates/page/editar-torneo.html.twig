@@ -12,6 +12,17 @@
                     </button>
                     <button id="cancelar"><a href="{{ path('torneo',{'id': torneo.id}) }}">Cancelar</a></button>
             </div>
-            <div id="equipos"></div>
+            {% for equipo in equipos %}
+            <div id="equipos">
+                <tr>
+                        <td>{{ equipo.id }}</td>
+                        <td>{{ equipo.nombre }}</td>
+                        <td>
+                        <a href="{{path('jugadoreliminado', {'id': equipo.id})}}" class="btn btn-sm btn-danger">Eliminar</a>
+                        <a href="{{path('modificarjugador', {'id': equipo.id})}}" class="btn btn-sm btn-secondary">Modificar</a>
+                </td>
+                </tr>
+            </div>
+            {% endfor %}
     </div>
 {% endblock %}
