@@ -159,7 +159,10 @@ final class PageController extends AbstractController
             $entityManager->remove($equipo);
             $entityManager->flush();
         }
-        return $this->redirectToRoute('equipo');
+
+        return $this->redirectToRoute('torneo', [
+        'id' => $equipo->getTorneo()->getId()
+    ]);
     }
     #[Route('/equipo/{id}', name: 'equipo')]
     public function verEquipo(int $id,ManagerRegistry $doctrine): Response {
@@ -201,11 +204,14 @@ final class PageController extends AbstractController
         $entityManager = $doctrine->getManager();
         $repositorio = $doctrine->getRepository(Jugadores::class);
         $jugador = $repositorio->find($id);
+        $equipoId = $jugador->getEquipo()->getId();
         if ($jugador) {
             $entityManager->remove($jugador);
             $entityManager->flush();
         }
-        return $this->redirectToRoute('inicio');
+        return $this->redirectToRoute('equipo', [
+        'id' => $equipoId
+    ]);
     }
     #[Route('/equipo/{id}/crearjugador', name: 'crearjugador')]
     public function crearJugador(int $id,ManagerRegistry $doctrine,Request $request): Response {
