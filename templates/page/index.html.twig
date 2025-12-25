@@ -59,6 +59,28 @@
                     </div>
                 </section>
             </div>
+            <section class="section-container">
+                    <h2>Ligas fantasy que tienes</h2>
+                    <hr>
+                    <div class="grid-layout">
+                        {# app.user.users es la relación ManyToMany que definiste en tu entidad #}
+                        {% if app.user %}
+                            {% for seguido in app.user.seguidos %}
+                                <div class="card">
+                                    <div class="card-img">Siguiendo</div>
+                                    <div class="card-info">
+                                        <strong>{{ seguido.name }}</strong>
+                                        <p>{{ seguido.tipo }}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <p>Aún no sigues ningún torneo.</p>
+                            {% endfor %}
+                        {% else %}
+                            <p><a href="{{ path('app_login') }}">Inicia sesión</a> para ver tus torneos seguidos.</p>
+                        {% endif %}
+                    </div>
+                </section>
         </main>
     </main>
 {% endblock %}
