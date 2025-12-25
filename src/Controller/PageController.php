@@ -28,12 +28,12 @@ final class PageController extends AbstractController
         }
         $torneos=$user->getTorneos();
         $seguidos=$user->getSeguidos();
-        $fantasies=$user->getEquipoFantasies()->getLigafantasy();
+        $fantasies=$user->getEquipoFantasies();
         return $this->render('page/index.html.twig', [
             'torneos'=>$torneos,
             'seguidos'=>$seguidos,
             'controller_name' => 'PageController',
-            'fantasy'=>$fantasy
+            'fantasies'=>$fantasies
         ]);
     }
 }

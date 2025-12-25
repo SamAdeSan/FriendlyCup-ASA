@@ -22,6 +22,11 @@ class LigaFantasyFormType extends AbstractType
                 'data' => 0,
                 'attr' => ['class' => 'form-control']
             ])
+            ->add('presupuestoInicial', IntegerType::class, [
+            'mapped' => false, // 👈 NO se guarda en la entidad Fantasy
+            'label' => 'Presupuesto inicial',
+            'required' => true,
+            ])
             ->add('crear', SubmitType::class, [
                 'label' => 'Crear Competición',
                 'attr' => ['class' => 'btn btn-primary mt-3']

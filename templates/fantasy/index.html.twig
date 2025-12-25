@@ -37,6 +37,13 @@
         {{ equipo.entrenador.name }} - Puntos: {{ equipo.puntos }}
     </li>
 {% endfor %}
-<div class="mercado"></div>
 </ul>
+<div class="mercado">
+    {% for jugador in mercado %}
+        <p>Jugador: {{jugador.nombre}} Puntos: {{jugador.estadisticas}} Valor de mercado: {{jugador.valordemercado}} </p>
+    {% endfor %}
+</div>
+{% if app.user == liga.administrador %}
+    <button>Añadir a otro usuario</button>
+{% endif %}
 {% endblock %}

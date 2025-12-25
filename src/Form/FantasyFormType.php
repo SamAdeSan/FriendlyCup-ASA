@@ -2,12 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\LigaFantasy;
 use App\Entity\Torneo;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\LigaFantasy;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class FantasyFormType extends AbstractType
 {

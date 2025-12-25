@@ -8,6 +8,7 @@ use App\Entity\EquipoFantasy;
 use App\Form\LigaFantasyFormType;
 use App\Repository\JugadoresRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\EquipoFantasyRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,9 @@ final class FantasyController extends AbstractController
         $liga = new LigaFantasy();
         $liga->setTorneo($torneo);
         $liga->setPuntuaje(0);
+        $liga->setAdministrador($user);
         $form = $this->createForm(LigaFantasyFormType::class, $liga);
+        
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($liga);
@@ -40,6 +43,7 @@ final class FantasyController extends AbstractController
             $miEquipo->setLigafantasy($liga);
             $miEquipo->setPresupuesto(100000000); 
             $miEquipo->setPuntos(0);
+            $miEquipo->setPresupuesto( $form->get('presupuestoInicial')->getData());
             $miEquipo->setDatosAlineacion([
                 'titulares' => [],
                 'suplentes' => [],
@@ -55,18 +59,49 @@ final class FantasyController extends AbstractController
             'torneo' => $torneo
         ]);
     }
+
+    #[Route('/liga/delete/{id}', name: 'fantasyterminar')]
+    public function deleteFantasy(ManagerRegistry $doctrine,int $id): Response {
+        $entityManager = $doctrine->getManager();
+        $repositorio = $doctrine->getRepository(LigaFantasy::class);
+        $liga = $repositorio->find($id);
+        $entityManager->remove($liga);
+        $entityManager->flush();
+        return $this->redirectToRoute('inicio');
+    }
+
     #[Route('/liga/{id}', name: 'fantasy_liga')]
-    public function index(LigaFantasy $liga): Response
+    public function index(LigaFantasy $liga, JugadoresRepository $jugadoresRepo): Response
     {
         $user = $this->getUser();
         $miEquipo = $this->equipoRepo->findOneBy([
             'entrenador' => $user,
             'ligafantasy' => $liga
         ]);
+        $equipos = $liga->getTorneo()->getEquipos();
+        $todosLosJugadoresDelTorneo = [];
+        foreach ($equipos as $equipo) {
+            foreach ($equipo->getJugadores() as $jugador) {
+            $todosLosJugadoresDelTorneo[] = $jugador;
+        }
+        }
         $idsMisJugadores = array_merge($miEquipo->getDatosAlineacion()['titulares'], $miEquipo->getDatosAlineacion()['suplentes']);
         $misJugadoresObjs = empty($idsMisJugadores) ? [] : $this->jugadoresRepo->findBy(['id' => $idsMisJugadores]);
         $todosLosJugadores = $this->jugadoresRepo->findAll();
-        $mercado = $miEquipo->getLigafantasy()->filtrarJugadoresLibres($todosLosJugadores);
+        $idsOcupados = [];
+        foreach ($liga->getEquipoFantasies() as $equipoFantasy) {
+            $datos = $equipoFantasy->getDatosAlineacion();
+            $idsDelEquipo = array_merge($datos['titulares'] ?? [], $datos['suplentes'] ?? []);
+            foreach ($idsDelEquipo as $id) {
+                $idsOcupados[] = $id;
+            }
+        }
+        $mercado = [];
+        foreach ($todosLosJugadores as $jugadorlibre) {
+            if (!in_array($jugadorlibre->getId(), $idsOcupados)) {
+                $mercado[] = $jugadorlibre;
+            }
+        }
         $equiposEnLiga = $this->equipoRepo->findBy([
         'ligafantasy' => $liga
         ]);
@@ -79,4 +114,5 @@ final class FantasyController extends AbstractController
             'equiposEnLiga' => $equiposEnLiga
         ]);
     }
+
 }

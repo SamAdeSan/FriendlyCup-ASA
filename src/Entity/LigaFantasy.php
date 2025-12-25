@@ -30,12 +30,28 @@ class LigaFantasy
     /**
      * @var Collection<int, EquipoFantasy>
      */
-    #[ORM\OneToMany(targetEntity: EquipoFantasy::class, mappedBy: 'ligafantasy')]
+    #[ORM\OneToMany(targetEntity: EquipoFantasy::class, mappedBy: 'ligafantasy',cascade: ['remove'])]
     private Collection $equipoFantasies;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $administrador = null;
 
     public function __construct()
     {
         $this->equipoFantasies = new ArrayCollection();
+    }
+
+    public function getAdministrador(): ?User
+    {
+        return $this->administrador;
+    }
+
+    public function setAdministrador(?User $administrador): static
+    {
+        $this->administrador = $administrador;
+
+        return $this;
     }
 
     public function getMinimoJugadores(): ?int

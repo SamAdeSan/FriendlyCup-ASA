@@ -20,7 +20,7 @@
                 <div class="grid-layout">
                     {% for torneo in torneos %}
                         <div class="card">
-                            <div class="card-img">Torneo</div>
+                            <div class="card-img"></div>
                             <div class="card-info">
                                 <a href="{{ path('torneo', {'id': torneo.id}) }}">
                                     <strong>{{ torneo.name }}</strong>
@@ -59,18 +59,18 @@
                     </div>
                 </section>
             </div>
-            <section class="section-container">
+            <div class="lower-sections">
+                <section class="section-container">
                     <h2>Ligas fantasy que tienes</h2>
                     <hr>
                     <div class="grid-layout">
                         {# app.user.users es la relación ManyToMany que definiste en tu entidad #}
                         {% if app.user %}
-                            {% for seguido in app.user.seguidos %}
+                            {% for fantasy in fantasies %}
                                 <div class="card">
-                                    <div class="card-img">Siguiendo</div>
+                                    <div class="card-img"></div>
                                     <div class="card-info">
-                                        <strong>{{ seguido.name }}</strong>
-                                        <p>{{ seguido.tipo }}</p>
+                                        <a href="{{ path('fantasy_liga',{'id': fantasy.ligaFantasy.id}) }}">Liga: {{ fantasy.ligaFantasy.nombre }}</a>
                                     </div>
                                 </div>
                             {% else %}
@@ -81,6 +81,7 @@
                         {% endif %}
                     </div>
                 </section>
+            </div>
         </main>
     </main>
 {% endblock %}

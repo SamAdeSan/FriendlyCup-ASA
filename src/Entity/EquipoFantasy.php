@@ -16,6 +16,7 @@ class EquipoFantasy
 
 
     #[ORM\ManyToOne(inversedBy: 'equipoFantasies')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?LigaFantasy $ligafantasy = null;
 
     #[ORM\ManyToOne(inversedBy: 'equipoFantasies')]

@@ -21,6 +21,9 @@ class Jugadores
     #[ORM\Column]
     private ?int $estadisticas = 0;
 
+    #[ORM\Column]
+    private ?int $valordemercado = 0;
+
     #[ORM\ManyToOne(inversedBy: 'jugadores')]
     private ?Equipos $equipo = null;
 
@@ -67,6 +70,18 @@ class Jugadores
     public function setEstadisticas(int $estadisticas): static
     {
         $this->estadisticas = $estadisticas;
+
+        return $this;
+    }
+
+    public function getValordemercado(): ?int
+    {
+        return $this->valordemercado;
+    }
+
+    public function setValordemercado(int $valordemercado): static
+    {
+        $this->valordemercado = $valordemercado;
 
         return $this;
     }
