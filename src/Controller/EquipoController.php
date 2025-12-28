@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Equipos;
+use App\Entity\Jugadores;
 use App\Form\EquipoFormType;
+use App\Form\JugadorFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

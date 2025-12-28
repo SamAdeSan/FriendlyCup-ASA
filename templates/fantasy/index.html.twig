@@ -17,7 +17,6 @@
         {% endif %}
     {% endfor %}
 </div>
-
 <div class="banquillo">
     <h3>Suplentes</h3>
     {% for jugador in misJugadores %}
@@ -38,9 +37,10 @@
     </li>
 {% endfor %}
 </ul>
+<div class="contador"></div>
 <div class="mercado">
     {% for jugador in mercado %}
-        <p>Jugador: {{jugador.nombre}} Puntos: {{jugador.estadisticas}} Valor de mercado: {{jugador.valordemercado}} </p>
+        <p>Jugador: {{jugador.nombre}} Puntos: {{jugador.estadisticas}} Valor de mercado: {{jugador.valordemercado}} <button>Pujar</button> </p>
     {% endfor %}
 </div>
 {% if app.user == liga.administrador %}
