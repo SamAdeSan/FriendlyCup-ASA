@@ -28,15 +28,6 @@ class LigaFantasyFormType extends AbstractType
             'label' => 'Presupuesto inicial',
             'required' => true,
             ])
-            ->add('segundosMercado', IntegerType::class, [
-                'mapped' => false,
-                'label' => 'Duración del mercado (segundos)',
-                'attr' => [
-                    'min' => 1,
-                    'placeholder' => 'Ej: 3600 (1 hora)'
-                ],
-                'required' => true,
-            ])
             ->add('crear', SubmitType::class, [
                 'label' => 'Crear Competición',
                 'attr' => ['class' => 'btn btn-primary mt-3']

@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use App\Repository\EquipoFantasyRepository;
 
 #[ORM\Entity(repositoryClass: EquipoFantasyRepository::class)]
@@ -25,12 +26,9 @@ class EquipoFantasy
     #[ORM\Column]
     private ?float $presupuesto = 100000000;
 
-    #[ORM\Column(type: Types::JSON)]
-    private array $datosAlineacion = [
-        'titulares' => [],      // Array de IDs [1, 5, 9...]
-        'suplentes' => [],      // Array de IDs
-        'coste_compra' => []    // Mapa ID => Precio { "10": 500000 }
-    ];
+    #[ORM\ManyToMany(targetEntity: Jugadores::class)]
+    #[ORM\JoinTable(name: "equipofantasy_titulares")]
+    private Collection $titulares;
 
     #[ORM\Column]
     private ?int $puntos = 0;
@@ -40,7 +38,10 @@ class EquipoFantasy
         return $this->id;
     }
 
-    
+    public function __construct()
+    {
+        $this->titulares = new ArrayCollection();
+    }
 
     public function getLigafantasy(): ?LigaFantasy
     {
@@ -88,51 +89,21 @@ class EquipoFantasy
 
         return $this;
     }
-    public function getDatosAlineacion(): array
+    public function getTitulares(): Collection
     {
-        return array_merge([
-            'titulares' => [],
-            'suplentes' => [],
-            'coste_compra' => []
-        ], $this->datosAlineacion);
+        return $this->titulares;
     }
 
-    public function setDatosAlineacion(array $datosAlineacion): static
+    public function addTitular(Jugadores $jugador): self
     {
-        $this->datosAlineacion = $datosAlineacion;
+        if (!$this->titulares->contains($jugador)) {
+            $this->titulares->add($jugador);
+        }
         return $this;
     }
-    public function ficharJugador(int $id, float $precio): void
+    public function removeTitular(Jugadores $jugador): self
     {
-        $this->datosAlineacion['suplentes'][] = $id;        
-        $this->datosAlineacion['coste_compra'][$id] = $precio;
-        $this->presupuesto -= $precio;
-    }
-    public function cambiarPosicion(int $id): void
-    {
-        $esTitular = in_array($id, $this->datosAlineacion['titulares']);
-        $origen  = $esTitular ? 'titulares' : 'suplentes';
-        $destino = $esTitular ? 'suplentes' : 'titulares';
-        $this->datosAlineacion[$origen] = array_values(array_diff($this->datosAlineacion[$origen], [$id]));
-        $this->datosAlineacion[$destino][] = $id;
-    }
-    public function venderJugador(int $id, float $precio): void
-    {
-    $total = count($this->datosAlineacion['titulares']) + count($this->datosAlineacion['suplentes']);
-    $minimo = $this->getLigafantasy()->getMinimoJugadores();
-
-    if ($total <= $minimo) {
-        throw new \Exception("Mínimo de $minimo jugadores requerido.");
-    }
-    $this->datosAlineacion['titulares'] = array_values(array_diff($this->datosAlineacion['titulares'], [$id]));
-    $this->datosAlineacion['suplentes'] = array_values(array_diff($this->datosAlineacion['suplentes'], [$id]));
-    unset($this->datosAlineacion['coste_compra'][$id]);
-    $this->presupuesto += $precio;
-    }
-    public function tieneJugador(int $idJugador): bool
-    {
-        // Buscamos si el ID está en titulares O en suplentes
-        return in_array($idJugador, $this->datosAlineacion['titulares']) || 
-            in_array($idJugador, $this->datosAlineacion['suplentes']);
+        $this->titulares->removeElement($jugador);
+        return $this;
     }
 }

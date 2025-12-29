@@ -44,7 +44,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Posición (opcional)</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -52,8 +51,7 @@
                         {% for jugador in jugadores %}
                             <tr>
                                 <td>{{ jugador.id }}</td>
-                                <td>{{ jugador.nombre }}</td>S
-                                <td>{{ jugador.posicion|default('No definida') }}</td>
+                                <td>{{ jugador.nombre }}</td>
                                 <td>
                                     <a href="{{path('jugadoreliminado', {'id': jugador.id})}}" class="btn btn-sm btn-danger">Eliminar</a>
                                     <a href="{{path('modificarjugador', {'id': jugador.id})}}" class="btn btn-sm btn-secondary">Modificar</a>
