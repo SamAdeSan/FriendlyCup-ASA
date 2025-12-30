@@ -1,15 +1,16 @@
 let presupuesto=document.getElementById("budget");
 let presupuestoActual = Number(presupuesto.dataset.valor);
-let id = window.location.pathname.split('/').pop();
+let idEquipo = presupuesto.dataset.id;
 let pujar=document.querySelectorAll('.btn-pujar');
 pujar.forEach(boton => {
     boton.onclick=comprar
 })
 function comprar() {
+    console.log(idEquipo)
     let costoJugador = Number(this.dataset.valor);
     if (presupuestoActual >= costoJugador) {
         let nuevoSaldo = presupuestoActual - costoJugador;
-        fetch(`fantasy/api/equipo/${id}/presupuesto`, {
+        fetch(`/fantasy/api/equipo/${idEquipo}/presupuesto`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ presupuesto: nuevoSaldo })
