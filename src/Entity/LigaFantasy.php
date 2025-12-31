@@ -27,6 +27,12 @@ class LigaFantasy
     #[ORM\Column]
     private ?int $puntuaje = null;
 
+    #[ORM\Column]
+    private ?string $clave = null;
+
+    #[ORM\Column]
+    private ?int $presupuestoinicial = null;
+
     /**
      * @var Collection<int, EquipoFantasy>
      */
@@ -55,6 +61,17 @@ class LigaFantasy
         return $this;
     }
 
+    public function getPresupuestoinicial(): ?int
+    {
+        return $this->presupuestoinicial;
+    }
+
+    public function setPresupuestoinicial(int $presupuestoinicial): static
+    {
+        $this->presupuestoinicial = $presupuestoinicial;
+        return $this;
+    }
+
     public function getMinimoJugadores(): ?int
     {
         return $this->minimoJugadores;
@@ -79,6 +96,17 @@ class LigaFantasy
     public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+    public function getClave(): ?string
+    {
+        return $this->clave;
+    }
+
+    public function setClave(string $clave): static
+    {
+        $this->clave = $clave;
 
         return $this;
     }

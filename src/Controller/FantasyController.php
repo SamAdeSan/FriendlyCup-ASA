@@ -6,15 +6,17 @@ use App\Entity\Torneo;
 use App\Entity\LigaFantasy;
 use App\Entity\EquipoFantasy;
 use App\Form\LigaFantasyFormType;
+use App\Repository\UserRepository;
 use App\Repository\JugadoresRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\LigaFantasyRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\EquipoFantasyRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/fantasy')]
 final class FantasyController extends AbstractController
@@ -42,6 +44,9 @@ final class FantasyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $claveGenerada = strtoupper(substr(bin2hex(random_bytes(4)), 0, 8));
+            $liga->setClave($claveGenerada);
+            $liga->setPresupuestoinicial($form->get('presupuestoInicial')->getData());
             $this->em->persist($liga);
             $miEquipo = new EquipoFantasy();
             $miEquipo->setEntrenador($user);
@@ -93,7 +98,25 @@ final class FantasyController extends AbstractController
         $em->flush();
         return $this->json(['nuevoPresupuesto' => $nuevoPresupuesto], 200);
     }
-
+    #[Route('/api/liga/unirse', methods: ['POST'])]
+    public function anadirUsuario(LigaFantasyRepository $ligaRepo,Request $request,UserRepository $userRepo,EntityManagerInterface $em) : JsonResponse{
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'] ?? null;
+        $clave = $data['clave'] ?? null;
+        $usuario = $userRepo->findOneBy(['email' => $email]);
+        $liga = $ligaRepo->findOneBy(['claveInvitacion' => $clave]);
+        $nuevoEquipo = new EquipoFantasy();
+        $nuevoEquipo->setPresupuesto($liga->getPresupuestoinicial());
+        $nuevoEquipo->setPuntos(0);
+        $nuevoEquipo->setEntrenador($usuario);
+        $nuevoEquipo->setLigafantasy($liga);
+        $em->persist($nuevoEquipo);
+        $em->flush();
+        return $this->json([
+        'liga' => $liga->getNombre(),
+        'nombreUsuario' => $usuario->getName()
+        ], 200);
+    }
     #[Route('/liga/{id}', name: 'fantasy_liga')]
     public function index(LigaFantasy $liga): Response
     {

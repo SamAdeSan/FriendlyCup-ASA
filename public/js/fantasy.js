@@ -7,6 +7,8 @@ let botonesVender=document.querySelectorAll('.vender')
 botonesVender.forEach(boton=>{
     boton.onclick=vender
 })
+let admin=document.getElementById("btnAnadirUsuario")
+admin.onclick=mostrarclave
 pujar.forEach(boton => {
     boton.onclick=comprar
 })
@@ -52,6 +54,10 @@ function comprar() {
     } else {
         alert("No tienes suficiente saldo");
     }
+}
+function mostrarclave() {
+    let clave=this.getAttribute('data-clave');
+    alert('La clave para unirse a esta liga es: ' + clave);
 }
 function vender() {
     let idJugador = this.dataset.id;

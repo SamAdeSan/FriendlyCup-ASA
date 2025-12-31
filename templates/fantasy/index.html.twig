@@ -11,9 +11,7 @@
     {% for jugador in misJugadores %}
     <div class="jugador-card titular">
         Jugador: {{jugador.nombre}} Puntos: {{jugador.estadisticas}} Valor de mercado: {{jugador.valordemercado}}
-        <button class="vender" onclick="vender({{ equipo.id }}, {{ jugador.id }})">
-            Vender
-        </button>
+        <button class="vender" data-id="{{ jugador.id }}" data-nombre="{{ jugador.nombre }}"data-valor="{{ jugador.valordemercado }}"data-puntos="{{ jugador.estadisticas }}">Vender</button>
     </div>
 {% endfor %}
 </div>
@@ -33,6 +31,8 @@
     {% endfor %}
 </div>
 {% if app.user == liga.administrador %}
-    <button>Añadir a otro usuario</button>
+    <button id="btnAnadirUsuario" 
+        class="btn btn-primary" 
+        data-clave="{{ liga.clave }}">Ver clave invitacion</button>
 {% endif %}
 {% endblock %}
