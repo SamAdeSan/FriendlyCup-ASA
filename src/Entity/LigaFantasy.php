@@ -19,7 +19,7 @@ class LigaFantasy
     private ?string $nombre = null;
 
     #[ORM\Column]
-    private ?int $minimoJugadores = 11;
+    private ?int $minimoJugadores = 0;
 
     #[ORM\ManyToOne(inversedBy: 'ligaFantasies')]
     private ?Torneo $torneo = null;

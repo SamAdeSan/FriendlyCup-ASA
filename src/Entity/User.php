@@ -233,6 +233,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->seguidos->contains($seguido)) {
             $this->seguidos->add($seguido);
+            $seguido->setSeguidores($seguido->getSeguidores()+1);
         }
 
         return $this;
@@ -241,7 +242,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeSeguido(Torneo $seguido): static
     {
         $this->seguidos->removeElement($seguido);
-
+        $seguido->setSeguidores($seguido->getSeguidores()-1);
         return $this;
     }
 }

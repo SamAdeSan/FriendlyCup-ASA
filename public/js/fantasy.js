@@ -1,4 +1,5 @@
 let presupuesto=document.getElementById("budget");
+let maximo = Number(presupuesto.dataset.minimo);
 let presupuestoActual = Number(presupuesto.dataset.valor);
 let idEquipo = presupuesto.dataset.id;
 let contenedorJugadores = document.querySelector('.jugadores');
@@ -7,18 +8,25 @@ let botonesVender=document.querySelectorAll('.vender')
 botonesVender.forEach(boton=>{
     boton.onclick=vender
 })
-let admin=document.getElementById("btnAnadirUsuario")
-admin.onclick=mostrarclave
+let admin = document.getElementById("btnAnadirUsuario");
+if (admin) {
+    admin.onclick = mostrarclave;
+}
 pujar.forEach(boton => {
     boton.onclick=comprar
 })
 function comprar() {
+    let contenedorJugadores = document.querySelector('.jugadores'); 
+    let numJugadoresActuales = contenedorJugadores.querySelectorAll('.jugador-card.titular').length;
+    if (numJugadoresActuales >= maximo) {
+        alert(`¡Has alcanzado el número maximo de jugadores (${maximo})! No puedes fichar más.`);
+        return;
+    }
     let idJugador = this.dataset.id;
     let nombreJugador = this.dataset.nombre;
     let costoJugador = Number(this.dataset.valor);
     let puntosJugador = this.dataset.puntos; 
     let tarjetaJugador = this.parentElement;
-    let contenedorJugadores = document.querySelector('.jugadores'); 
     if (presupuestoActual >= costoJugador) {
         let nuevoSaldo = presupuestoActual - costoJugador;
         fetch(`/fantasy/api/equipo/${idEquipo}/presupuesto`, {

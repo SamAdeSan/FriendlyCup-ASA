@@ -6,10 +6,12 @@ use App\Entity\Torneo;
 use App\Entity\Equipos;
 use App\Form\EquipoFormType;
 use App\Form\TorneoFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class TorneoController extends AbstractController
@@ -71,6 +73,7 @@ final class TorneoController extends AbstractController
     }
     #[Route('/torneo/{id}/crearequipo', name: 'crearequipo')]
     public function crearEquipo(int $id,ManagerRegistry $doctrine,Request $request): Response {
+        
         $entityManager = $doctrine->getManager();
         $torneoRepo = $doctrine->getRepository(Torneo::class);
         $torneo = $torneoRepo->find($id);
@@ -94,15 +97,38 @@ final class TorneoController extends AbstractController
             'torneo' => $torneo
         ]);
     }
+    #[Route('/torneo/{id}/seguir', name: 'torneo_seguir', methods: ['POST'])]
+    public function seguir(Torneo $torneo,EntityManagerInterface $em): JsonResponse
+    {
+        $user = $this->getUser();
+        if ($user->getSeguidos()->contains($torneo)) {
+            $user->removeSeguido($torneo);
+            $accion = 'desseguir';
+        }else{
+            $user->addSeguido($torneo);
+            $accion = 'seguir';
+        }
+        $em->flush();
+        return $this->json([
+        'accion' => $accion,
+        'totalSeguidores' => $torneo->getSeguidores()->count()
+        ]);
+    }
     #[Route('/torneo/{id}', name: 'torneo')]
     public function ligas(int $id,ManagerRegistry $doctrine): Response
     {
         $repositorio = $doctrine->getRepository(Torneo::class);
         $torneo=$repositorio->find($id);
         $admin=$torneo->getOrganizador();
+        $user = $this->getUser();
+        $yaSigue = false;
+        if ($user) {
+            $yaSigue = $user->getSeguidos()->contains($torneo);
+        }
         return $this->render('page/torneos.html.twig', [
             'torneo' => $torneo,
             'admin'  => $admin,
+            'yasigue' => $yaSigue
         ]);
     }
 }

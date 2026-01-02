@@ -10,11 +10,12 @@
                 </div>
                 <div class="header-actions">
                     {% if app.user == admin %}
-                    <a href="{{ path('modificartorneo', {'id': torneo.id}) }}" class="btn-secondary">Modificar Torneo</a>
-                    <a href="{{ path('torneoeliminado', {'id': torneo.id}) }}" class="btn-danger">Terminar Torneo</a>
+                        <a href="{{ path('modificartorneo', {'id': torneo.id}) }}" class="btn-secondary">Modificar Torneo</a>
+                        <a href="{{ path('torneoeliminado', {'id': torneo.id}) }}" class="btn-danger">Terminar Torneo</a>
                     {% else %}
-                    <a href="#" class="btn-secondary">Seguir</a>
+                        <button id="seguir" data-id="{{ torneo.id }}" class="{{ app.user.seguidos.contains(torneo) ? 'btn-danger' : 'btn-secondary' }}">{{ app.user.seguidos.contains(torneo) ? 'Dejar de seguir' : 'Seguir' }}</button>
                     {% endif %}
+                    <span id="contador-seguidores">{{ torneo.seguidores}}</span> seguidores
                 </div>
             </section>
 
@@ -64,6 +65,5 @@
             <button class="btn-fantasy"><a href="{{ path('fantasycrear', {'id': torneo.id}) }}">Crear fantasy ligado</a></button>
         </aside>
     </div>
-    <script src="{{ asset('js/torneo.js') }}"></script>
 
 {% endblock %}
