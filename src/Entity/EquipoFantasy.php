@@ -17,7 +17,6 @@ class EquipoFantasy
     #[Groups(['equipofantasy:read'])]
     private ?int $id = null;
 
-
     #[ORM\ManyToOne(inversedBy: 'equipoFantasies')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?LigaFantasy $ligafantasy = null;
@@ -28,25 +27,30 @@ class EquipoFantasy
 
     #[ORM\Column]
     #[Groups(['equipofantasy:read'])]
-    private ?float $presupuesto = 0;
+    private float $presupuesto = 0;
 
-    #[ORM\ManyToMany(targetEntity: Jugadores::class)]
-    #[ORM\JoinTable(name: "equipofantasy_titulares")]
+    #[ORM\ManyToMany(
+        targetEntity: Jugadores::class,
+        inversedBy: 'equipoFantasies'
+    )]
+    #[ORM\JoinTable(name: 'equipofantasy_titulares')]
     #[Groups(['equipofantasy:read'])]
     private Collection $titulares;
 
     #[ORM\Column]
     #[Groups(['equipofantasy:read'])]
-    private ?int $puntos = 0;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    private int $puntos = 0;
 
     public function __construct()
     {
         $this->titulares = new ArrayCollection();
+    }
+
+    // ================= GETTERS & SETTERS =================
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getLigafantasy(): ?LigaFantasy
@@ -54,10 +58,9 @@ class EquipoFantasy
         return $this->ligafantasy;
     }
 
-    public function setLigafantasy(?LigaFantasy $ligafantasy): static
+    public function setLigafantasy(?LigaFantasy $ligafantasy): self
     {
         $this->ligafantasy = $ligafantasy;
-
         return $this;
     }
 
@@ -66,35 +69,37 @@ class EquipoFantasy
         return $this->entrenador;
     }
 
-    public function setEntrenador(?User $entrenador): static
+    public function setEntrenador(?User $entrenador): self
     {
         $this->entrenador = $entrenador;
-
         return $this;
     }
 
-    public function getPresupuesto(): ?float
+    public function getPresupuesto(): float
     {
         return $this->presupuesto;
     }
 
-    public function setPresupuesto(float $presupuesto): static
+    public function setPresupuesto(float $presupuesto): self
     {
         $this->presupuesto = $presupuesto;
         return $this;
     }
 
-    public function getPuntos(): ?int
+    public function getPuntos(): int
     {
         return $this->puntos;
     }
 
-    public function setPuntos(int $puntos): static
+    public function setPuntos(int $puntos): self
     {
         $this->puntos = $puntos;
-
         return $this;
     }
+
+    /**
+     * @return Collection<int, Jugadores>
+     */
     public function getTitulares(): Collection
     {
         return $this->titulares;
@@ -104,12 +109,16 @@ class EquipoFantasy
     {
         if (!$this->titulares->contains($jugador)) {
             $this->titulares->add($jugador);
+            $jugador->getEquipoFantasies()->add($this);
         }
         return $this;
     }
+
     public function removeTitular(Jugadores $jugador): self
     {
-        $this->titulares->removeElement($jugador);
+        if ($this->titulares->removeElement($jugador)) {
+            $jugador->getEquipoFantasies()->removeElement($this);
+        }
         return $this;
     }
 }

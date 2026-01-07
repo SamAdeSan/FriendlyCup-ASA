@@ -10,6 +10,7 @@
                 </div>
                 <div class="header-actions">
                     {% if app.user == admin %}
+                        <a href="" data-id="{{ torneo.id }}" class="btn-secondary">Crear evento</a>
                         <a href="{{ path('modificartorneo', {'id': torneo.id}) }}" class="btn-secondary">Modificar Torneo</a>
                         <a href="{{ path('torneoeliminado', {'id': torneo.id}) }}" class="btn-danger">Terminar Torneo</a>
                     {% else %}
@@ -26,7 +27,7 @@
                     <li><a href="#" id="estadisticas"class="tab" data-url="{{ path('torneo_estadisticas', {id: torneo.id}) }}">Estadisticas</a></li>
                 </ul>
             </nav>
-
+            
             <section id="torneo-section" class="torneo-section">
             </section>
         </main>

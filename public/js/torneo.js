@@ -44,20 +44,33 @@ function gestionseguidores() {
         }
     })
 }
-
+function cargar(url) {
+    fetch(url)
+        .then(r => r.text())
+        .then(html=>{
+            section.innerHTML = html;
+        })
+}
 tabs.forEach(tab => {
     tab.onclick= function (e) {
         e.preventDefault()
         tabs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
-        fetch(this.dataset.url)
-        .then(r => r.text())
-        .then(html=>{
-            section.innerHTML = html;
-        })
+        cargar(this.dataset.url);
     }
 })
 let activa = document.querySelector('.tab.active');
 if (activa) {
     cargar(activa.dataset.url);
+}
+function crearevento() {
+    let evento=prompt("Como quieres llamar al evento")
+    let puntos=prompt("Quantos puntos quieres que cuente? (sirve para crear la fantasy)")
+    fetch('/crear/evento', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        puntos:puntos,evento:evento,torneo_id:this.dataset.id
+    }).then(response => response.json())
+})
 }

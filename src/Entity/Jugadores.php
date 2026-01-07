@@ -19,30 +19,28 @@ class Jugadores
     private ?string $nombre = null;
 
     #[ORM\Column]
-    private ?int $estadisticas = 0;
+    private int $estadisticas = 0;
 
     #[ORM\Column]
-    private ?int $valordemercado = 0;
+    private int $valorDeMercado = 0;
 
     #[ORM\ManyToOne(inversedBy: 'jugadores')]
     private ?Equipos $equipo = null;
 
-    /**
-     * @var Collection<int, EquipoFantasy>
-     */
-    #[ORM\OneToMany(targetEntity: EquipoFantasy::class, mappedBy: 'jugadores')]
+    #[ORM\ManyToMany(targetEntity: EquipoFantasy::class, mappedBy: 'titulares')]
     private Collection $equipoFantasies;
 
-    /**
-     * @var Collection<int, PuntuajeEvento>
-     */
-    #[ORM\OneToMany(targetEntity: PuntuajeEvento::class, mappedBy: 'jugador')]
-    private Collection $puntuajeEventos;
+    #[ORM\OneToMany(
+        targetEntity: PuntuajeEvento::class,
+        mappedBy: 'jugador',
+        cascade: ['persist', 'remove']
+    )]
+    private Collection $puntajeEventos;
 
     public function __construct()
     {
         $this->equipoFantasies = new ArrayCollection();
-        $this->puntuajeEventos = new ArrayCollection();
+        $this->puntajeEventos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -55,34 +53,31 @@ class Jugadores
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): static
+    public function setNombre(string $nombre): self
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
-    public function getEstadisticas(): ?int
+    public function getEstadisticas(): int
     {
         return $this->estadisticas;
     }
 
-    public function setEstadisticas(int $estadisticas): static
+    public function setEstadisticas(int $estadisticas): self
     {
         $this->estadisticas = $estadisticas;
-
         return $this;
     }
 
-    public function getValordemercado(): ?int
+    public function getValorDeMercado(): int
     {
-        return $this->valordemercado;
+        return $this->valorDeMercado;
     }
 
-    public function setValordemercado(int $valordemercado): static
+    public function setValorDeMercado(int $valorDeMercado): self
     {
-        $this->valordemercado = $valordemercado;
-
+        $this->valorDeMercado = $valorDeMercado;
         return $this;
     }
 
@@ -91,10 +86,9 @@ class Jugadores
         return $this->equipo;
     }
 
-    public function setEquipo(?Equipos $equipo): static
+    public function setEquipo(?Equipos $equipo): self
     {
         $this->equipo = $equipo;
-
         return $this;
     }
 
@@ -106,55 +100,26 @@ class Jugadores
         return $this->equipoFantasies;
     }
 
-    public function addEquipoFantasy(EquipoFantasy $equipoFantasy): static
-    {
-        if (!$this->equipoFantasies->contains($equipoFantasy)) {
-            $this->equipoFantasies->add($equipoFantasy);
-            $equipoFantasy->setJugadores($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipoFantasy(EquipoFantasy $equipoFantasy): static
-    {
-        if ($this->equipoFantasies->removeElement($equipoFantasy)) {
-            // set the owning side to null (unless already changed)
-            if ($equipoFantasy->getJugadores() === $this) {
-                $equipoFantasy->setJugadores(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, PuntuajeEvento>
+     * @return Collection<int, PuntajeEvento>
      */
-    public function getPuntuajeEventos(): Collection
+    public function getPuntajeEventos(): Collection
     {
-        return $this->puntuajeEventos;
+        return $this->puntajeEventos;
     }
 
-    public function addPuntuajeEvento(PuntuajeEvento $puntuajeEvento): static
+    public function addPuntajeEvento(PuntuajeEvento $puntajeEvento): self
     {
-        if (!$this->puntuajeEventos->contains($puntuajeEvento)) {
-            $this->puntuajeEventos->add($puntuajeEvento);
-            $puntuajeEvento->setJugador($this);
+        if (!$this->puntajeEventos->contains($puntajeEvento)) {
+            $this->puntajeEventos->add($puntajeEvento);
         }
 
         return $this;
     }
 
-    public function removePuntuajeEvento(PuntuajeEvento $puntuajeEvento): static
+    public function removePuntajeEvento(PuntuajeEvento $puntajeEvento): self
     {
-        if ($this->puntuajeEventos->removeElement($puntuajeEvento)) {
-            // set the owning side to null (unless already changed)
-            if ($puntuajeEvento->getJugador() === $this) {
-                $puntuajeEvento->setJugador(null);
-            }
-        }
-
+        $this->puntajeEventos->removeElement($puntajeEvento);
         return $this;
     }
 }

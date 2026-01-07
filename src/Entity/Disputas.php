@@ -33,17 +33,6 @@ class Disputas
     #[ORM\JoinColumn(nullable: false)]
     private ?Torneo $torneo = null;
 
-    /**
-     * @var Collection<int, PuntuajeEvento>
-     */
-    #[ORM\OneToMany(targetEntity: PuntuajeEvento::class, mappedBy: 'disputa')]
-    private Collection $puntuajeEventos;
-
-    public function __construct()
-    {
-        $this->puntuajeEventos = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -109,33 +98,4 @@ class Disputas
         return $this;
     }
 
-    /**
-     * @return Collection<int, PuntuajeEvento>
-     */
-    public function getPuntuajeEventos(): Collection
-    {
-        return $this->puntuajeEventos;
-    }
-
-    public function addPuntuajeEvento(PuntuajeEvento $puntuajeEvento): static
-    {
-        if (!$this->puntuajeEventos->contains($puntuajeEvento)) {
-            $this->puntuajeEventos->add($puntuajeEvento);
-            $puntuajeEvento->setDisputa($this);
-        }
-
-        return $this;
-    }
-
-    public function removePuntuajeEvento(PuntuajeEvento $puntuajeEvento): static
-    {
-        if ($this->puntuajeEventos->removeElement($puntuajeEvento)) {
-            // set the owning side to null (unless already changed)
-            if ($puntuajeEvento->getDisputa() === $this) {
-                $puntuajeEvento->setDisputa(null);
-            }
-        }
-
-        return $this;
-    }
 }
