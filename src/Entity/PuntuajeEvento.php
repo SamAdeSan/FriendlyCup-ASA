@@ -14,10 +14,7 @@ class PuntuajeEvento
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'puntuajeEventos')]
-    private ?Disputas $disputa = null;
-
-    #[ORM\ManyToOne(inversedBy: 'puntuajeEventos')]
-    private ?Jugadores $jugador = null;
+    private ?Torneo $torneo = null;
 
     #[ORM\Column]
     private ?int $puntos = null;
@@ -30,26 +27,14 @@ class PuntuajeEvento
         return $this->id;
     }
 
-    public function getDisputa(): ?Disputas
+    public function getTorneo(): ?Torneo
     {
-        return $this->disputa;
+        return $this->torneo;
     }
 
-    public function setDisputa(?Disputas $disputa): static
+    public function setTorneo(?Torneo $torneo): static
     {
-        $this->disputa = $disputa;
-
-        return $this;
-    }
-
-    public function getJugador(): ?Jugadores
-    {
-        return $this->jugador;
-    }
-
-    public function setJugador(?Jugadores $jugador): static
-    {
-        $this->jugador = $jugador;
+        $this->torneo = $torneo;
 
         return $this;
     }
