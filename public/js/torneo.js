@@ -21,6 +21,10 @@ let seguir=document.getElementById("seguir")
 if (seguir) {
     seguir.onclick=gestionseguidores
 }
+let crearEvento = document.getElementById("crear-evento");
+if (crearEvento) {
+    crearEvento.onclick=crearevento
+}
 function gestionseguidores() {
     let idTorneo = this.getAttribute('data-id');
     let contador = document.getElementById('contador-seguidores');
@@ -71,6 +75,6 @@ function crearevento() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
         puntos:puntos,evento:evento,torneo_id:this.dataset.id
+        })
     }).then(response => response.json())
-})
 }

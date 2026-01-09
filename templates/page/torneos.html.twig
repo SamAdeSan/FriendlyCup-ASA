@@ -10,7 +10,7 @@
                 </div>
                 <div class="header-actions">
                     {% if app.user == admin %}
-                        <a href="" data-id="{{ torneo.id }}" class="btn-secondary">Crear evento</a>
+                        <button type="button" class="btn-secondary" id="crear-evento" data-id="{{ torneo.id }}">Crear evento</button>
                         <a href="{{ path('modificartorneo', {'id': torneo.id}) }}" class="btn-secondary">Modificar Torneo</a>
                         <a href="{{ path('torneoeliminado', {'id': torneo.id}) }}" class="btn-danger">Terminar Torneo</a>
                     {% else %}
