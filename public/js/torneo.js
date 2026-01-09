@@ -69,7 +69,9 @@ if (activa) {
 }
 function crearevento() {
     let evento=prompt("Como quieres llamar al evento")
+    if (!evento) return
     let puntos=prompt("Quantos puntos quieres que cuente? (sirve para crear la fantasy)")
+    if (!puntos) return
     fetch('/crear/evento', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
