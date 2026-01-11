@@ -7,10 +7,7 @@
         <div id="RLCBlock">
             <h1>{{ equipo.nombre }}</h1>
         </div>
-
         <div class="equipos">
-
-
             <table class="stats-table">
                 <thead>
                 <tr>
@@ -34,13 +31,10 @@
                 Volver al inicio
             </a>
         </div>
-
         <hr>
-
         <div class="stats-table-container">
             <div style="display:flex; justify-content: space-between; align-items:center;">
                 <h3>Plantilla de Jugadores</h3>
-
                 {% if jugadores is not empty %}
                     <a href="{{ path('crearjugador', {'id': equipo.id}) }}" class="volver">
                         + Añadir jugador
@@ -71,14 +65,8 @@
                             <td>{{ jugador.id }}</td>
                             <td>{{ jugador.nombre }}</td>
                             <td>
-                                <a href="{{ path('jugadoreliminado', {'id': jugador.id}) }}"
-                                   class="btn-danger">
-                                    Eliminar
-                                </a>
-                                <a href="{{ path('modificarjugador', {'id': jugador.id}) }}"
-                                   class="btn-secondary">
-                                    Modificar
-                                </a>
+                                <a href="{{ path('jugadoreliminado', {'id': jugador.id}) }}"class="btn-danger">Eliminar</a>
+                                <a href="{{ path('modificarjugador', {'id': jugador.id}) }}"class="btn-secondary">Modificar</a>
                             </td>
                         </tr>
                     {% endfor %}

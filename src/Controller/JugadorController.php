@@ -17,6 +17,8 @@ final class JugadorController extends AbstractController
         $entityManager = $doctrine->getManager();
         $repositorio = $doctrine->getRepository(Jugadores::class);
         $jugador = $repositorio->find($id);
+        $equipo = $jugador->getEquipo();
+        $torneo = $equipo->getTorneo();
         if (!$jugador) {
             return $this->redirectToRoute('inicio');
         }
@@ -24,42 +26,37 @@ final class JugadorController extends AbstractController
         $formulario->handleRequest($request);
         if ($formulario->isSubmitted() && $formulario->isValid()) {
             $entityManager->flush();
-            return $this->redirectToRoute('jugador', [
-                'id' => $jugador->getId()
+            return $this->redirectToRoute('equipo', [
+                'id' => $equipo->getId()
             ]);
         }
         return $this->render('page/editar-jugador.html.twig', [
             'formulario' => $formulario->createView(),
-            'jugador' => $jugador
+            'jugador' => $jugador,
+            'torneo'     => $torneo,
+            
         ]);
     }
     #[Route('/jugador/delete/{id}', name: 'jugadoreliminado')]
-    public function deleteJugador(ManagerRegistry $doctrine,int $id): Response {
+    public function deleteJugador(ManagerRegistry $doctrine, int $id): Response
+    {
         $entityManager = $doctrine->getManager();
-        $repositorio = $doctrine->getRepository(Jugadores::class);
-        $jugador = $repositorio->find($id);
-        $equipoId = $jugador->getEquipo()->getId();
-        if ($jugador) {
-            $entityManager->remove($jugador);
-            $entityManager->flush();
-        }
-        return $this->redirectToRoute('equipo', [
-        'id' => $equipoId
-    ]);
-    }
-    
-
-    #[Route('/jugador/{id}', name: 'jugador')]
-    public function verJugador(int $id,ManagerRegistry $doctrine): Response {
         $repositorio = $doctrine->getRepository(Jugadores::class);
         $jugador = $repositorio->find($id);
         if (!$jugador) {
             return $this->redirectToRoute('inicio');
         }
-        return $this->render('page/jugador.html.twig', [
-            'jugador' => $jugador,
-            'equipo' => $jugador->getEquipo(),
-            'estadisticas' => $jugador->getEstadisticas(),
+        $equipo = $jugador->getEquipo();
+        $equipoId = $equipo ? $equipo->getId() : null;
+        foreach ($jugador->getEquipoFantasies() as $equipoFantasy) {
+            $equipoFantasy->removeTitular($jugador);
+            $entityManager->persist($equipoFantasy);
+        }
+        $entityManager->flush(); 
+        $entityManager->remove($jugador);
+        $entityManager->flush(); 
+        return $this->redirectToRoute('equipo', [
+            'id' => $equipoId
         ]);
     }
 }

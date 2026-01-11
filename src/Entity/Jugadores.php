@@ -27,7 +27,7 @@ class Jugadores
     #[ORM\ManyToOne(inversedBy: 'jugadores')]
     private ?Equipos $equipo = null;
 
-    #[ORM\ManyToMany(targetEntity: EquipoFantasy::class, mappedBy: 'titulares')]
+    #[ORM\ManyToMany(targetEntity: EquipoFantasy::class, mappedBy: 'titulares',)]
     private Collection $equipoFantasies;
 
     #[ORM\OneToMany(
