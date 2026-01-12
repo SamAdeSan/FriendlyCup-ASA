@@ -48,10 +48,13 @@ final class JugadorController extends AbstractController
         }
         $equipo = $jugador->getEquipo();
         $equipoId = $equipo ? $equipo->getId() : null;
-        foreach ($jugador->getEquipoFantasies() as $equipoFantasy) {
-            $equipoFantasy->removeTitular($jugador);
-            $entityManager->persist($equipoFantasy);
+        $equiposFantasy = $jugador->getEquipoFantasies()->toArray();
+        $puntajeEventos = $jugador->getPuntajeEventos()->toArray();
+        foreach ($equiposFantasy as $equipoFantasy) {
+             $equipoFantasy->getTitulares()->removeElement($jugador);
+             $entityManager->persist($equipoFantasy);
         }
+        
         $entityManager->flush(); 
         $entityManager->remove($jugador);
         $entityManager->flush(); 
