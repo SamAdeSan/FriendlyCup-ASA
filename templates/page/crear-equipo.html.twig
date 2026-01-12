@@ -1,14 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block title %}Crear Equipo{% endblock title %}
 {% block body %}
-    {{ form_start(formulario, {'attr': {'id': 'formTorneo'}}) }}
-    {{ form_widget(formulario) }} {# Esto dibuja los campos #}
-    
-    <div class="botones-accion">
-        <button type="submit" class="btn-guardar">Guardar Equipo</button>
-        <button type="button" id="cancelar">
-            <a href="{{ path('inicio') }}">Cancelar</a>
-        </button>
+    <div class="crear-equipo">
+        <div id="RLCBlock">
+            <h1>Editar Equipo del torneo {{ torneo.name }}</h1>
+        </div>
+        <div id="RLCForm">
+            {{ form_start(formulario, {'attr': {'id': 'formTorneo'}}) }}
+            {{ form_widget(formulario) }} {# Esto dibuja los campos #}
+        </div>
+
+        <div class="botones-accion">
+            <button type="submit" class="btn-guardar">Guardar Equipo</button>
+            <button type="button" id="cancelar">
+                <a href="{{ path('inicio') }}">Cancelar</a>
+            </button>
+        </div>
     </div>
 {{ form_end(formulario, {'render_rest': false}) }}
 {% endblock %}

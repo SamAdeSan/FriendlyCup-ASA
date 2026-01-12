@@ -5,7 +5,7 @@
 {% block body %}
     <div class="editar-torneo">
         <div id="RLCBlock">
-            <h1>{{ equipo.nombre }}</h1>
+            <h1>Datos de {{ equipo.nombre }}</h1>
         </div>
         <div class="equipos">
             <table class="stats-table">
@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ torneo.name }}</td>
+                    <td><a href="{{ path('torneo', {'id': torneo.id}) }}">{{ torneo.name }}</a></td>
                     <td>
                     <span class="btn-cta-round" style="color:#fff;">
                         {{ puntos }}
