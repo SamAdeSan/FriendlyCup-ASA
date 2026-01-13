@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="main-container">
+    <h2 style="color: #cdc832;">{% if termino %} Resultados para: "{{ termino }}" {% else %} Torneos {% endif %}</h2>
+    <div class="grid-layout">
+        {% for torneo in torneos %}
+            <div class="card" style="background: rgba(14, 23, 38, 0.8); border: 1px solid #939393;">
+                <div class="card-img" style="font-size: 30px;">🏆</div>
+                <div class="card-info">
+                    <h3 style="color: white;"><a  href="{{ path('torneo', {'id': torneo.id}) }}">{{ torneo.name }}</a></h3> 
+                </div>
+            </div>
+        {% else %}
+            <p>No se encontraron resultados.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

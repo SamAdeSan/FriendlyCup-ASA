@@ -6,6 +6,7 @@ use App\Entity\Torneo;
 use App\Entity\Equipos;
 use App\Form\EquipoFormType;
 use App\Form\TorneoFormType;
+use App\Repository\TorneoRepository;
 use App\Repository\JugadoresRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -70,6 +71,22 @@ final class TorneoController extends AbstractController
         return $this->render('page/crear-torneo.html.twig', [
             'controller_name' => 'PageController',
             'formulario' => $formulario->createView()
+        ]);
+    }
+    #[Route('/torneos', name: 'lista_torneos')]
+    public function index(TorneoRepository $repo, Request $request): Response
+    {
+        $termino = $request->query->get('q'); 
+
+        if ($termino) {
+            $torneos = $repo->buscarPorNombre($termino);
+        } else {
+            $torneos = $repo->findAll();
+        }
+
+        return $this->render('page/buscar/index.html.twig', [
+            'torneos' => $torneos,
+            'termino' => $termino
         ]);
     }
     #[Route('/torneo/{id}/crearequipo', name: 'crearequipo')]

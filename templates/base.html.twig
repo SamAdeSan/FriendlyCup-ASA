@@ -20,7 +20,13 @@
                 </a>
             </div>
             <div class="search-container">
-                <input type="text" placeholder="Buscar torneos">
+              <form action="{{ path('lista_torneos') }}" method="get">
+                    <input type="text" 
+                        name="q" 
+                        placeholder="Buscar torneos..." 
+                        value="{{ app.request.query.get('q') }}">
+        
+              </form>
             </div>
             <div class="nav-buttons">
                 <nav id="navLogin">

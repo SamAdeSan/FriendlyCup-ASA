@@ -15,6 +15,14 @@ class TorneoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Torneo::class);
     }
+    public function buscarPorNombre(string $termino): array
+{
+    return $this->createQueryBuilder('t')
+        ->andWhere('t.name LIKE :val') // Cambiado de 'nombre' a 'name'
+        ->setParameter('val',  $termino . '%')
+        ->getQuery()
+        ->getResult();
+}
 
 //    /**
 //     * @return Torneo[] Returns an array of Torneo objects
