@@ -26,7 +26,7 @@ class Disputas
     #[ORM\JoinColumn(nullable: false)]
     private ?Equipos $equipo2 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\ManyToOne(targetEntity: Equipos::class)]
     #[ORM\JoinColumn(nullable: true)]
     private ?Equipos $ganador = null;
 
