@@ -135,8 +135,13 @@ final class TorneoController extends AbstractController
     #[Route('/torneo/{id}/resumen', name: 'torneo_resumen')]
     public function resumen(Torneo $torneo): Response
     {
+        $admin=$torneo->getOrganizador();
+        $disputas=$torneo->getDisputas();
+
         return $this->render('page/torneo/resumen.html.twig', [
-            'torneo' => $torneo
+            'torneo' => $torneo,
+            'admin'  => $admin,
+            'disputas'  => $disputas,
         ]);
     }
     #[Route('/torneo/{id}/clasificacion', name: 'torneo_clasificacion')]

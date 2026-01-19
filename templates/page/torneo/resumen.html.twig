@@ -1,3 +1,8 @@
 <h2>Resumen</h2>
-<a class="btn-secondary">Añadir disputa<a>
-<a class="btn-danger">Eliminar disputa<a>
+{% if app.user == admin %}
+<a id="anadirdisputa" class="btn-secondary" data-torneo-id="{{ torneo.id }}">Añadir disputa</a>
+<a id="eliminardisputa" class="btn-danger" data-torneo-id="{{ torneo.id }}">Eliminar disputa</a>
+{% endif %}
+{% for disputa in disputas %}
+    <p id="disputa">{{disputa.equipo1}}: {{disputa.resultado}} {{disputa.equipo2}}</p>
+{% endfor %}

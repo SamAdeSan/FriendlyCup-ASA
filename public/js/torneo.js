@@ -53,6 +53,12 @@ function cargar(url) {
         .then(r => r.text())
         .then(html=>{
             section.innerHTML = html;
+            let anadirdisputa=document.getElementById("anadirdisputa")
+            if (anadirdisputa) {
+                anadirdisputa.onclick=function() {
+                    anadirdis(this.dataset.torneoId);
+                }
+            }
         })
 }
 tabs.forEach(tab => {
@@ -77,6 +83,22 @@ function crearevento() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
         puntos:puntos,evento:evento,torneo_id:this.dataset.id
+        })
+    }).then(response => response.json())
+}
+
+function anadirdis(torneo) {
+    let equipo1=prompt("Que equipo quieres poner? (Escribe el id)")
+    if (!equipo1) return
+    let equipo2=prompt("Que otro quieres poner?: (Escribe el id)")
+    if (!equipo2) return
+    fetch('/disputas/crear', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        equipo1_id:equipo1,
+        equipo2_id:equipo2,
+        torneo_id:torneo
         })
     }).then(response => response.json())
 }
