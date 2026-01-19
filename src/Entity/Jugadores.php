@@ -30,14 +30,10 @@ class Jugadores
     #[ORM\ManyToMany(targetEntity: EquipoFantasy::class, mappedBy: 'titulares',)]
     private Collection $equipoFantasies;
 
-    #[ORM\ManyToMany(targetEntity: PuntuajeEvento::class, inversedBy: 'jugadores')]
-    #[ORM\JoinTable(name: 'jugador_eventos')]
-    private Collection $puntajeEventos;
 
     public function __construct()
     {
         $this->equipoFantasies = new ArrayCollection();
-        $this->puntajeEventos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,29 +91,5 @@ class Jugadores
     public function getEquipoFantasies(): Collection
     {
         return $this->equipoFantasies;
-    }
-
-    /**
-     * @return Collection<int, PuntuajeEvento>
-     */
-    public function getPuntajeEventos(): Collection
-    {
-        return $this->puntajeEventos;
-    }
-
-    public function getEstadisticasPorEvento(): array
-    {
-        $stats = [];
-
-        foreach ($this->puntajeEventos as $evento) {
-            $tipo = $evento->getEvento();
-
-            if (!isset($stats[$tipo])) {
-                $stats[$tipo] = 0;
-            }
-
-            $stats[$tipo]++;
-        }
-        return $stats;
     }
 }

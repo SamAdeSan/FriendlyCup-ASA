@@ -82,7 +82,9 @@ function crearevento() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-        puntos:puntos,evento:evento,torneo_id:this.dataset.id
+        puntos:puntos,
+        evento:evento,
+        torneo_id:this.dataset.id
         })
     }).then(response => response.json())
 }

@@ -40,14 +40,11 @@ class Equipos
         $this->disputasComoLocal = new ArrayCollection();
         $this->disputasComoVisitante = new ArrayCollection();
     }
-
     public function getId(): ?int { return $this->id; }
     public function getNombre(): ?string { return $this->nombre; }
     public function setNombre(string $nombre): static { $this->nombre = $nombre; return $this; }
-
     public function getTorneo(): ?Torneo { return $this->torneo; }
     public function setTorneo(?Torneo $torneo): static { $this->torneo = $torneo; return $this; }
-
     public function getJugadores(): Collection { return $this->jugadores; }
     public function addJugadore(Jugadores $jugadore): static
     {
@@ -57,29 +54,24 @@ class Equipos
         }
         return $this;
     }
-
-    // --- Disputas como Local ---
     public function getDisputasComoLocal(): Collection { return $this->disputasComoLocal; }
     public function addDisputaComoLocal(Disputas $disputa): static
     {
         if (!$this->disputasComoLocal->contains($disputa)) {
             $this->disputasComoLocal->add($disputa);
-            $disputa->setEquipo1($this); // maintain bidirectional link
+            $disputa->setEquipo1($this);
         }
         return $this;
     }
-
-    // --- Disputas como Visitante ---
     public function getDisputasComoVisitante(): Collection { return $this->disputasComoVisitante; }
     public function addDisputaComoVisitante(Disputas $disputa): static
     {
         if (!$this->disputasComoVisitante->contains($disputa)) {
             $this->disputasComoVisitante->add($disputa);
-            $disputa->setEquipo2($this); // maintain bidirectional link
+            $disputa->setEquipo2($this); 
         }
         return $this;
     }
-
     public function getTodasLasDisputas(): array
     {
         return array_merge(
@@ -87,7 +79,6 @@ class Equipos
             $this->disputasComoVisitante->toArray()
         );
     }
-
     public function getPuntos(): ?int { return $this->puntos; }
     public function setPuntos(int $puntos): static { $this->puntos = $puntos; return $this; }
 }

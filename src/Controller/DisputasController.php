@@ -31,7 +31,7 @@ final class DisputasController extends AbstractController
         $disputa->setResultado('0-0');
         $equipo1 = $equiposRepository->find($data['equipo1_id']);
         $equipo2 = $equiposRepository->find($data['equipo2_id']);
-        $torneo  = $torneoRepository->find($data['torneo_id']);
+        $torneo  = $torneoRepository->find($data['torneo_id']) ?? 'aaa';
         if (!$equipo1) return new JsonResponse(['error' => 'El Equipo 1 no existe'], 404);
         if (!$equipo2) return new JsonResponse(['error' => 'El Equipo 2 no existe'], 404);
         if (!$torneo)  return new JsonResponse(['error' => 'El Torneo no existe'], 404);
@@ -42,4 +42,8 @@ final class DisputasController extends AbstractController
         $entityManager->flush();
         return new JsonResponse($disputa->getId());
     }
+     #[Route('/disputas/modificar', name: 'creardisputas')]
+     public function modificarDisputas(){
+
+     }
 }

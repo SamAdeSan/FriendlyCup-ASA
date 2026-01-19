@@ -29,33 +29,6 @@ class PuntuajeEvento
     {
         return $this->id;
     }
-
-    #[ORM\ManyToMany(targetEntity: Jugadores::class, mappedBy: 'puntajeEventos')]
-    private Collection $jugadores;
-
-    public function __construct(){
-        $this->jugadores = new ArrayCollection();
-    }
-
-    public function getJugadores(): Collection
-    {
-        return $this->jugadores;
-    }
-
-    public function addJugador(Jugadores $jugador): self
-    {
-        if (!$this->jugadores->contains($jugador)) {
-            $this->jugadores->add($jugador);
-        }
-        return $this;
-    }
-
-    public function removeJugador(Jugadores $jugador): self
-    {
-        $this->jugadores->removeElement($jugador);
-        return $this;
-    }
-
     public function getTorneo(): ?Torneo
     {
         return $this->torneo;
