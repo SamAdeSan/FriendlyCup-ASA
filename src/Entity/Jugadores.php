@@ -34,13 +34,13 @@ class Jugadores
      * @var Collection<int, JugadorEvento>
      */
     #[ORM\OneToMany(targetEntity: JugadorEvento::class, mappedBy: 'jugador')]
-    private Collection $evento;
+    private Collection $registroEventos;
 
 
     public function __construct()
     {
         $this->equipoFantasies = new ArrayCollection();
-        $this->evento = new ArrayCollection();
+        $this->registroEventos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,25 +105,25 @@ class Jugadores
      */
     public function getEvento(): Collection
     {
-        return $this->evento;
+        return $this->registroEventos;
     }
 
     public function addEvento(JugadorEvento $evento): static
     {
-        if (!$this->evento->contains($evento)) {
-            $this->evento->add($evento);
+        if (!$this->registroEventos->contains($evento)) {
+            $this->registroEventos->add($evento);
             $evento->setJugador($this);
         }
 
         return $this;
     }
 
-    public function removeEvento(JugadorEvento $evento): static
+    public function removeEvento(JugadorEvento $registroEventos): static
     {
-        if ($this->evento->removeElement($evento)) {
+        if ($this->registroEventos->removeElement($registroEventos)) {
             // set the owning side to null (unless already changed)
-            if ($evento->getJugador() === $this) {
-                $evento->setJugador(null);
+            if ($registroEventos->getJugador() === $this) {
+                $registroEventos->setJugador(null);
             }
         }
 
