@@ -23,7 +23,7 @@ final class DisputasController extends AbstractController
             'controller_name' => 'DisputasController',
         ]);
     }
-    #[Route('/disputas/crear', name: 'app_disputas')]
+    #[Route('/disputas/crear', name: 'creardisputas', methods: ['POST'])]
     public function crearDisputas(Request $request, EntityManagerInterface $entityManager,EquiposRepository $equiposRepository,TorneoRepository $torneoRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -32,6 +32,9 @@ final class DisputasController extends AbstractController
         $equipo1 = $equiposRepository->find($data['equipo1_id']);
         $equipo2 = $equiposRepository->find($data['equipo2_id']);
         $torneo  = $torneoRepository->find($data['torneo_id']);
+        if (!$equipo1) return new JsonResponse(['error' => 'El Equipo 1 no existe'], 404);
+        if (!$equipo2) return new JsonResponse(['error' => 'El Equipo 2 no existe'], 404);
+        if (!$torneo)  return new JsonResponse(['error' => 'El Torneo no existe'], 404);
         $disputa->setEquipo1($equipo1);
         $disputa->setEquipo2($equipo2);
         $disputa->setTorneo($torneo);

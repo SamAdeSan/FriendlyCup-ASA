@@ -4,5 +4,5 @@
 <a id="eliminardisputa" class="btn-danger" data-torneo-id="{{ torneo.id }}">Eliminar disputa</a>
 {% endif %}
 {% for disputa in disputas %}
-    <p id="disputa">{{disputa.equipo1}}: {{disputa.resultado}} {{disputa.equipo2}}</p>
+    <p id="disputa">{{disputa.equipo1.nombre}}: {{disputa.resultado}} {{disputa.equipo2.nombre}}</p>
 {% endfor %}
