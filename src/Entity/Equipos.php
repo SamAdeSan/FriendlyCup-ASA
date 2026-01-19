@@ -25,10 +25,10 @@ class Equipos
     #[ORM\OneToMany(targetEntity: Jugadores::class, mappedBy: 'equipo', cascade: ['persist', 'remove'])]
     private Collection $jugadores;
 
-    #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'equipo1')]
+    #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'equipo1', cascade: ['persist', 'remove'])]
     private Collection $disputasComoLocal;
 
-    #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'equipo2')]
+    #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'equipo2', cascade: ['persist', 'remove'])]
     private Collection $disputasComoVisitante;
 
     #[ORM\Column]
@@ -41,19 +41,13 @@ class Equipos
         $this->disputasComoVisitante = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    // --- Nombre y Torneo ---
+    public function getId(): ?int { return $this->id; }
     public function getNombre(): ?string { return $this->nombre; }
     public function setNombre(string $nombre): static { $this->nombre = $nombre; return $this; }
 
     public function getTorneo(): ?Torneo { return $this->torneo; }
     public function setTorneo(?Torneo $torneo): static { $this->torneo = $torneo; return $this; }
 
-    // --- Gestión de Jugadores ---
     public function getJugadores(): Collection { return $this->jugadores; }
     public function addJugadore(Jugadores $jugadore): static
     {
@@ -64,31 +58,28 @@ class Equipos
         return $this;
     }
 
-    // --- Gestión de Disputas (Local) ---
+    // --- Disputas como Local ---
     public function getDisputasComoLocal(): Collection { return $this->disputasComoLocal; }
     public function addDisputaComoLocal(Disputas $disputa): static
     {
         if (!$this->disputasComoLocal->contains($disputa)) {
             $this->disputasComoLocal->add($disputa);
-            $disputa->setEquipo1($this);
+            $disputa->setEquipo1($this); // maintain bidirectional link
         }
         return $this;
     }
 
-    // --- Gestión de Disputas (Visitante) ---
+    // --- Disputas como Visitante ---
     public function getDisputasComoVisitante(): Collection { return $this->disputasComoVisitante; }
     public function addDisputaComoVisitante(Disputas $disputa): static
     {
         if (!$this->disputasComoVisitante->contains($disputa)) {
             $this->disputasComoVisitante->add($disputa);
-            $disputa->setEquipo2($this);
+            $disputa->setEquipo2($this); // maintain bidirectional link
         }
         return $this;
     }
 
-    /**
-     * Función utilitaria para obtener todos los partidos del equipo
-     */
     public function getTodasLasDisputas(): array
     {
         return array_merge(
@@ -97,7 +88,6 @@ class Equipos
         );
     }
 
-    // --- Puntos ---
     public function getPuntos(): ?int { return $this->puntos; }
     public function setPuntos(int $puntos): static { $this->puntos = $puntos; return $this; }
 }

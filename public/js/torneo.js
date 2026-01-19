@@ -56,7 +56,7 @@ function cargar(url) {
             let anadirdisputa=document.getElementById("anadirdisputa")
             if (anadirdisputa) {
                 anadirdisputa.onclick=function() {
-                    anadirdis(this.dataset.torneoId);
+                    anadirdis(anadirdisputa.dataset.torneoId);
                 }
             }
         })
