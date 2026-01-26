@@ -24,17 +24,14 @@ final class DisputasController extends AbstractController
         ]);
     }
     #[Route('/disputas/crear', name: 'creardisputas', methods: ['POST'])]
-    public function crearDisputas(Request $request, EntityManagerInterface $entityManager,EquiposRepository $equiposRepository,TorneoRepository $torneoRepository): JsonResponse
+    public function crearDisputas(Request $request, EntityManagerInterface $entityManager, EquiposRepository $equiposRepository, TorneoRepository $torneoRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $disputa= new Disputas();
+        $disputa = new Disputas();
         $disputa->setResultado('0-0');
         $equipo1 = $equiposRepository->find($data['equipo1_id']);
         $equipo2 = $equiposRepository->find($data['equipo2_id']);
-        $torneo  = $torneoRepository->find($data['torneo_id']) ?? 'aaa';
-        if (!$equipo1) return new JsonResponse(['error' => 'El Equipo 1 no existe'], 404);
-        if (!$equipo2) return new JsonResponse(['error' => 'El Equipo 2 no existe'], 404);
-        if (!$torneo)  return new JsonResponse(['error' => 'El Torneo no existe'], 404);
+        $torneo = $torneoRepository->find($data['torneo_id']) ?? 'aaa';
         $disputa->setEquipo1($equipo1);
         $disputa->setEquipo2($equipo2);
         $disputa->setTorneo($torneo);
@@ -42,8 +39,24 @@ final class DisputasController extends AbstractController
         $entityManager->flush();
         return new JsonResponse($disputa->getId());
     }
-     #[Route('/disputas/modificar', name: 'modificardisputas')]
-     public function modificarDisputas(){
-
-     }
+    #[Route('/disputas/{id}/modificar', name: 'modificardisputas', methods: ['POST'])]
+    public function modificarDisputas(Request $request, EntityManagerInterface $entityManager, DisputasRepository $disputasRepository, EquiposRepository $equiposRepository, int $id): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $disputa = $disputasRepository->find($id);
+        $disputa->setResultado($data['resultado']);
+        $equipoGanador = $equiposRepository->find($data['ganador_id']);
+        $disputa->setGanador($equipoGanador);
+        $entityManager->persist($disputa);
+        $entityManager->flush();
+        return new JsonResponse($disputa->getId());
+    }
+    #[Route('/disputas/{id}/eliminar', name: 'eliminardisputas', methods: ['POST'])]
+    public function eliminarDisputas(Request $request, EntityManagerInterface $entityManager, DisputasRepository $disputasRepository, int $id): JsonResponse
+    {
+        $disputa = $disputasRepository->find($id);
+        $entityManager->remove($disputa);
+        $entityManager->flush();
+        return new JsonResponse($disputa->getId());
+    }
 }

@@ -1,29 +1,29 @@
-let unirse=document.getElementById("unirseliga")
+let unirse = document.getElementById("unirseliga")
 let tabs = document.querySelectorAll('.tab');
 let section = document.getElementById('torneo-section');
-unirse.onclick=anadirusuario
+unirse.onclick = anadirusuario
 function anadirusuario() {
     let clave = prompt("Introduce la clave privada de la liga:");
     if (!clave) return;
     fetch(`/fantasy/api/liga/unirse`, {
-            method: 'POST',
-            headers: { 
-            'Content-Type': 'application/json' 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ clave })
-    }).then(response => response.json()) 
-    .then(data=>{
-        alert(`¡Éxito! Te has unido a la liga: ${data.liga}`);
-       window.location.href = `/`
-    })
+    }).then(response => response.json())
+        .then(data => {
+            alert(`¡Éxito! Te has unido a la liga: ${data.liga}`);
+            window.location.href = `/`
+        })
 }
-let seguir=document.getElementById("seguir")
+let seguir = document.getElementById("seguir")
 if (seguir) {
-    seguir.onclick=gestionseguidores
+    seguir.onclick = gestionseguidores
 }
 let crearEvento = document.getElementById("crear-evento");
 if (crearEvento) {
-    crearEvento.onclick=crearevento
+    crearEvento.onclick = crearevento
 }
 function gestionseguidores() {
     let idTorneo = this.getAttribute('data-id');
@@ -35,7 +35,7 @@ function gestionseguidores() {
         let actual = parseInt(contador.innerText);
         actual--;
         contador.innerText = actual
-    }else{
+    } else {
         this.textContent = 'Dejar de seguir';
         this.classList.replace('btn-secondary', 'btn-danger');
         let actual = parseInt(contador.innerText);
@@ -51,11 +51,11 @@ function gestionseguidores() {
 function cargar(url) {
     fetch(url)
         .then(r => r.text())
-        .then(html=>{
+        .then(html => {
             section.innerHTML = html;
-            let anadirdisputa=document.getElementById("anadirdisputa")
+            let anadirdisputa = document.getElementById("anadirdisputa")
             if (anadirdisputa) {
-                anadirdisputa.onclick=function() {
+                anadirdisputa.onclick = function () {
                     anadirdis(anadirdisputa.dataset.torneoId);
                     window.location.reload();
                 }
@@ -63,7 +63,7 @@ function cargar(url) {
         })
 }
 tabs.forEach(tab => {
-    tab.onclick= function (e) {
+    tab.onclick = function (e) {
         e.preventDefault()
         tabs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
@@ -75,33 +75,63 @@ if (activa) {
     cargar(activa.dataset.url);
 }
 function crearevento() {
-    let evento=prompt("Como quieres llamar al evento")
+    let evento = prompt("Como quieres llamar al evento")
     if (!evento) return
-    let puntos=prompt("Quantos puntos quieres que cuente? (sirve para crear la fantasy)")
+    let puntos = prompt("Quantos puntos quieres que cuente? (sirve para crear la fantasy)")
     if (!puntos) return
     fetch('/crear/evento', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-        puntos:puntos,
-        evento:evento,
-        torneo_id:this.dataset.id
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            puntos: puntos,
+            evento: evento,
+            torneo_id: this.dataset.id
         })
     }).then(response => response.json())
 }
 
 function anadirdis(torneo) {
-    let equipo1=prompt("Que equipo quieres poner? (Escribe el id)")
+    let equipo1 = prompt("Que equipo quieres poner? (Escribe el id)")
     if (!equipo1) return
-    let equipo2=prompt("Que otro quieres poner?: (Escribe el id)")
+    let equipo2 = prompt("Que otro quieres poner?: (Escribe el id)")
     if (!equipo2) return
     fetch('/disputas/crear', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-        equipo1_id:equipo1,
-        equipo2_id:equipo2,
-        torneo_id:torneo
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            equipo1_id: equipo1,
+            equipo2_id: equipo2,
+            torneo_id: torneo
+        })
+    }).then(response => response.json())
+}
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("modificardisputa")) {
+        modificaresultado(e.target);
+    }
+});
+
+function modificaresultado(elemento) {
+    let id = elemento.dataset.disputaId;
+    let resultado = prompt("Introduce puntos de" + elemento.dataset.disputaEquipo1)
+    let resultado2 = prompt("Introduce puntos de" + elemento.dataset.disputaEquipo2)
+    let ganador
+    if (!resultado) return
+    if (!resultado2) return
+    if (parseInt(resultado) > parseInt(resultado2)) {
+        ganador = elemento.dataset.disputaEquipo1
+    } else if (parseInt(resultado) < parseInt(resultado2)) {
+        ganador = elemento.dataset.disputaEquipo2
+    } else {
+        ganador = null
+    }
+    let resultadototal=resultado+"-"+resultado2
+    fetch(`/disputas/${id}/modificar`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            resultado: resultadototal,
+            ganador_id: ganador
         })
     }).then(response => response.json())
 }
