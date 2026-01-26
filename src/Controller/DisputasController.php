@@ -7,6 +7,7 @@ use App\Repository\DisputasRepository;
 use App\Repository\EquiposRepository;
 use App\Repository\TorneoRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Proxies\__CG__\App\Entity\Torneo;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,7 @@ final class DisputasController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $disputa = new Disputas();
-        $disputa->setResultado('0-0');
+        $disputa->setResultado('n-n');
         $equipo1 = $equiposRepository->find($data['equipo1_id']);
         $equipo2 = $equiposRepository->find($data['equipo2_id']);
         $torneo = $torneoRepository->find($data['torneo_id']) ?? 'aaa';
@@ -45,9 +46,13 @@ final class DisputasController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $disputa = $disputasRepository->find($id);
         $disputa->setResultado($data['resultado']);
-        $equipoGanador = $equiposRepository->find($data['ganador_id']);
-        $disputa->setGanador($equipoGanador);
-        $entityManager->persist($disputa);
+        if ($data['ganador_id']) {
+            $equipoGanador = $equiposRepository->find($data['ganador_id']);
+            $disputa->setGanador($equipoGanador);
+        } else {
+            $disputa->setGanador(null);
+        }
+        $this->calculodepuntos($disputa->getTorneo(), $entityManager);
         $entityManager->flush();
         return new JsonResponse($disputa->getId());
     }
@@ -58,5 +63,22 @@ final class DisputasController extends AbstractController
         $entityManager->remove($disputa);
         $entityManager->flush();
         return new JsonResponse($disputa->getId());
+    }
+    private function calculodepuntos(Torneo $torneo, EntityManagerInterface $entityManager)
+    {
+        $equipos = $torneo->getEquipos();
+        foreach ($equipos as $equipo) {
+            $equipo->setPuntos(0);
+            $disputas = $equipo->getTodasLasDisputas();
+            foreach ($disputas as $disputa) {
+                if ($disputa->getGanador() == $equipo) {
+                    $equipo->setPuntos($equipo->getPuntos() + 3);
+                } elseif ($disputa->getResultado() != 'n-n' && $disputa->getGanador() == null) {
+                    $equipo->setPuntos($equipo->getPuntos() + 1);
+                }
+            }
+            $entityManager->persist($equipo);
+        }
+        $entityManager->flush();
     }
 }
