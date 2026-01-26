@@ -56,13 +56,15 @@ final class DisputasController extends AbstractController
         $entityManager->flush();
         return new JsonResponse($disputa->getId());
     }
-    #[Route('/disputas/{id}/eliminar', name: 'eliminardisputas', methods: ['POST'])]
-    public function eliminarDisputas(Request $request, EntityManagerInterface $entityManager, DisputasRepository $disputasRepository, int $id): JsonResponse
+    #[Route('/disputas/{id}/eliminar', name: 'eliminardisputas')]
+    public function eliminarDisputas(Request $request, EntityManagerInterface $entityManager, DisputasRepository $disputasRepository, int $id): Response
     {
         $disputa = $disputasRepository->find($id);
+        $torneoId = $disputa->getTorneo()->getId();
         $entityManager->remove($disputa);
         $entityManager->flush();
-        return new JsonResponse($disputa->getId());
+        $this->calculodepuntos($disputa->getTorneo(), $entityManager);
+        return $this->redirectToRoute('torneo', ['id' => $torneoId]);
     }
     private function calculodepuntos(Torneo $torneo, EntityManagerInterface $entityManager)
     {

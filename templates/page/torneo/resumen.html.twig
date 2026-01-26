@@ -1,12 +1,12 @@
 <h2>Resumen</h2>
 {% if app.user == admin %}
 <a id="anadirdisputa" class="btn-secondary" data-torneo-id="{{ torneo.id }}">Añadir disputa</a>
-<a id="eliminardisputa" class="btn-danger" data-torneo-id="{{ torneo.id }}">Eliminar disputa</a>
 {% endif %}
 {% for disputa in disputas %}
     <p id="disputa">{{disputa.equipo1.nombre}}: {{disputa.resultado}} {{disputa.equipo2.nombre}}</p>
     {% if app.user == admin %}
     <a class="modificardisputa btn-secondary" data-disputa-equipo1="{{disputa.equipo1.id}}" data-disputa-equipo2="{{disputa.equipo2.id}}" data-disputa-id="{{ disputa.id }}">Modificar</a>
+    <a class="eliminardisputa btn-danger" href="{{ path('eliminardisputas', {'id': disputa.id}) }}">Eliminar</a>
     {% endif %}
 {% else %}
     <p>No hay disputas todavía.</p>

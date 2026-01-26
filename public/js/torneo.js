@@ -125,7 +125,7 @@ function modificaresultado(elemento) {
     } else {
         ganador = null
     }
-    let resultadototal=resultado+"-"+resultado2
+    let resultadototal = resultado + "-" + resultado2
     fetch(`/disputas/${id}/modificar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
