@@ -6,6 +6,8 @@ use App\Entity\Torneo;
 use App\Entity\Equipos;
 use App\Form\EquipoFormType;
 use App\Form\TorneoFormType;
+use App\Repository\EventoRepository;
+use App\Repository\JugadorEventoRepository;
 use App\Repository\TorneoRepository;
 use App\Repository\JugadoresRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -152,7 +154,7 @@ final class TorneoController extends AbstractController
         ]);
     }
     #[Route('/torneo/{id}/estadisticas', name: 'torneo_estadisticas')]
-    public function estadisticas(Torneo $torneo): Response
+    public function estadisticas(Torneo $torneo,EventoRepository $estadisticas): Response
     {
         $jugadores =[];
         foreach ($torneo->getEquipos() as $equipo) {
@@ -160,9 +162,11 @@ final class TorneoController extends AbstractController
                 $jugadores[$jugador->getId()] = $jugador;
             }
         }
+        $estadisticas = $estadisticas->findBy(['torneo' => $torneo]);
         return $this->render('page/torneo/estadisticas.html.twig', [
             'jugadores' => $jugadores,
-            'torneo' => $torneo
+            'torneo' => $torneo,
+            'estadisticas' => $estadisticas
         ]);
     }
     #[Route('/torneo/{id}', name: 'torneo')]
