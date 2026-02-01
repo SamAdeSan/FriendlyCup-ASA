@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Common\Collections\Criteria;
 
 final class TorneoController extends AbstractController
 {
@@ -149,8 +150,12 @@ final class TorneoController extends AbstractController
     #[Route('/torneo/{id}/clasificacion', name: 'torneo_clasificacion')]
     public function clasificacion(Torneo $torneo): Response
     {
+        // Creamos un criterio de ordenación
+    $criteria = Criteria::create()
+        ->orderBy(['puntos' => Criteria::DESC]); // DESC = de mayor a menor
+        $equiposOrdenados = $torneo->getEquipos()->matching($criteria);
         return $this->render('page/torneo/clasificacion.html.twig', [
-            'equipos' => $torneo->getEquipos()
+            'equipos' => $equiposOrdenados
         ]);
     }
     #[Route('/torneo/{id}/estadisticas', name: 'torneo_estadisticas')]
