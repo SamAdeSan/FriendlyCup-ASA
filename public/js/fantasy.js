@@ -14,8 +14,8 @@ function asignarEventosBotones() {
     let botonesVender = tablaJugadores.querySelectorAll('.vender');
     botonesVender.forEach(boton => boton.onclick = vender);
 
-    let botonesPujar = tablaMercado.querySelectorAll('.btn-pujar');
-    botonesPujar.forEach(boton => boton.onclick = comprar);
+    let botonesSubir = tablaMercado.querySelectorAll('.btn-subir');
+    botonesSubir.forEach(boton => boton.onclick = comprar);
 }
 
 function comprar() {
@@ -90,15 +90,15 @@ function vender() {
             <td>${puntos}</td>
             <td>${valor} €</td>
             <td>
-                <button class="btn-pujar"
+                <button class="btn-subir"
                     data-id="${idJugador}"
                     data-nombre="${nombre}"
                     data-valor="${valor}"
                     data-puntos="${puntos}">
-                    Pujar
+                    Subir
                 </button>
             </td>`;
-        nuevaFila.querySelector('.btn-pujar').onclick = comprar;
+        nuevaFila.querySelector('.btn-subir').onclick = comprar;
     });
 }
 

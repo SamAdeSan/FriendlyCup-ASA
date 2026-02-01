@@ -267,7 +267,7 @@ hr {
 }
 
 /* Register y login, creación de torneo */
-.register-page, .login-page, .crear-torneo, .crear-equipo, .crear-jugador, .editar-equipo, .editar-torneo, .editar-jugador, .RLC-page {
+.register-page, .login-page, .crear-torneo, .crear-equipo, .crear-jugador, .editar-equipo, .editar-torneo, .editar-jugador, .RLC-page, .crear-liga {
     margin: 110px 270px;
     padding: 12px 0;
     border: 1px solid #bebebe;
