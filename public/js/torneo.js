@@ -53,19 +53,25 @@ function cargar(url) {
         .then(response => response.text())
         .then(html => {
             section.innerHTML = html;
+
             let btnMostrar = document.getElementById("btnmostrarform");
             let formDisputa = document.getElementById("formnuevadisputa");
-            let btnGuardar = document.getElementById("btnguardardisputa");
+            // CORRECCIÓN: ID con guiones tal cual está en tu HTML
+            let btnGuardar = document.getElementById("btn-guardar-disputa");
+
             if (btnMostrar) {
                 btnMostrar.onclick = function () {
                     formDisputa.style.display = formDisputa.style.display === 'none' ? 'block' : 'none';
                 }
             }
+
             if (btnGuardar) {
                 btnGuardar.onclick = function () {
                     let equipo1 = document.getElementById("selectequipo1").value;
                     let equipo2 = document.getElementById("selectequipo2").value;
-                    let torneo = this.dataset.torneoid;
+                    // CORRECCIÓN: dataset usa camelCase para data-torneo-id -> torneoId
+                    let torneo = this.dataset.torneoId;
+
                     if (!equipo1 || !equipo2) {
                         alert("Selecciona ambos equipos");
                         return;
@@ -74,6 +80,7 @@ function cargar(url) {
                         alert("Los equipos deben ser diferentes");
                         return;
                     }
+
                     fetch('/disputas/crear', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -82,8 +89,15 @@ function cargar(url) {
                             equipo2_id: equipo2,
                             torneo_id: torneo
                         })
-                    }).then(response => response.json())
-                        .then(data => window.location.reload());
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                // Esto recargará la página y debería aparecer la nueva disputa
+                                window.location.reload();
+                            } else {
+                                alert("Error al guardar en el servidor");
+                            }
+                        });
                 }
             }
         })
@@ -139,19 +153,31 @@ document.addEventListener("click", function (e) {
 
 function modificaresultado(elemento) {
     let id = elemento.dataset.disputaId;
-    let resultado = prompt("Introduce puntos de" + elemento.dataset.disputaEquipo1)
-    let resultado2 = prompt("Introduce puntos de" + elemento.dataset.disputaEquipo2)
-    let ganador
-    if (!resultado) return
-    if (!resultado2) return
+
+    // Usamos los nuevos atributos con los nombres
+    let nombre1 = elemento.dataset.nombreEquipo1;
+    let nombre2 = elemento.dataset.nombreEquipo2;
+
+    let resultado = prompt("Introduce puntos de " + nombre1);
+    if (resultado === null) return; // Si cancela el prompt
+
+    let resultado2 = prompt("Introduce puntos de " + nombre2);
+    if (resultado2 === null) return;
+
+    let ganador;
+    let idEquipo1 = elemento.dataset.disputaEquipo1;
+    let idEquipo2 = elemento.dataset.disputaEquipo2;
+
     if (parseInt(resultado) > parseInt(resultado2)) {
-        ganador = elemento.dataset.disputaEquipo1
+        ganador = idEquipo1;
     } else if (parseInt(resultado) < parseInt(resultado2)) {
-        ganador = elemento.dataset.disputaEquipo2
+        ganador = idEquipo2;
     } else {
-        ganador = null
+        ganador = null;
     }
-    let resultadototal = resultado + "-" + resultado2
+
+    let resultadototal = resultado + "-" + resultado2;
+
     fetch(`/disputas/${id}/modificar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -160,4 +186,7 @@ function modificaresultado(elemento) {
             ganador_id: ganador
         })
     }).then(response => response.json())
+        .then(data => {
+            window.location.reload(); // Recarga para ver el nuevo marcador
+        });
 }

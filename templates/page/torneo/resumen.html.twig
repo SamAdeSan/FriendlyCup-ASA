@@ -1,27 +1,34 @@
 <h2>Resumen</h2>
-{% if app.user == admin %}
 <a id="btnmostrarform" class="btn-secondary">Añadir disputa</a>
-<div id="formnuevadisputa" style="display:none; margin-top:10px; border:1px solid #ccc; padding:10px;">
-    <select id="selectequipo1">
-        <option value="">Selecciona Equipo 1</option>
-        {% for equipo in torneo.equipos %}
-            <option value="{{ equipo.id }}">{{ equipo.nombre }}</option>
-        {% endfor %}
-    </select>
-    <span>VS</span>
-    <select id="selectequipo2">
-        <option value="">Selecciona Equipo 2</option>
-        {% for equipo in torneo.equipos %}
-            <option value="{{ equipo.id }}">{{ equipo.nombre }}</option>
-        {% endfor %}
-    </select>
-    <button id="btn-guardar-disputa" class="btn-primary" data-torneo-id="{{ torneo.id }}">Guardar</button>
-</div>
+{% if app.user == admin %}
+    <form id="formnuevadisputa" style="display:none; margin-top:10px; border:1px solid #ccc; padding:10px;">
+        <select id="selectequipo1">
+            <option value="">Selecciona Equipo 1</option>
+            {% for equipo in torneo.equipos %}
+                <option value="{{ equipo.id }}">{{ equipo.nombre }}</option>
+            {% endfor %}
+        </select>
+        <span>VS</span>
+        <select id="selectequipo2">
+            <option value="" selected disabled >Selecciona Equipo 2</option>
+            {% for equipo in torneo.equipos %}
+                <option value="{{ equipo.id }}">{{ equipo.nombre }}</option>
+            {% endfor %}
+        </select>
+        <button id="btn-guardar-disputa" class="btn-primary" data-torneo-id="{{ torneo.id }}">Guardar</button>
+    </form>
 {% endif %}
 {% for disputa in disputas %}
     <p id="disputa">{{disputa.equipo1.nombre}}: {{disputa.resultado}} {{disputa.equipo2.nombre}}</p>
     {% if app.user == admin %}
-    <a class="modificardisputa btn-secondary" data-disputa-equipo1="{{disputa.equipo1.id}}" data-disputa-equipo2="{{disputa.equipo2.id}}" data-disputa-id="{{ disputa.id }}">Modificar</a>
+        <a class="modificardisputa btn-secondary"
+           data-disputa-id="{{ disputa.id }}"
+           data-disputa-equipo1="{{ disputa.equipo1.id }}"
+           data-disputa-equipo2="{{ disputa.equipo2.id }}"
+           data-nombre-equipo1="{{ disputa.equipo1.nombre }}"
+           data-nombre-equipo2="{{ disputa.equipo2.nombre }}">
+            Modificar
+        </a>
     <a class="eliminardisputa btn-danger" href="{{ path('eliminardisputas', {'id': disputa.id}) }}">Eliminar</a>
     {% endif %}
 {% else %}

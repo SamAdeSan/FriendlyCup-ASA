@@ -530,6 +530,46 @@ hr {
     }
 }
 
+#btnmostrarform {
+    margin-bottom: 10px;
+}
+
+#formnuevadisputa {
+    margin-top: 20px;
+    padding: 15px;
+    select  {
+        padding: 10px;
+        border-radius: 5px;
+        border-color: #FFFFFF;
+        background: linear-gradient(-90deg, #0b2233, #0c314d);
+        color: #FFFFFF;
+    }
+    option {
+        color: lightgray;
+        background-color: #0c314d;
+        font-weight: bold;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 2px 2px 2px #333333;
+    }
+
+    button {
+        padding: 8px 10px;
+        margin: 1px 10px;
+        border: 2px solid #939393;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        color: white;
+        background: #043f29;
+        width: fit-content;
+    }
+    button:hover {
+        background: #075e3c;
+    }
+}
+
+
 /* Footer */
 footer {
     position: absolute;
