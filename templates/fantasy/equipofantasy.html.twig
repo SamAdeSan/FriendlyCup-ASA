@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fantasy League - {{ equipo.entrenador.name }}{% endblock %}
+
+{% block body %}
+<h1>{{ equipo.entrenador.name }}</h1>
+<div class="torneo-content">
+    <h3>Mis jugadores</h3>
+    <div class="stats-table-container">
+        <table class="stats-table">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Puntos</th>
+                <th>Valor de mercado</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for jugador in equipo.titulares %}
+                <tr>
+                    <td>{{ jugador.nombre }}</td>
+                    <td>{{ jugador.estadisticas }}</td>
+                    <td>{{ jugador.valordemercado }} €</td>
+                    <td>
+                        <button class="vender"
+                                data-id="{{ jugador.id }}"
+                                data-nombre="{{ jugador.nombre }}"
+                                data-valor="{{ jugador.valordemercado }}"
+                                data-puntos="{{ jugador.estadisticas }}">
+                            Vender
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

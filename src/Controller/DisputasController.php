@@ -17,14 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class DisputasController extends AbstractController
 {
-    #[Route('/disputas', name: 'app_disputas')]
+    #[Route('/disputa', name: 'app_disputas')]
     public function index(): Response
     {
         return $this->render('disputas/index.html.twig', [
             'controller_name' => 'DisputasController',
         ]);
     }
-    #[Route('/disputas/crear', name: 'creardisputas', methods: ['POST'])]
+    #[Route('/disputa/crear', name: 'creardisputas', methods: ['POST'])]
     public function crearDisputas(Request $request, EntityManagerInterface $entityManager, EquiposRepository $equiposRepository, TorneoRepository $torneoRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -40,7 +40,7 @@ final class DisputasController extends AbstractController
         $entityManager->flush();
         return new JsonResponse($disputa->getId());
     }
-    #[Route('/disputas/{id}/modificar', name: 'modificardisputas', methods: ['POST'])]
+    #[Route('/disputa/{id}/modificar', name: 'modificardisputas', methods: ['POST'])]
     public function modificarDisputas(Request $request, EntityManagerInterface $entityManager, DisputasRepository $disputasRepository, EquiposRepository $equiposRepository, int $id): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -56,7 +56,7 @@ final class DisputasController extends AbstractController
         $entityManager->flush();
         return new JsonResponse($disputa->getId());
     }
-    #[Route('/disputas/{id}/eliminar', name: 'eliminardisputas')]
+    #[Route('/disputa/{id}/eliminar', name: 'eliminardisputas')]
     public function eliminarDisputas(EntityManagerInterface $entityManager, DisputasRepository $disputasRepository, int $id): Response
     {
         $disputa = $disputasRepository->find($id);
@@ -82,5 +82,24 @@ final class DisputasController extends AbstractController
             $entityManager->persist($equipo);
         }
         $entityManager->flush();
+    }
+    #[Route('/disputa/{id}', name: 'disputa')]
+    public function disputasdentro(EntityManagerInterface $entityManager, DisputasRepository $disputasRepository, int $id): Response
+    {
+        $disputa = $disputasRepository->find($id);
+        $torneo = $disputa->getTorneo();
+        $equipo1=$disputa->getEquipo1();
+        $equipo2=$disputa->getEquipo2();
+        $jugadores1=$equipo1->getJugadores();
+        $jugadores2=$equipo2->getJugadores();
+
+        return $this->render('page/torneo/disputa.html.twig', [
+            'disputa' => $disputa,
+            'torneo' => $torneo,
+            'equipo1' => $equipo1,
+            'equipo2' => $equipo2,
+            'jugadores1' => $jugadores1,
+            'jugadores2' => $jugadores2,
+        ]);
     }
 }
