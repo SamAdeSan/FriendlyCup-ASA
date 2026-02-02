@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fantasy League - {{ equipo.entrenador.name }}{% endblock %}
+{% block title %}Fantasy League - {{ equipoFantasy.entrenador.name }}{% endblock %}
 
 {% block body %}
-<h1>{{ equipo.entrenador.name }}</h1>
+<h1>{{ equipoFantasy.entrenador.name }}</h1>
 <div class="torneo-content">
     <h3>Mis jugadores</h3>
     <div class="stats-table-container">
@@ -17,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for jugador in equipo.titulares %}
+            {% for jugador in jugadores %}
                 <tr>
                     <td>{{ jugador.nombre }}</td>
                     <td>{{ jugador.estadisticas }}</td>

@@ -20,7 +20,7 @@ class EquipoFantasyController extends AbstractController
         $liga=$equipoFantasy->getLigafantasy();
         $jugadores=$equipoFantasy->getTitulares();
         $entrenador=$equipoFantasy->getEntrenador();
-        return $this->render('equipo_fantasy/show.html.twig', [
+        return $this->render('fantasy/equipofantasy.html.twig', [
             'equipoFantasy' => $equipoFantasy,
             'liga' => $liga,
             'jugadores' => $jugadores,
