@@ -93,7 +93,7 @@
                         <tbody>
                         {% for equipo in equiposEnLiga %}
                             <tr>
-                                <td>{{ equipo.entrenador.name }}</td>
+                                <td> <a href="{{ path('equipo_fantasy_show', {'id': equipo.id}) }}">{{ equipo.entrenador.name }}</a></td>
                                 <td>{{ equipo.puntos }}</td>
                             </tr>
                         {% endfor %}
