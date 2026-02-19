@@ -64,7 +64,7 @@
         <aside>
             <h1>Tus datos de usuario</h1>
             <div id="main-data">
-                <p>Nombre y Apellidos: <span class="userDataText">{{ app.user.name }}</span></p>
+                <p>Nombre y Apellidos: <a href="{{ path('user_profile', {'username': app.user.name}) }}"><span class="userDataText">{{ app.user.name }}</span></a></p>
                 <hr style="margin-top:10px;margin-bottom: 10px">
                 <p style="margin-bottom: 5px">Correo electrónico: <span class="userDataText">{{ app.user.email }}</span></p>
             </div>

@@ -23,7 +23,7 @@
                     <td>{{ jugador.estadisticas }}</td>
                     <td>{{ jugador.valordemercado }} €</td>
                     <td>
-                        <button class="vender"
+                        <button class="fichar"
                                 data-id="{{ jugador.id }}"
                                 data-nombre="{{ jugador.nombre }}"
                                 data-valor="{{ jugador.valordemercado }}"
@@ -36,5 +36,6 @@
             </tbody>
         </table>
     </div>
+    <p id="budget">Presupuesto: {{ equipoFantasy2.presupuesto }} €</p>
 </div>
 {% endblock %}

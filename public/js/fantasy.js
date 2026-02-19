@@ -102,6 +102,8 @@ function vender() {
     });
 }
 
+
+
 function mostrarClave() {
     let clave = this.dataset.clave;
     alert('La clave para unirse a esta liga es: ' + clave);
