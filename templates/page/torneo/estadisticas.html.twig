@@ -1,23 +1,31 @@
 <div class="section-content">
-    <h3>Rendimiento de Jugadores</h3>
-    <div class="stats-table-container">
-        <table class="stats-table">
-            <thead>
-            <tr>
-                <th>Jugador</th>
-                <th>Equipo</th>
-                <th style="text-align: center;">Puntos</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for estadistica in estadisticas %}
+    {% for evento in eventos %}
+        <h3 style="margin-top: 2rem; color: #cdc832;">{{ evento.evento }}</h3>
+        <div class="stats-table-container">
+            <table class="stats-table">
+                <thead>
                 <tr>
-                    <td>{{ estadistica.jugador.nombre }}</td>
-                    <td>{{ estadistica.jugador.equipo.nombre }}</td>
-                    <td style="text-align: center; color: #cdc832;">{{ estadistica.valor }}</td>
+                    <th>Jugador</th>
+                    <th>Equipo</th>
+                    <th style="text-align: center;">Cantidad</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for je in evento.jugadorEventos %}
+                    <tr>
+                        <td>{{ je.jugador.nombre }}</td>
+                        <td>{{ je.jugador.equipo.nombre }}</td>
+                        <td style="text-align: center; color: #cdc832;">{{ je.cantidad }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" style="text-align: center;">No hay registros para {{ evento.evento }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No hay eventos configurados para este torneo.</p>
+    {% endfor %}
 </div>
