@@ -11,11 +11,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for je in evento.jugadorEventos %}
+                {% for event in evento.jugadorEventos %}
                     <tr>
-                        <td>{{ je.jugador.nombre }}</td>
-                        <td>{{ je.jugador.equipo.nombre }}</td>
-                        <td style="text-align: center; color: #cdc832;">{{ je.cantidad }}</td>
+                        <td>{{ event.jugador.nombre }}</td>
+                        <td>{{ event.jugador.equipo.nombre }}</td>
+                        <td style="text-align: center; color: #cdc832;">{{ event.cantidad }}</td>
                     </tr>
                 {% else %}
                     <tr>
