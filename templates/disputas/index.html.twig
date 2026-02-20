@@ -1,20 +1,177 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DisputasController!{% endblock %}
+{% block title %}Gestión de Disputa | FriendlyCup{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .wrapper-centro {
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .contenedor-principal {
+        display: flex;
+        align-items: stretch;
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px; /* Aumentado para que quepan los laterales */
+    }
+
+    /* Cuadrados de Equipos/Jugadores */
+    .caja-jugadores {
+        width: 250px;
+        background: rgba(43, 53, 68, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        color: white;
+    }
+
+    .caja-jugadores h3 {
+        font-size: 1.2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        color: #0d6efd;
+        text-align: center;
+    }
+
+    .lista-jugadores {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .lista-jugadores li {
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Caja Central de Gestión */
+    .caja-formulario {
+        flex-grow: 1;
+        background-color: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .titulo-seccion {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 30px;
+    }
+
+    .input-custom {
+        background-color: #2b3544 !important;
+        border: 1px solid #4e5d6d !important;
+        color: white !important;
+        border-radius: 8px;
+        padding: 10px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .btn-enviar { background-color: #0f4d36; border: none; color: white; padding: 10px 40px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+    .btn-cancelar { background-color: #8b1e1e; border: none; color: white; padding: 10px 40px; border-radius: 20px; text-decoration: none; font-weight: bold; }
+    
+    .btn-volver-atras {
+        position: absolute;
+        top: 20px;
+        left: 40px;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+    }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="wrapper-centro">
+    <a href="{{ path('torneo', {'id': disputa.torneo.id}) }}" class="btn-volver-atras">
+        ❮ Volver al Resumen
+    </a>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/alumno/Desktop/FriendlyCup/src/Controller/DisputasController.php</code></li>
-        <li>Your template at <code>/home/alumno/Desktop/FriendlyCup/templates/disputas/index.html.twig</code></li>
-    </ul>
+    <div class="contenedor-principal">
+        
+        <div class="caja-jugadores">
+            <h3>{{ equipo1.nombre }}</h3>
+            <ul class="lista-jugadores">
+                {% for jugador in equipo1.jugadores %}
+                    <li>👤 {{ jugador.nombre }}</li>
+                {% else %}
+                    <li class="text-muted">Sin jugadores</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="caja-formulario">
+            <h1 class="titulo-seccion">Gestionar Disputa</h1>
+            
+            <form id="form-resultado">
+                <div class="mb-4">
+                    <label class="d-block text-white mb-2 fw-bold">Resultado</label>
+                    <input type="text" name="resultado" class="form-control input-custom mx-auto" value="{{ disputa.resultado }}">
+                </div>
+
+                <div class="mb-5">
+                    <label class="d-block text-white mb-2 fw-bold">Ganador</label>
+                    <select name="ganador_id" class="form-select input-custom mx-auto">
+                        <option value="">Empate</option>
+                        <option value="{{ equipo1.id }}" {{ disputa.ganador and disputa.ganador.id == equipo1.id ? 'selected' : '' }}>
+                            {{ equipo1.nombre }}
+                        </option>
+                        <option value="{{ equipo2.id }}" {{ disputa.ganador and disputa.ganador.id == equipo2.id ? 'selected' : '' }}>
+                            {{ equipo2.nombre }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column align-items-center">
+                    <button type="button" class="btn-enviar" onclick="guardarCambios({{ disputa.id }})">Guardar</button>
+                    <a href="{{ path('torneo', {'id': disputa.torneo.id}) }}" class="btn-cancelar">Cancelar</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="caja-jugadores">
+            <h3>{{ equipo2.nombre }}</h3>
+            <ul class="lista-jugadores">
+                {% for jugador in equipo2.jugadores %}
+                    <li>👤 {{ jugador.nombre }}</li>
+                {% else %}
+                    <li class="text-muted">Sin jugadores</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+async function guardarCambios(id) {
+    const data = {
+        resultado: document.querySelector('input[name="resultado"]').value,
+        ganador_id: document.querySelector('select[name="ganador_id"]').value || null
+    };
+
+    const response = await fetch(`/disputa/${id}/modificar`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+        window.location.href = "{{ path('torneo', {'id': disputa.torneo.id}) }}";
+    }
+}
+</script>
 {% endblock %}

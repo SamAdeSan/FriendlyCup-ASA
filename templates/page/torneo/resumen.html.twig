@@ -21,14 +21,9 @@
 {% for disputa in disputas %}
     <p id="disputa">{{disputa.equipo1.nombre}}: {{disputa.resultado}} {{disputa.equipo2.nombre}}</p>
     {% if app.user == admin %}
-        <a class="modificardisputa btn-secondary"
-           data-disputa-id="{{ disputa.id }}"
-           data-disputa-equipo1="{{ disputa.equipo1.id }}"
-           data-disputa-equipo2="{{ disputa.equipo2.id }}"
-           data-nombre-equipo1="{{ disputa.equipo1.nombre }}"
-           data-nombre-equipo2="{{ disputa.equipo2.nombre }}">
-            Modificar
-        </a>
+        <a href="{{ path('disputa', {'id': disputa.id}) }}" class="btn btn-sm btn-outline-info">
+    Gestionar
+</a>
     <a class="eliminardisputa btn-danger" href="{{ path('eliminardisputas', {'id': disputa.id}) }}">Eliminar</a>
     {% endif %}
 {% else %}

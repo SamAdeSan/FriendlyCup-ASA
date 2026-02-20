@@ -62,11 +62,26 @@
         </div>
         <aside>
             <h1>Tus datos de usuario</h1>
-<<<<<<< Updated upstream
-            <div id="main-data">
-                <p>Nombre y Apellidos: <a href="{{ path('user_profile', {'username': app.user.name}) }}"><span class="userDataText">{{ app.user.name }}</span></a></p>
-                <hr style="margin-top:10px;margin-bottom: 10px">
-                <p style="margin-bottom: 5px">Correo electrónico: <span class="userDataText">{{ app.user.email }}</span></p>
+            <div id="main-data" style="text-align: center; padding: 20px 10px;">
+                <a href="{{ path('user_profile', {'username': app.user.name}) }}" style="text-decoration: none;">
+                    <div class="home-profile-avatar">
+                        {% if app.user.foto %}
+                            <img src="{{ asset('uploads/avatars/' ~ app.user.foto) }}?v={{ 'now'|date('U') }}"
+                                 style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #cdc832; object-fit: cover; margin-bottom: 15px;">
+                        {% else %}
+                            <div style="width: 80px; height: 80px; border-radius: 50%; background: #071926; color: #cdc832; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 15px auto; border: 2px solid #cdc832;">
+                                {{ app.user.name|first|upper }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <p style="margin-bottom: 0;">Nombre y Apellidos:</p>
+                    <span class="userDataText" style="font-size: 1.1rem; font-weight: bold; color: #cdc832;">{{ app.user.name }}</span>
+                </a>
+
+                <hr style="margin-top:15px; margin-bottom: 15px; border: 0.5px solid rgba(255,255,255,0.1)">
+
+                <p style="margin-bottom: 5px">Correo electrónico:</p>
+                <span class="userDataText" style="word-break: break-all;">{{ app.user.email }}</span>
             </div>
 
             <section class="section-container">
@@ -95,29 +110,9 @@
                             {% endfor %}
                             </tbody>
                         </table>
-=======
-            <div id="main-data" style="text-align: center; padding: 20px 10px;">
-                <a href="{{ path('user_profile', {'username': app.user.name}) }}" style="text-decoration: none;">
-                    <div class="home-profile-avatar">
-                        {% if app.user.foto %}
-                            <img src="{{ asset('uploads/avatars/' ~ app.user.foto) }}?v={{ 'now'|date('U') }}"
-                                 style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #cdc832; object-fit: cover; margin-bottom: 15px;">
-                        {% else %}
-                            <div style="width: 80px; height: 80px; border-radius: 50%; background: #071926; color: #cdc832; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 15px auto; border: 2px solid #cdc832;">
-                                {{ app.user.name|first|upper }}
-                            </div>
-                        {% endif %}
->>>>>>> Stashed changes
                     </div>
-                    <p style="margin-bottom: 0;">Nombre y Apellidos:</p>
-                    <span class="userDataText" style="font-size: 1.1rem; font-weight: bold; color: #cdc832;">{{ app.user.name }}</span>
-                </a>
-
-                <hr style="margin-top:15px; margin-bottom: 15px; border: 0.5px solid rgba(255,255,255,0.1)">
-
-                <p style="margin-bottom: 5px">Correo electrónico:</p>
-                <span class="userDataText" style="word-break: break-all;">{{ app.user.email }}</span>
-            </div>
+                {% endif %}
+            </section>
         </aside>
     </main>
 {% endblock %}

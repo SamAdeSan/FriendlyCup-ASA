@@ -84,22 +84,19 @@ final class DisputasController extends AbstractController
         $entityManager->flush();
     }
     #[Route('/disputa/{id}', name: 'disputa')]
-    public function disputasdentro(EntityManagerInterface $entityManager, DisputasRepository $disputasRepository, int $id): Response
-    {
-        $disputa = $disputasRepository->find($id);
-        $torneo = $disputa->getTorneo();
-        $equipo1=$disputa->getEquipo1();
-        $equipo2=$disputa->getEquipo2();
-        $jugadores1=$equipo1->getJugadores();
-        $jugadores2=$equipo2->getJugadores();
+    public function disputaindex(DisputasRepository $disputasRepository, int $id): Response
+{
+    // Buscamos la disputa específica por su ID
+    $disputa = $disputasRepository->find($id);
 
-        return $this->render('page/torneo/disputa.html.twig', [
-            'disputa' => $disputa,
-            'torneo' => $torneo,
-            'equipo1' => $equipo1,
-            'equipo2' => $equipo2,
-            'jugadores1' => $jugadores1,
-            'jugadores2' => $jugadores2,
-        ]);
+    if (!$disputa) {
+        throw $this->createNotFoundException('No se encontró la disputa con ID: ' . $id);
     }
+
+    return $this->render('disputas/index.html.twig', [
+        'disputa' => $disputa,
+        'equipo1' => $disputa->getEquipo1(),
+        'equipo2' => $disputa->getEquipo2(),
+    ]);
+}
 }
