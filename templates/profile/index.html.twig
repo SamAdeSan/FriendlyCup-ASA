@@ -4,46 +4,9 @@
 
 {% block body %}
     <div class="main-container">
-<<<<<<< Updated upstream
-        {# Columna Izquierda: Información del Usuario #}
         <aside style="flex: 1; margin-right: 40px;">
             <div class="section-container">
-                <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
-
-                    {# Contenedor del Avatar (El Globo) #}
-                    <div class="profile-avatar-container" style="position: relative; width: 140px; height: 140px; margin: 0 auto 20px auto;">
-
-                        {# El Globo de la foto #}
-                        <div style="width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 3px solid #cdc832; background: #071926;">
-                            {% if user.foto %}
-                                {# Buscamos en la carpeta de subidas #}
-                                <img src="{{ asset('uploads/avatars/' ~ user.foto) }}"
-                                     style="width: 100%; height: 100%; object-fit: cover;">
-                            {% else %}
-                                {# Tu foto de perfil predeterminada del proyecto #}
-                                <img src="{{ asset('img/default-user-profile.png') }}"
-                                     style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
-                            {% endif %}
-                        </div>
-
-                        {# BOTÓN: Subir/Actualizar (Parte del CRUD) #}
-                        <form action="{{ path('user_update_avatar') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
-                            <label for="avatar_input" style="position: absolute; bottom: 10px; right: 10px; background: #043f29; border: 1px solid #939393; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">
-                                <span style="font-size: 18px;">+</span>
-                                <input type="file" id="avatar_input" name="avatar" style="display: none;" onchange="document.getElementById('avatarForm').submit();">
-                            </label>
-                        </form>
-
-                        {# BOTÓN: Eliminar (Parte del CRUD) #}
-                        {% if user.foto %}
-                            <form action="{{ path('user_delete_avatar') }}" method="POST" onsubmit="return confirm('¿Eliminar tu foto de perfil?');">
-                                <button type="submit" style="position: absolute; top: 5px; right: 10px; background: #7e0e14; border: 1px solid #939393; border-radius: 50%; width: 25px; height: 25px; color: white; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                                    ✕
-                                </button>
-                            </form>
-=======
-        <aside style="flex: 1; margin-right: 40px;">
-            <div class="section-container">
+                {# Botón de navegación #}
                 <div style="margin-bottom: 20px;">
                     <a href="javascript:history.back()" style="color: #cdc832; text-decoration: none; font-size: 0.9rem;">
                         ← Volver atrás
@@ -52,6 +15,8 @@
 
                 <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
                     <div class="profile-avatar-container" style="position: relative; width: 140px; height: 140px; margin: 0 auto 20px auto;">
+
+                        {# Foto del perfil #}
                         <div style="width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 3px solid #cdc832; background: #071926;">
                             {% if user.foto %}
                                 <img src="{{ asset('uploads/avatars/' ~ user.foto) }}?v={{ 'now'|date('U') }}" style="width: 100%; height: 100%; object-fit: cover;">
@@ -62,6 +27,7 @@
 
                         {# SOLO MOSTRAR EDICIÓN SI ES MI PERFIL #}
                         {% if app.user and app.user.id == user.id %}
+                            {# Botón: Subir/Actualizar #}
                             <form action="{{ path('user_update_avatar') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
                                 <label for="avatar_input" class="btn-add-photo">
                                     <span>+</span>
@@ -70,27 +36,15 @@
                             </form>
 
                             {% if user.foto %}
-                                <form action="{{ path('user_delete_avatar') }}" method="POST" onsubmit="return confirm('¿Eliminar tu foto de perfil?');">
-                                    <button type="submit" class="btn-delete-photo">✕</button>
+                                <form action="{{ path('user_delete_avatar') }}" method="POST" id="formDeleteFoto">
+                                    <button type="button" class="btn-delete-photo" onclick="abrirModalBorrarFoto()">✕</button>
                                 </form>
                             {% endif %}
->>>>>>> Stashed changes
                         {% endif %}
                     </div>
                 </div>
 
                 <div id="main-data">
-<<<<<<< Updated upstream
-                    <p>Nombre y Apellidos: <a href="{{ path('user_profile', {'username': app.user.name}) }}"><span class="userDataText">{{ app.user.name }}</span></a></p>
-                    <hr style="margin-top:10px;margin-bottom: 10px">
-                    <p style="margin-bottom: 5px">Correo electrónico: <span class="userDataText">{{ app.user.email }}</span></p>
-                </div>
-
-            </div>
-        </aside>
-
-        {# Columna Derecha: Listado de Torneos #}
-=======
                     <p>Nombre: <span class="userDataText">{{ user.name }}</span></p>
                     <hr style="margin-top:10px;margin-bottom: 10px; border: 0.5px solid rgba(255,255,255,0.1)">
                     <p style="margin-bottom: 5px">Correo: <span class="userDataText">{{ user.email }}</span></p>
@@ -99,7 +53,6 @@
         </aside>
 
         {# Listado de Torneos #}
->>>>>>> Stashed changes
         <section class="section-container" style="flex: 2;">
             <h2>Mis torneos</h2>
             <hr>
@@ -139,4 +92,5 @@
             {% endif %}
         </section>
     </div>
+    {{ include('modals/_eliminarFotoPerfil.html.twig') }}
 {% endblock %}

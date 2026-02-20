@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Inicio - FriendlyCup{% endblock %}
+
 {% block body %}
-    <section class="fc-title animate-fade"> 
+    <section class="fc-title animate-fade">
         <h1>- FriendlyCup -</h1>
         <p>Bienvenido a tu página de torneos</p>
     </section>
@@ -13,14 +16,13 @@
             </div>
         </section>
     </main>
+
     <main class="main-container">
         <div id="sections">
-            {# SECCIÓN: TORNEOS SEGUIDOS #}
-            <section class="section-container">
+            <section class="section-container animate-fade delay-2">
                 <h2>Torneos seguidos</h2>
                 <hr>
                 <div class="grid-layout">
-                    {# app.user.users es la relación ManyToMany que definiste en tu entidad #}
                     {% if app.user %}
                         {% for seguido in app.user.seguidos %}
                             <div class="card">
@@ -40,7 +42,8 @@
                     {% endif %}
                 </div>
             </section>
-            <section class="section-container">
+
+            <section class="section-container animate-fade delay-3">
                 <h2>Ligas fantasy que tienes</h2>
                 <hr>
                 <div class="grid-layout">
@@ -52,67 +55,73 @@
                                 </div>
                             </div>
                         {% else %}
-                            <p>Aún no sigues ningún torneo.</p>
+                            <p>No participas en ninguna liga fantasy aún.</p>
                         {% endfor %}
                     {% else %}
-                        <p><a href="{{ path('app_login') }}">Inicia sesión</a> para ver tus torneos seguidos.</p>
+                        <p><a href="{{ path('app_login') }}">Inicia sesión</a> para ver tus ligas.</p>
                     {% endif %}
                 </div>
             </section>
         </div>
-        <aside>
+
+        <aside class="animate-fade delay-4">
             <h1>Tus datos de usuario</h1>
             <div id="main-data" style="text-align: center; padding: 20px 10px;">
-                <a href="{{ path('user_profile', {'username': app.user.name}) }}" style="text-decoration: none;">
-                    <div class="home-profile-avatar">
-                        {% if app.user.foto %}
-                            <img src="{{ asset('uploads/avatars/' ~ app.user.foto) }}?v={{ 'now'|date('U') }}"
-                                 style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #cdc832; object-fit: cover; margin-bottom: 15px;">
-                        {% else %}
-                            <div style="width: 80px; height: 80px; border-radius: 50%; background: #071926; color: #cdc832; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 15px auto; border: 2px solid #cdc832;">
-                                {{ app.user.name|first|upper }}
+                {% if app.user %}
+                    <a href="{{ path('user_profile', {'username': app.user.name}) }}" style="text-decoration: none;">
+                        <div class="home-profile-avatar">
+                            {% if app.user.foto %}
+                                <img src="{{ asset('uploads/avatars/' ~ app.user.foto) }}?v={{ 'now'|date('U') }}"
+                                     style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #cdc832; object-fit: cover; margin-bottom: 15px;">
+                            {% else %}
+                                <div style="width: 80px; height: 80px; border-radius: 50%; background: #071926; color: #cdc832; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 15px auto; border: 2px solid #cdc832;">
+                                    {{ app.user.name|first|upper }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <p style="margin-bottom: 0;">Nombre y Apellidos:</p>
+                        <span class="userDataText" style="font-size: 1.1rem; font-weight: bold; color: #cdc832;">{{ app.user.name }}</span>
+                    </a>
+
+                    <hr style="margin-top:15px; margin-bottom: 15px; border: 0.5px solid rgba(255,255,255,0.1)">
+
+                    <p style="margin-bottom: 5px">Correo electrónico:</p>
+                    <span class="userDataText" style="word-break: break-all;">{{ app.user.email }}</span>
+
+                    <section class="section-container">
+                        <h2>Mis torneos</h2>
+                        <hr>
+                        {% if torneos is not empty %}
+                            <div class="stats-table-container">
+                                <table class="stats-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Torneo</th>
+                                        <th>Seguidores</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for torneo in torneos %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ path('torneo', {'id': torneo.id}) }}">
+                                                    {{ torneo.name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ torneo.seguidores }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
+                        {% else %}
+                            <p style="font-size: 0.8rem; opacity: 0.7;">No administras torneos.</p>
                         {% endif %}
-                    </div>
-                    <p style="margin-bottom: 0;">Nombre y Apellidos:</p>
-                    <span class="userDataText" style="font-size: 1.1rem; font-weight: bold; color: #cdc832;">{{ app.user.name }}</span>
-                </a>
-
-                <hr style="margin-top:15px; margin-bottom: 15px; border: 0.5px solid rgba(255,255,255,0.1)">
-
-                <p style="margin-bottom: 5px">Correo electrónico:</p>
-                <span class="userDataText" style="word-break: break-all;">{{ app.user.email }}</span>
-            </div>
-
-            <section class="section-container">
-                <h2>Mis torneos</h2>
-                <hr>
-
-                {% if torneos is not empty %}
-                    <div class="stats-table-container">
-                        <table class="stats-table">
-                            <thead>
-                            <tr>
-                                <th>Torneo</th>
-                                <th>Seguidores</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for torneo in torneos %}
-                                <tr>
-                                    <td>
-                                        <a href="{{ path('torneo', {'id': torneo.id}) }}" id="">
-                                            {{ torneo.name }}
-                                        </a>
-                                    </td>
-                                    <td>{{ torneo.seguidores }}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                    </section>
+                {% else %}
+                    <p>Inicia sesión para ver tu perfil.</p>
                 {% endif %}
-            </section>
+            </div>
         </aside>
     </main>
 {% endblock %}

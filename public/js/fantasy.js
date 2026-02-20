@@ -1,14 +1,24 @@
-let presupuesto = document.getElementById("budget");
-let maximo = Number(presupuesto.dataset.minimo);
+/**
+ * SELECTORES DE FANTASY
+ */
+const presupuesto = document.getElementById("budget");
+const maximo = Number(presupuesto.dataset.minimo);
 let presupuestoActual = Number(presupuesto.dataset.valor);
-let idEquipo = presupuesto.dataset.id;
-let tablas = document.querySelectorAll('.torneo-content .stats-table tbody');
-let tablaJugadores = tablas[0];
-let tablaMercado = tablas[1];
-let admin = document.getElementById("btnAnadirUsuario");
-if (admin) admin.onclick = mostrarClave;
+const idEquipo = presupuesto.dataset.id;
 
-asignarEventosBotones();
+const tablas = document.querySelectorAll('.torneo-content .stats-table tbody');
+const tablaJugadores = tablas[0];
+const tablaMercado = tablas[1];
+
+const adminBtn = document.getElementById("btnAnadirUsuario");
+
+/**
+ * INICIALIZACIÓN
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    if (adminBtn) adminBtn.onclick = abrirModalClave;
+    asignarEventosBotones();
+});
 
 function asignarEventosBotones() {
     let botonesVender = tablaJugadores.querySelectorAll('.vender');
@@ -18,10 +28,15 @@ function asignarEventosBotones() {
     botonesSubir.forEach(boton => boton.onclick = comprar);
 }
 
+/**
+ * LÓGICA DE COMPRA
+ */
 function comprar() {
     let numJugadoresActuales = tablaJugadores.querySelectorAll('tr').length;
+
+    // 1. Validar límite de jugadores (Modal)
     if (numJugadoresActuales >= maximo) {
-        alert(`¡Has alcanzado el número máximo de jugadores (${maximo})!`);
+        abrirModalAviso('modal-limite-jugadores');
         return;
     }
 
@@ -31,8 +46,10 @@ function comprar() {
     let valor = Number(this.dataset.valor);
     let puntos = this.dataset.puntos;
 
+    // 2. Validar saldo (Podemos usar un modal de "Sin saldo" o el mismo de aviso)
     if (presupuestoActual < valor) {
-        alert("No tienes suficiente saldo");
+        alert("No tienes suficiente saldo para fichar a " + nombre);
+        // Nota: Si creas _sinSaldo.html.twig, cambia este alert por abrirModalAviso
         return;
     }
 
@@ -43,9 +60,7 @@ function comprar() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ presupuesto: nuevoSaldo, idJugador: idJugador })
     }).then(() => {
-        presupuestoActual = nuevoSaldo;
-        presupuesto.textContent = nuevoSaldo;
-        presupuesto.dataset.valor = nuevoSaldo;
+        actualizarInterfazPresupuesto(nuevoSaldo);
         fila.remove();
 
         let nuevaFila = tablaJugadores.insertRow();
@@ -66,6 +81,9 @@ function comprar() {
     });
 }
 
+/**
+ * LÓGICA DE VENTA
+ */
 function vender() {
     let fila = this.closest('tr');
     let idJugador = this.dataset.id;
@@ -79,9 +97,7 @@ function vender() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ idJugador: idJugador })
     }).then(() => {
-        presupuestoActual = nuevoSaldo;
-        presupuesto.textContent = nuevoSaldo;
-        presupuesto.dataset.valor = nuevoSaldo;
+        actualizarInterfazPresupuesto(nuevoSaldo);
         fila.remove();
 
         let nuevaFila = tablaMercado.insertRow();
@@ -102,9 +118,46 @@ function vender() {
     });
 }
 
+/**
+ * FUNCIONES AUXILIARES INTERFAZ
+ */
+function actualizarInterfazPresupuesto(nuevoValor) {
+    presupuestoActual = nuevoValor;
+    presupuesto.textContent = nuevoValor;
+    presupuesto.dataset.valor = nuevoValor;
+}
 
+function abrirModalAviso(idModal) {
+    const modal = document.getElementById(idModal);
+    if (modal) modal.style.display = 'flex';
+}
 
-function mostrarClave() {
-    let clave = this.dataset.clave;
-    alert('La clave para unirse a esta liga es: ' + clave);
+window.cerrarModalLimite = function() {
+    document.getElementById('modal-limite-jugadores').style.display = 'none';
+};
+
+/**
+ * LÓGICA DEL MODAL CLAVE DE INVITACIÓN
+ */
+function abrirModalClave() {
+    const clave = this.dataset.clave;
+    const modal = document.getElementById('modal-ver-clave');
+    const spanClave = document.getElementById('texto-clave-liga');
+
+    if (modal && spanClave) {
+        spanClave.innerText = clave;
+        modal.style.display = 'flex';
+    }
+}
+
+window.cerrarModalClave = function() {
+    const modal = document.getElementById('modal-ver-clave');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+};
+
+const btnAnadirUsuario = document.getElementById("btnAnadirUsuario");
+if (btnAnadirUsuario) {
+    btnAnadirUsuario.onclick = abrirModalClave;
 }

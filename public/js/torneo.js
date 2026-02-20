@@ -1,192 +1,207 @@
-let unirse = document.getElementById("unirseliga")
-let tabs = document.querySelectorAll('.tab');
-let section = document.getElementById('torneo-section');
-unirse.onclick = anadirusuario
-function anadirusuario() {
-    let clave = prompt("Introduce la clave privada de la liga:");
-    if (!clave) return;
-    fetch(`/fantasy/api/liga/unirse`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ clave })
-    }).then(response => response.json())
-        .then(data => {
-            alert(`¡Éxito! Te has unido a la liga: ${data.liga}`);
-            window.location.href = `/`
-        })
-}
-let seguir = document.getElementById("seguir")
-if (seguir) {
-    seguir.onclick = gestionseguidores
-}
-let crearEvento = document.getElementById("crear-evento");
-if (crearEvento) {
-    crearEvento.onclick = crearevento
-}
-function gestionseguidores() {
-    let idTorneo = this.getAttribute('data-id');
-    let contador = document.getElementById('contador-seguidores');
-    let estoySiguiendo = this.classList.contains('btn-danger');
-    if (estoySiguiendo) {
-        this.textContent = 'Seguir';
-        this.classList.replace('btn-danger', 'btn-secondary');
-        let actual = parseInt(contador.innerText);
-        actual--;
-        contador.innerText = actual
-    } else {
-        this.textContent = 'Dejar de seguir';
-        this.classList.replace('btn-secondary', 'btn-danger');
-        let actual = parseInt(contador.innerText);
-        contador.innerText = actual + 1;
-    }
-    fetch(`/torneo/${idTorneo}/seguir`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-}
-function cargar(url) {
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            section.innerHTML = html;
+/**
+ * SELECTORES GLOBALES
+ */
+const selectores = {
+    unirseBtn: document.getElementById("unirseliga"),
+    seguirBtn: document.getElementById("seguir"),
+    crearEventoBtn: document.getElementById("crear-evento"),
+    btnConfirmarEvento: document.getElementById('btn-confirmar-evento'),
+    btnConfirmarUnirse: document.getElementById('btn-confirmar-unirse'),
+    tabs: document.querySelectorAll('.tab'),
+    section: document.getElementById('torneo-section'),
+    contadorSeguidores: document.getElementById('contador-seguidores')
+};
 
-            let btnMostrar = document.getElementById("btnmostrarform");
-            let formDisputa = document.getElementById("formnuevadisputa");
-            // CORRECCIÓN: ID con guiones tal cual está en tu HTML
-            let btnGuardar = document.getElementById("btn-guardar-disputa");
+/**
+ * INICIALIZACIÓN DE EVENTOS
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    if (selectores.unirseBtn) selectores.unirseBtn.onclick = abrirModalUnirse;
+    if (selectores.seguirBtn) selectores.seguirBtn.onclick = gestionSeguidores;
+    if (selectores.crearEventoBtn) selectores.crearEventoBtn.onclick = abrirModalEvento;
+    if (selectores.btnConfirmarEvento) selectores.btnConfirmarEvento.onclick = ejecutarCrearEvento;
+    if (selectores.btnConfirmarUnirse) selectores.btnConfirmarUnirse.onclick = ejecutarUnirseFantasy;
 
-            if (btnMostrar) {
-                btnMostrar.onclick = function () {
-                    formDisputa.style.display = formDisputa.style.display === 'none' ? 'block' : 'none';
-                }
-            }
+    selectores.tabs.forEach(tab => {
+        tab.onclick = (e) => {
+            e.preventDefault();
+            selectores.tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            cargarContenido(tab.dataset.url);
+        };
+    });
 
-            if (btnGuardar) {
-                btnGuardar.onclick = function () {
-                    let equipo1 = document.getElementById("selectequipo1").value;
-                    let equipo2 = document.getElementById("selectequipo2").value;
-                    // CORRECCIÓN: dataset usa camelCase para data-torneo-id -> torneoId
-                    let torneo = this.dataset.torneoId;
-
-                    if (!equipo1 || !equipo2) {
-                        alert("Selecciona ambos equipos");
-                        return;
-                    }
-                    if (equipo1 === equipo2) {
-                        alert("Los equipos deben ser diferentes");
-                        return;
-                    }
-
-                    fetch('/disputas/crear', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            equipo1_id: equipo1,
-                            equipo2_id: equipo2,
-                            torneo_id: torneo
-                        })
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                // Esto recargará la página y debería aparecer la nueva disputa
-                                window.location.reload();
-                            } else {
-                                alert("Error al guardar en el servidor");
-                            }
-                        });
-                }
-            }
-        })
-}
-tabs.forEach(tab => {
-    tab.onclick = function (e) {
-        e.preventDefault()
-        tabs.forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-        cargar(this.dataset.url);
-    }
-})
-let activa = document.querySelector('.tab.active');
-if (activa) {
-    cargar(activa.dataset.url);
-}
-function crearevento() {
-    let evento = prompt("Como quieres llamar al evento")
-    if (!evento) return
-    let puntos = prompt("Quantos puntos quieres que cuente? (sirve para crear la fantasy)")
-    if (!puntos) return
-    fetch('/crear/evento', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            puntos: puntos,
-            evento: evento,
-            torneo_id: this.dataset.id
-        })
-    }).then(response => response.json())
-}
-
-function anadirdis(torneo) {
-    let equipo1 = prompt("Que equipo quieres poner? (Escribe el id)")
-    if (!equipo1) return
-    let equipo2 = prompt("Que otro quieres poner?: (Escribe el id)")
-    if (!equipo2) return
-    fetch('/disputas/crear', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            equipo1_id: equipo1,
-            equipo2_id: equipo2,
-            torneo_id: torneo
-        })
-    }).then(response => response.json())
-}
-document.addEventListener("click", function (e) {
+    const tabActiva = document.querySelector('.tab.active');
+    if (tabActiva) cargarContenido(tabActiva.dataset.url);
+});
+document.addEventListener("click", (e) => {
     if (e.target.classList.contains("modificardisputa")) {
-        modificaresultado(e.target);
+        modificaResultado(e.target);
     }
 });
 
-function modificaresultado(elemento) {
-    let id = elemento.dataset.disputaId;
+/**
+ * FUNCIONES: SEGUIMIENTO Y TABS
+ */
+function gestionSeguidores() {
+    const idTorneo = this.getAttribute('data-id');
+    const estoySiguiendo = this.classList.contains('btn-danger');
+    let actual = parseInt(selectores.contadorSeguidores.innerText);
 
-    // Usamos los nuevos atributos con los nombres
-    let nombre1 = elemento.dataset.nombreEquipo1;
-    let nombre2 = elemento.dataset.nombreEquipo2;
-
-    let resultado = prompt("Introduce puntos de " + nombre1);
-    if (resultado === null) return; // Si cancela el prompt
-
-    let resultado2 = prompt("Introduce puntos de " + nombre2);
-    if (resultado2 === null) return;
-
-    let ganador;
-    let idEquipo1 = elemento.dataset.disputaEquipo1;
-    let idEquipo2 = elemento.dataset.disputaEquipo2;
-
-    if (parseInt(resultado) > parseInt(resultado2)) {
-        ganador = idEquipo1;
-    } else if (parseInt(resultado) < parseInt(resultado2)) {
-        ganador = idEquipo2;
+    if (estoySiguiendo) {
+        this.textContent = 'Seguir';
+        this.classList.replace('btn-danger', 'btn-secondary');
+        actual--;
     } else {
-        ganador = null;
+        this.textContent = 'Dejar de seguir';
+        this.classList.replace('btn-secondary', 'btn-danger');
+        actual++;
+    }
+    selectores.contadorSeguidores.innerText = actual;
+
+    fetch(`/torneo/${idTorneo}/seguir`, { method: 'POST' })
+        .catch(err => console.error("Error en follow:", err));
+}
+
+function cargarContenido(url) {
+    if (!selectores.section) return;
+
+    fetch(url)
+        .then(res => res.text())
+        .then(html => {
+            selectores.section.innerHTML = html;
+            vincularEventosDinamicos();
+        })
+        .catch(err => console.error("Error cargando contenido:", err));
+}
+
+function vincularEventosDinamicos() {
+    const btnMostrar = document.getElementById("btnmostrarform");
+    const formDisputa = document.getElementById("formnuevadisputa");
+    const btnGuardar = document.getElementById("btn-guardar-disputa");
+
+    if (btnMostrar && formDisputa) {
+        btnMostrar.onclick = () => {
+            formDisputa.style.display = (formDisputa.style.display === 'none' || formDisputa.style.display === '') ? 'block' : 'none';
+        };
     }
 
-    let resultadototal = resultado + "-" + resultado2;
+    if (btnGuardar) {
+        btnGuardar.onclick = function() {
+            const equipo1 = document.getElementById("selectequipo1").value;
+            const equipo2 = document.getElementById("selectequipo2").value;
+            const torneoId = this.dataset.torneoId;
+
+            if (!equipo1 || !equipo2 || equipo1 === equipo2) {
+                alert("Selecciona dos equipos diferentes.");
+                return;
+            }
+
+            fetch('/disputas/crear', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ equipo1_id: equipo1, equipo2_id: equipo2, torneo_id: torneoId })
+            }).then(res => res.ok ? window.location.reload() : console.error("Error al guardar"));
+        };
+    }
+}
+
+/**
+ * FUNCIONES: MODAL CREAR EVENTO
+ */
+function abrirModalEvento() {
+    const modal = document.getElementById('modal-crear-evento');
+    if (modal) {
+        modal.style.display = 'flex';
+        selectores.btnConfirmarEvento.dataset.id = this.dataset.id;
+        document.getElementById('input-evento-nombre').focus();
+    }
+}
+
+window.cerrarModalEvento = () => {
+    const modal = document.getElementById('modal-crear-evento');
+    if (modal) {
+        modal.style.display = 'none';
+        document.getElementById('input-evento-nombre').value = '';
+        document.getElementById('input-evento-puntos').value = '';
+    }
+};
+
+function ejecutarCrearEvento() {
+    const evento = document.getElementById('input-evento-nombre').value;
+    const puntos = document.getElementById('input-evento-puntos').value;
+    const torneoId = this.dataset.id;
+
+    if (!evento || !puntos) return;
+
+    fetch('/crear/evento', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ puntos, evento, torneo_id: torneoId })
+    }).then(() => {
+        cerrarModalEvento();
+        window.location.reload();
+    });
+}
+
+/**
+ * FUNCIONES: MODAL UNIRSE FANTASY
+ */
+function abrirModalUnirse() {
+    const modal = document.getElementById('modal-unirse-fantasy');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.getElementById('input-fantasy-clave').focus();
+    }
+}
+
+window.cerrarModalUnirse = () => {
+    const modal = document.getElementById('modal-unirse-fantasy');
+    if (modal) {
+        modal.style.display = 'none';
+        document.getElementById('error-clave').style.display = 'none';
+    }
+};
+
+function ejecutarUnirseFantasy() {
+    const clave = document.getElementById('input-fantasy-clave').value;
+    const errorMsg = document.getElementById('error-clave');
+
+    if (!clave) return;
+
+    fetch(`/fantasy/api/liga/unirse`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clave })
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.liga) window.location.href = `/`;
+            else errorMsg.style.display = 'block';
+        })
+        .catch(err => console.error("Error:", err));
+}
+
+/**
+ * FUNCIONES: RESULTADOS (Pendiente de Modal)
+ */
+function modificaResultado(elemento) {
+    const id = elemento.dataset.disputaId;
+    const n1 = elemento.dataset.nombreEquipo1;
+    const n2 = elemento.dataset.nombreEquipo2;
+
+    const res1 = prompt(`Puntos de ${n1}`);
+    if (res1 === null) return;
+    const res2 = prompt(`Puntos de ${n2}`);
+    if (res2 === null) return;
+
+    const id1 = elemento.dataset.disputaEquipo1;
+    const id2 = elemento.dataset.disputaEquipo2;
+    let ganador = (parseInt(res1) > parseInt(res2)) ? id1 : (parseInt(res1) < parseInt(res2) ? id2 : null);
 
     fetch(`/disputas/${id}/modificar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            resultado: resultadototal,
-            ganador_id: ganador
-        })
-    }).then(response => response.json())
-        .then(data => {
-            window.location.reload(); // Recarga para ver el nuevo marcador
-        });
+        body: JSON.stringify({ resultado: `${res1}-${res2}`, ganador_id: ganador })
+    }).then(() => window.location.reload());
 }

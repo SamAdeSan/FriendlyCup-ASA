@@ -1,0 +1,17 @@
+<div id="modal-unirse-fantasy" class="modal-overlay" style="display: none;">
+    <div class="modal-content animate-fade">
+        <h2 style="color: #cdc832; margin-top: 0;">Unirse a la Liga</h2>
+        <p style="color: white; margin-bottom: 20px;">Para participar, necesitas la clave privada que te ha facilitado el organizador.</p>
+
+        <div style="text-align: left; margin-bottom: 25px;">
+            <label for="input-fantasy-clave" style="color: #9fb3c8; font-size: 0.9rem; margin-bottom: 5px; display: block;">Clave de acceso:</label>
+            <input type="text" id="input-fantasy-clave" class="fc-input" placeholder="Pega aquí la clave..." autocomplete="off">
+            <small id="error-clave" style="color: #ff4d4d; display: none; margin-top: 5px;">La clave no es válida o está vacía.</small>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn-secondary" onclick="cerrarModalUnirse()">Cancelar</button>
+            <button type="button" id="btn-confirmar-unirse" class="btn-gold" style="background-color: #043f29; color: white; border-color: #043f29;">Unirse ahora</button>
+        </div>
+    </div>
+</div>

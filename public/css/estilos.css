@@ -1281,7 +1281,7 @@ tbody a:hover {
     background: #043f29;
 }
 
-#navLogin .btn-secondary.:hover {
+#navLogin .btn-secondary.logout:hover {
     background: #7e0e14;
 }
 
@@ -1374,6 +1374,17 @@ tbody a:hover {
         margin-top: 15px;
     }
 }
+/************************************************************/
+/* EXTRAS (webkits, arreglos, etc.) */
+/* Badge para los puntos en la tabla */
+.puntos-badge {
+    background: rgba(205, 200, 50, 0.1);
+    color: #cdc832;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(205, 200, 50, 0.3);
+    font-weight: bold;
+}
 
 .crear-torneo h2, .crear-equipo h2, .crear-jugador h2 {
     font-size: 24pt;
@@ -1426,7 +1437,7 @@ form[id="formTorneo"] input:focus {
 }
 
 /* Botón Guardar (usando el verde de tu hero-cta) */
-form[id="formTorneo"] button[type="submit"], 
+form[id="formTorneo"] button[type="submit"],
 .botones-accion button:not(#cancelar) {
     padding: 10px 30px;
     background: #043f29;
@@ -1465,7 +1476,6 @@ form[id="formTorneo"] button[type="submit"]:hover {
     padding-top: 20px;
     border-top: 1px solid #939393;
 }
-/* EXTRAS (webkits, arreglos, etc.) */
 
 /* Esto controla el color del fondo y del texto cuando el navegador autocompleta */
 input:-webkit-autofill,
@@ -1499,3 +1509,34 @@ input:-webkit-autofill:active {
 .delay-2 { animation-delay: 0.4s; }
 .delay-3 { animation-delay: 0.6s; }
 .delay-4 { animation-delay: 0.8s; }
+
+/* --- ESTILOS COMUNES MODALES FRIENDLYCUP --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999; backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: #071926;
+    border: 2px solid #cdc832;
+    border-radius: 12px;
+    width: 90%; max-width: 400px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.fc-input {
+    width: 100%; padding: 10px;
+    border-radius: 6px; border: 1px solid #cdc832;
+    background: #0e1726; color: white;
+    box-sizing: border-box;
+}
+
+.modal-footer { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+.modal-footer button { padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s;}
+.modal-footer .btn-secondary { background: transparent; border: 1px solid #9fb3c8; color: #9fb3c8; }
+.modal-footer .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+.modal-footer .btn-gold:hover { opacity: 0.8; }

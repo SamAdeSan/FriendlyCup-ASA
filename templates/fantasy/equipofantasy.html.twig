@@ -3,39 +3,65 @@
 {% block title %}Fantasy League - {{ equipoFantasy.entrenador.name }}{% endblock %}
 
 {% block body %}
-<h1>{{ equipoFantasy.entrenador.name }}</h1>
-<div class="torneo-content">
-    <h3>Jugadores</h3>
-    <div class="stats-table-container">
-        <table class="stats-table">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Puntos</th>
-                <th>Valor de mercado</th>
-                <th>Acción</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for jugador in jugadores %}
-                <tr>
-                    <td>{{ jugador.nombre }}</td>
-                    <td>{{ jugador.estadisticas }}</td>
-                    <td>{{ jugador.valordemercado }} €</td>
-                    <td>
-                        <button class="fichar"
-                                data-id="{{ jugador.id }}"
-                                data-nombre="{{ jugador.nombre }}"
-                                data-valor="{{ jugador.valordemercado }}"
-                                data-puntos="{{ jugador.estadisticas }}">
-                            Fichar
-                        </button>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="fantasy-main">
+        {# Cabecera Estilo RLC: Nombre y Presupuesto #}
+        <section id="RLCBlock">
+            <h1 style="margin-bottom: 5px;">Equipo de {{ equipoFantasy.entrenador.name }}</h1>
+            <p class="budget-text">
+                Presupuesto:
+                <span id="budget" data-valor="{{ equipoFantasy.presupuesto }}">
+                    {{ equipoFantasy.presupuesto | number_format }} €
+                </span>
+            </p>
+        </section>
+
+        <div class="main-container-fantasy" style="width: 100%; max-width: 900px; margin: 0 auto;">
+            <div class="torneo-content section-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0; color: #cdc832; font-family: 'Cinzel', serif;">Plantilla Actual</h3>
+                    <span style="color: #9fb3c8; font-size: 0.8rem;">{{ jugadores|length }} Jugadores</span>
+                </div>
+
+                <div class="stats-table-container">
+                    <table class="stats-table">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th style="text-align: center;">Puntos</th>
+                            <th style="text-align: right;">Valor</th>
+                            <th style="text-align: center;">Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for jugador in jugadores %}
+                            <tr>
+                                <td style="font-weight: bold; color: white;">{{ jugador.nombre }}</td>
+                                <td style="text-align: center;">
+                                    <span class="puntos-badge">{{ jugador.estadisticas }}</span>
+                                </td>
+                                <td style="text-align: right; color: #cdc832;">{{ jugador.valordemercado | number_format }} €</td>
+                                <td style="text-align: center;">
+                                    <button class="btn-subir fichar"
+                                            data-id="{{ jugador.id }}"
+                                            data-nombre="{{ jugador.nombre }}"
+                                            data-valor="{{ jugador.valordemercado }}"
+                                            data-puntos="{{ jugador.estadisticas }}"
+                                            style="padding: 5px 15px; font-size: 0.8rem;">
+                                        Fichar
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 30px; text-align: center;">
+                    <a href="javascript:history.back()" class="btn-secondary" style="text-decoration: none; font-size: 0.9rem;">
+                        ← Volver a la liga
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <p id="budget">Presupuesto: {{ equipoFantasy2.presupuesto }} €</p>
-</div>
 {% endblock %}

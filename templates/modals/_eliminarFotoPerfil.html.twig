@@ -1,0 +1,39 @@
+<div id="modal-eliminar-foto" class="modal-overlay" style="display: none;">
+    <div class="modal-content animate-fade">
+        <div style="color: #cdc832; font-size: 3.5rem; margin-bottom: 10px; line-height: 1;">⚠</div>
+
+        <h2 style="color: #cdc832; margin-top: 0; font-family: 'Cinzel', serif;">¿Eliminar foto?</h2>
+
+        <p style="color: white; margin-bottom: 25px; font-size: 0.95rem;">
+            Tu imagen de perfil actual será borrada permanentemente. ¿Deseas continuar?
+        </p>
+
+        <div class="modal-footer">
+            <button type="button" class="btn-secondary" onclick="cerrarModalBorrarFoto()">
+                Volver
+            </button>
+            <button type="button" id="btn-confirmar-borrado" class="btn-danger-action">
+                Eliminar foto
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-danger-action {
+        background-color: #721c24;
+        color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        padding: 8px 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-danger-action:hover {
+        background-color: #a82222;
+        color: white;
+        box-shadow: 0 0 10px rgba(168, 34, 34, 0.4);
+    }
+</style>
