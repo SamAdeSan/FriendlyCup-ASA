@@ -1,23 +1,27 @@
-<h2>Clasificación</h2>
-<p>Tabla de posiciones</p>
-
-<div class="stats-table-container">
-    <table class="stats-table">
-        <thead>
-        <tr>
-            <th>Posición</th>
-            <th>Equipo</th>
-            <th>Puntos</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for equipo in equipos %}
+<div class="section-content">
+    <h3>Tabla de Posiciones</h3>
+    <div class="stats-table-container">
+        <table class="stats-table">
+            <thead>
             <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ equipo.nombre }}</td>
-                <td>{{ equipo.puntos }}</td>
+                <th style="width: 50px;">Pos</th>
+                <th>Equipo</th>
+                <th style="text-align: center;">Puntos</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for equipo in equipos %}
+                <tr>
+                    <td><strong>{{ loop.index }}º</strong></td>
+                    <td>{{ equipo.nombre }}</td>
+                    <td style="text-align: center; font-weight: bold; color: #cdc832;">{{ equipo.puntos }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" style="text-align: center;">No hay equipos registrados aún.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>

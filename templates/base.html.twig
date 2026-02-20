@@ -31,19 +31,25 @@
             <div class="nav-buttons">
                 <nav id="navLogin">
                     {% if app.user %}
-                        {# Si el usuario está logueado #}
-                        <span class="user-welcome">Hola, {{ app.user.name }}</span>
-                        <button class="btn-secondary">
-                            <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
-                        </button>
+                        <div class="user-nav-wrapper">
+                            <a href="{{ path('user_profile', {'username': app.user.name}) }}" class="user-link">
+                                <div class="nav-avatar">
+                                    {% if app.user.foto %}
+                                        <img src="{{ asset('uploads/avatars/' ~ app.user.foto) }}?v={{ 'now'|date('U') }}" alt="Avatar">
+                                    {% else %}
+                                        <div class="nav-avatar-placeholder" style="color:#043f29; font-weight:bold;">
+                                            {{ app.user.name|first|upper }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <span class="user-welcome">Hola, {{ app.user.name }}</span>
+                            </a>
+
+                            <button class="btn-secondary logout">
+                                <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
+                            </button>
+                        </div>
                     {% else %}
-                        {# Si no está logueado #}
-                        <button class="btn-secondary">
-                            <a href="{{ path('app_login') }}">Iniciar Sesión</a>
-                        </button>
-                        <button class="btn-secondary">
-                            <a href="{{ path('app_register') }}">Registrarse</a>
-                        </button>
                     {% endif %}
                 </nav>
             </div>

@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
-{% block title %} Torneos {% endblock title %}
+{% block title %} FriendlyCup - {{ torneo.name }} {% endblock %}
+
 {% block body %}
     <div class="main-container-torneo">
+
         <main class="torneo-content">
+            {# Cabecera Profesional #}
             <section class="torneo-header-card">
                 <div class="header-info">
-                    <h1>{{torneo.name}}</h1>
-                    <span id="contador-seguidores">{{ torneo.seguidores}}</span> seguidores
+                    <h1>{{ torneo.name }}</h1>
+                    <p><span id="contador-seguidores">{{ torneo.getSeguidores() | length }}</span> seguidores</p>
                 </div>
                 <div class="header-actions">
                     {% if app.user == admin %}
@@ -14,39 +17,57 @@
                         <a href="{{ path('modificartorneo', {'id': torneo.id}) }}" class="btn-secondary">Modificar Torneo</a>
                         <a href="{{ path('torneoeliminado', {'id': torneo.id}) }}" class="btn-danger">Terminar Torneo</a>
                     {% else %}
-                        <button id="seguir" data-id="{{ torneo.id }}" class="{{ app.user.seguidos.contains(torneo) ? 'btn-danger' : 'btn-secondary' }}">{{ app.user.seguidos.contains(torneo) ? 'Dejar de seguir' : 'Seguir' }}</button>
+                        <button id="seguir" data-id="{{ torneo.id }}"
+                                class="{{ app.user.seguidos.contains(torneo) ? 'btn-danger' : 'btn-secondary' }}">
+                            {{ app.user.seguidos.contains(torneo) ? 'Dejar de seguir' : 'Seguir' }}
+                        </button>
                     {% endif %}
-                    
                 </div>
             </section>
-
             <nav class="navigator-torneos">
                 <ul>
                     <li><a href="#" id="resumen" class="tab active" data-url="{{ path('torneo_resumen', {id: torneo.id}) }}">Resumen</a></li>
                     <li><a href="#" id="clasificacion" class="tab" data-url="{{ path('torneo_clasificacion', {id: torneo.id}) }}">Clasificación</a></li>
-                    <li><a href="#" id="estadisticas" class="tab" data-url="{{ path('torneo_estadisticas', {id: torneo.id}) }}">Estadisticas</a></li>
+                    <li><a href="#" id="estadisticas" class="tab" data-url="{{ path('torneo_estadisticas', {id: torneo.id}) }}">Estadísticas</a></li>
                 </ul>
             </nav>
-
-            <section id="torneo-section" class="torneo-section"></section>
+            <section id="torneo-section" class="torneo-section">
+                <div class="loader-placeholder">Selecciona una pestaña para ver los datos...</div>
+            </section>
         </main>
 
         <aside class="sidebar-organizador">
             <div class="organizador-card">
                 <h3>Organizador</h3>
                 <hr>
-                <div class="org-info">
-                    <span>{{admin.name}}</span>
-                </div>
+                <a href="{{ path('user_profile', {'username': admin.name}) }}" class="org-link-wrapper">
+                    <div class="org-info">
+                        <div class="org-photo">
+                            {% if admin.foto %}
+                                <img src="{{ asset('uploads/avatars/' ~ admin.foto) }}" alt="">
+                            {% else %}
+                                {{ admin.name|first|upper }}
+                            {% endif %}
+                        </div>
+                        <span class="org-name">{{ admin.name }}</span>
+                    </div>
+                </a>
             </div>
 
             <div class="organizador-card link-box">
-                <p>Para fantasy</p>
-                <button type="button" id="unirseliga" data-url="{{ path('app_fantasy_anadirusuario') }}" data-torneo="{{ torneo.id }}">Unirme a la liga</button>
+                <p>¿Quieres competir?</p>
+                <button type="button" id="unirseliga"
+                        data-url="{{ path('app_fantasy_anadirusuario') }}"
+                        data-torneo="{{ torneo.id }}">
+                    Unirme a la Liga Fantasy
+                </button>
             </div>
 
-            <button class="btn-fantasy"><a href="{{ path('fantasycrear', {'id': torneo.id}) }}">Crear fantasy ligado</a></button>
+            <div class="btn-fantasy">
+                <a href="{{ path('fantasycrear', {'id': torneo.id}) }}">
+                    🏆 Crear Fantasy Ligado
+                </a>
+            </div>
         </aside>
     </div>
-
 {% endblock %}

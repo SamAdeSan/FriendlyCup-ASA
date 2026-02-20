@@ -1,28 +1,23 @@
-<h2>Estadísticas de jugadores</h2>
-{% for estadistica in estadisticas %}
-    <h1>{{ estadistica.evento }}</h1>
+<div class="section-content">
+    <h3>Rendimiento de Jugadores</h3>
     <div class="stats-table-container">
         <table class="stats-table">
             <thead>
-                <tr>
-                    <th>Jugador</th>
-                    <th>Puntos</th>
-                    <th>Valor de mercado</th>
-                </tr>
+            <tr>
+                <th>Jugador</th>
+                <th>Equipo</th>
+                <th style="text-align: center;">Puntos</th>
+            </tr>
             </thead>
             <tbody>
-                {% for jugadorEvento in estadistica.jugadorEventos %}
-                    <tr>
-                        <td>{{ jugadorEvento.jugador.nombre }}</td>
-                        <td>{{ jugadorEvento.cantidad }}</td>
-                        <td>{{ jugadorEvento.jugador.valorDeMercado }} €</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="3">No hay estadísticas disponibles</td>
-                    </tr>
-                {% endfor %}
+            {% for estadistica in estadisticas %}
+                <tr>
+                    <td>{{ estadistica.jugador.nombre }}</td>
+                    <td>{{ estadistica.jugador.equipo.nombre }}</td>
+                    <td style="text-align: center; color: #cdc832;">{{ estadistica.valor }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
-{% endfor %}
+</div>

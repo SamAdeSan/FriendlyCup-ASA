@@ -4,6 +4,7 @@
 
 {% block body %}
     <div class="main-container">
+<<<<<<< Updated upstream
         {# Columna Izquierda: Información del Usuario #}
         <aside style="flex: 1; margin-right: 40px;">
             <div class="section-container">
@@ -40,11 +41,46 @@
                                     ✕
                                 </button>
                             </form>
+=======
+        <aside style="flex: 1; margin-right: 40px;">
+            <div class="section-container">
+                <div style="margin-bottom: 20px;">
+                    <a href="javascript:history.back()" style="color: #cdc832; text-decoration: none; font-size: 0.9rem;">
+                        ← Volver atrás
+                    </a>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+                    <div class="profile-avatar-container" style="position: relative; width: 140px; height: 140px; margin: 0 auto 20px auto;">
+                        <div style="width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 3px solid #cdc832; background: #071926;">
+                            {% if user.foto %}
+                                <img src="{{ asset('uploads/avatars/' ~ user.foto) }}?v={{ 'now'|date('U') }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            {% else %}
+                                <img src="{{ asset('img/default-user-profile.png') }}" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                            {% endif %}
+                        </div>
+
+                        {# SOLO MOSTRAR EDICIÓN SI ES MI PERFIL #}
+                        {% if app.user and app.user.id == user.id %}
+                            <form action="{{ path('user_update_avatar') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
+                                <label for="avatar_input" class="btn-add-photo">
+                                    <span>+</span>
+                                    <input type="file" id="avatar_input" name="avatar" style="display: none;" onchange="document.getElementById('avatarForm').submit();">
+                                </label>
+                            </form>
+
+                            {% if user.foto %}
+                                <form action="{{ path('user_delete_avatar') }}" method="POST" onsubmit="return confirm('¿Eliminar tu foto de perfil?');">
+                                    <button type="submit" class="btn-delete-photo">✕</button>
+                                </form>
+                            {% endif %}
+>>>>>>> Stashed changes
                         {% endif %}
                     </div>
                 </div>
 
                 <div id="main-data">
+<<<<<<< Updated upstream
                     <p>Nombre y Apellidos: <a href="{{ path('user_profile', {'username': app.user.name}) }}"><span class="userDataText">{{ app.user.name }}</span></a></p>
                     <hr style="margin-top:10px;margin-bottom: 10px">
                     <p style="margin-bottom: 5px">Correo electrónico: <span class="userDataText">{{ app.user.email }}</span></p>
@@ -54,6 +90,16 @@
         </aside>
 
         {# Columna Derecha: Listado de Torneos #}
+=======
+                    <p>Nombre: <span class="userDataText">{{ user.name }}</span></p>
+                    <hr style="margin-top:10px;margin-bottom: 10px; border: 0.5px solid rgba(255,255,255,0.1)">
+                    <p style="margin-bottom: 5px">Correo: <span class="userDataText">{{ user.email }}</span></p>
+                </div>
+            </div>
+        </aside>
+
+        {# Listado de Torneos #}
+>>>>>>> Stashed changes
         <section class="section-container" style="flex: 2;">
             <h2>Mis torneos</h2>
             <hr>

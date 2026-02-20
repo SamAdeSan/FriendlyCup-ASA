@@ -6,15 +6,14 @@
     <div class="fantasy-main">
         <section id="RLCBlock">
             <h1>Equipo {{ equipo.id }} de {{ equipo.entrenador.name }}</h1>
-            <p class="budget-text" style="display: flex; justify-content: center; font-size: 25pt">Presupuesto -> <span id="budget"
-                                                       data-minimo="{{ liga.minimoJugadores }}"
-                                                       data-valor="{{ equipo.presupuesto }}"
-                                                       data-id="{{ equipo.id }}">
-            {{ equipo.presupuesto | number_format }} €
-        </span></p>
+            <p class="budget-text">
+                <span id="budget" data-minimo="{{ liga.minimoJugadores }}" data-valor="{{ equipo.presupuesto }}" data-id="{{ equipo.id }}">
+                    {{ equipo.presupuesto | number_format }} €
+                </span>
+            </p>
         </section>
 
-        <div class="main-container-fantasy">
+        <div class="main-container-fantasy" style="width: 100%;">
             <div class="torneo-content">
                 <h3>Mis jugadores</h3>
                 <div class="stats-table-container">

@@ -2,20 +2,20 @@
     box-sizing: border-box;
 }
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     color: #ffffff;
     margin: 0;
-    background: linear-gradient(-50deg, #0c314d, #0e1726, #043f29);
-    background-size: 200% 200%;
+    background: linear-gradient(-45deg, #061a2b, #0e1726, #032b1c, #0c314d);
+    background-size: 400% 400%;
     backdrop-filter: blur(10px);
-    animation: gradientMove 6s ease infinite;
+    animation: gradientMove 10s ease infinite;
     min-height: 100vh;
 }
 
 @keyframes gradientMove {
-    0% { background-position: 0 50% }
+    0% { background-position: 0% 50% }
     50% { background-position: 100% 50% }
-    100% { background-position: 0 50% }
+    100% { background-position: 0% 50% }
 }
 
 /* Titulo */
@@ -28,23 +28,27 @@ body {
     font-size: 30pt;
     margin-top: 50px;
     h1 {
-        padding: 50px;
-        border: 1px solid #fff;
-        border-radius: 5px;
+        padding: 40px 60px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
         margin: 20px;
-        background: linear-gradient(#082235, #021f14);
+        background: linear-gradient(135deg, rgba(8, 34, 53, 0.9), rgba(2, 31, 20, 0.9));
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
     p {
-        font-size: 15pt;
-        color: white;
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 300;
     }
 }
 
 /* --- Control del Logo --- */
 .main-logo {
-    height: 50px;
+    height: 45px;
     width: auto;
     display: block;
+    transition: transform 0.3s ease;
 }
 
 .logo-container {
@@ -53,11 +57,13 @@ body {
 }
 /* Navbar */
 .navigator-bar {
-    border-bottom: 1px solid #939393;
-    padding: 10px 20px;
+    border-bottom: 1px solid rgba(147, 147, 147, 0.3);
+    padding: 12px 20px;
     position: sticky;
     top: 0;
-    background: linear-gradient(-43deg, #0c314d, #0e1726, #0e1726, #043f29);
+    z-index: 1000;
+    background: rgba(14, 23, 38, 0.85);
+    backdrop-filter: blur(12px);
 }
 
 .nav-content {
@@ -71,35 +77,62 @@ body {
 .logoFC {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .search-container input {
-    padding: 8px;
+    padding: 10px 15px;
     width: 300px;
-    border: 1px solid #939393;
-    border-radius: 4px;
+    border: 1px solid rgba(147, 147, 147, 0.4);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: #cdc832;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .btn-cta, .btn-secondary {
     text-decoration: none;
-    padding: 8px 15px;
-    border: 1px solid #939393;
-    border-radius: 4px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
     color: #FFF;
     margin-left: 10px;
     font-size: 14px;
+    font-weight: 600;
     background: #223d60;
+    transition: all 0.3s ease;
 }
 
 .btn-cta:hover, .btn-secondary:hover {
-    transition: 50ms ease;
-    background: #38649c;
+    background: #325a8d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
+
+.btn-danger {
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #FFF;
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #7e0e14;
+    transition: all 0.3s ease;
+}
+
 .btn-danger:hover {
-    transition: 50ms ease;
     background: #c91a1a;
+    transform: translateY(-1px);
 }
+
 .btn-secondary a{
     color: #eee;
     text-decoration: none;
@@ -116,30 +149,34 @@ body {
 }
 /* Hero Section */
 .hero-section {
-    padding: 60px 20px;
+    padding: 80px 20px;
     text-align: center;
-    border-bottom: 1px solid #939393;
+    border-bottom: 1px solid rgba(147, 147, 147, 0.2);
 }
 
 .hero-content h1 {
-    font-size: 48px;
-    margin-bottom: 30px;
+    font-size: 56px;
+    margin-bottom: 25px;
+    font-weight: 800;
+    letter-spacing: -1px;
 }
 
 .hero-cta {
     display: inline-block;
-    padding: 15px 40px;
-    border: 2px solid #939393;
+    padding: 16px 45px;
+    border: none;
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
     color: white;
     background: #043f29;
-
+    box-shadow: 0 4px 15px rgba(4, 63, 41, 0.4);
+    transition: all 0.3s ease;
 }
 
 .hero-cta:hover {
     background: #075e3c;
+    transform: scale(1.05);
 }
 
 /* Contenedor Principal */
@@ -181,16 +218,17 @@ hr {
 
 /* Tarjetas (Cards) */
 .card {
-    margin-top: 12px;
-    border: 1px solid #6b6b6b;
-    border-radius: 6px;
-    background: linear-gradient(135deg, #071926, #0b2233);
+    margin-top: 15px;
+    border: 1px solid rgba(107, 107, 107, 0.4);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(7, 25, 38, 0.8), rgba(11, 34, 51, 0.9));
     width: fit-content;
-    padding: 10px 4px 10px 4px;
+    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    transition: transform 0.3s ease;
     a {
         text-decoration: none;
         color: #fff;
@@ -207,6 +245,11 @@ hr {
         padding-top: 15px;
         margin: 8px 0 10px;
     }
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #cdc832;
 }
 
 .card-info {
@@ -231,12 +274,12 @@ hr {
 }
 /* Datos del usuario*/
 #main-data {
-    background: linear-gradient(135deg, #071926, #0b2233);
-    border: 1px solid #6b6b6b;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 25px;
-    color: #ffffff;
+    background: rgba(11, 34, 51, 0.6);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(107, 107, 107, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
 }
 
 #main-data p {
@@ -268,17 +311,19 @@ hr {
 
 /* Register y login, creación de torneo */
 .register-page, .login-page, .crear-torneo, .crear-equipo, .crear-jugador, .editar-equipo, .editar-torneo, .editar-jugador, .RLC-page, .crear-liga {
-    margin: 110px 270px;
-    padding: 12px 0;
-    border: 1px solid #bebebe;
-    border-top-color: transparent;
-    border-bottom-color: transparent;
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
     flex-wrap: wrap;
     width: auto;
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    border: 1px solid rgba(190, 190, 190, 0.2);
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
     form {
         display: flex;
         flex-direction: column;
@@ -303,13 +348,15 @@ hr {
         text-decoration: initial;
         display: inline-block;
         padding: 6px;
-        margin: 1px 10px;
-        border: 2px solid #939393;
         border-radius: 50px;
         text-decoration: none;
         font-weight: bold;
         color: white;
         background: #043f29;
+        width: 100%;
+        margin: 10px 0;
+        background: rgba(4, 63, 41, 0.3);
+        border: 1px solid rgba(147, 147, 147, 0.5);
     }
     #formActionButtons {
         display: flex;
@@ -569,6 +616,49 @@ hr {
     }
 }
 
+/* Presupuesto del Fantasy */
+
+.budget-text { /* contenedor */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
+    padding: 12px 35px;
+    width: fit-content;
+
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.4rem !important;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* El número del presupuesto */
+#budget {
+    margin-left: 15px;
+    color: #cdc832;
+    font-weight: 800;
+    font-size: 2rem;
+    text-shadow: 0 0 20px rgba(205, 200, 50, 0.4);
+    font-family: 'Monaco', 'Consolas', monospace; /* Fuente mono para que los números no bailen */
+}
+
+.budget-text {
+    color: transparent;
+}
+
+.budget-text::before {
+    content: "Saldo Disponible";
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
 
 /* Footer */
 footer {
@@ -576,7 +666,9 @@ footer {
     left: 0;
     width: 100%;
     height: anchor-size(25%) !important;
-    background: #222;
+    margin-top: 50px;
+    background: #070d16;
+    border-top: 1px solid rgba(255,255,255,0.05);
 }
 
 footer div {
@@ -594,14 +686,17 @@ footer p {
     color: #777;
 }
 
-/*css de torneos*/
+/* <==| CSS DE LOS TORNEOS |==> */
+
 /* --- Ajustes de la página de Torneo --- */
 .main-container-torneo {
-    max-width: 1200px;
-    margin: 124px auto;
-    display: flex;
-    gap: 20px;
-    padding: 0 20px;
+    max-width: 1250px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 30px;
+    padding: 0 25px;
+    align-items: start;
 }
 
 .main-container-fantasy {
@@ -614,7 +709,7 @@ footer p {
 
 /* Columna Principal */
 .torneo-content {
-    flex: 3; /* Ocupa más espacio */
+    flex: 3;
     padding-right: 20px;
     border-right: 1px solid #ffffff;
 }
@@ -625,19 +720,32 @@ footer p {
 }
 
 .torneo-header-card {
-    border: 1px solid #939393;
-    border-radius: 3px;
-    padding: 20px;
+    background: linear-gradient(135deg, rgba(14, 23, 38, 0.95), rgba(20, 32, 53, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
+    align-items: center;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
 }
 
 .torneo-header-card h1 {
-    font-size: 32px;
+    font-size: 36px;
+    font-weight: 800;
     margin: 0;
+    color: #ffffff;
+    letter-spacing: -0.5px;
 }
+
+.torneo-header-card p {
+    color: #9fb3c8;
+    margin: 5px 0 0 0;
+    font-size: 0.95rem;
+}
+
 .header-actions {
     display: flex;
     flex-direction: column;
@@ -645,13 +753,124 @@ footer p {
     align-items: flex-end;
 }
 
-/* Navegación interna (Pestañas) */
-.navigator-torneos ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
+.link-box {
+    background: linear-gradient(135deg, #043f29 0%, #061a2b 100%);
+    border: 1px solid #cdc832;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.link-box h4 {
+    color: #ffffff;
     margin-bottom: 10px;
-    justify-content: space-between;
+    font-size: 1.2rem;
+}
+
+.link-box p {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#unirseliga {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background: #cdc832;
+    color: #0e1726;
+    border: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#unirseliga:hover {
+    background: #e6e03a;
+    transform: translateY(-2px);
+}
+
+.btn-gold-action {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    background: #cdc832;
+    color: #0e1726;
+    border: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-gold-action:hover {
+    background: #f0eb4c;
+    box-shadow: 0 0 20px rgba(205, 200, 50, 0.4);
+    transform: scale(1.02);
+}
+
+.btn-fantasy {
+    background: transparent;
+    border: 2px solid #cdc832;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.btn-fantasy a {
+    display: block;
+    padding: 12px;
+    color: #cdc832;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-fantasy:hover {
+    background: #cdc832;
+}
+
+.btn-fantasy:hover a {
+    color: #0e1726;
+}
+
+.btn-fantasy-secondary {
+    display: block;
+    margin-top: 15px;
+    padding: 10px;
+    text-align: center;
+    color: #cdc832;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border: 1px solid rgba(205, 200, 50, 0.3);
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-fantasy-secondary:hover {
+    background: rgba(205, 200, 50, 0.1);
+}
+
+/* Navegación interna (Pestañas) */
+
+.navigator-torneos {
+    margin-bottom: 0;
+    position: relative;
+    z-index: 5;
+}
+
+.navigator-torneos ul {
+    border-bottom: 2px solid white !important;
+    display: flex;
+    gap: 5px;
+    padding: 0 0 0 10px;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    z-index: 10;
 }
 
 .navigator-torneos a {
@@ -665,14 +884,222 @@ footer p {
 .navigator-torneos a.active {
     font-weight: bold;
 }
-
-/* Cajas de Datos (Resumen/Partidos) */
+/************************************/
 .torneo-section {
-    border: 1px solid #939393;
+    min-height: 400px;
     padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
 }
 
-/* Tablas */
+.tabs-list {
+    display: flex;
+    gap: 5px;
+    padding: 0 20px;
+    list-style: none;
+    margin: 0;
+}
+
+.tab {
+    padding: 10px 25px;
+    color: #9fb3c8;
+    text-decoration: none;
+    border: 2px solid transparent !important;
+    border-bottom: none !important;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: -2px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.2s;
+    display: inline-block;
+}
+
+.tab:hover:not(.active) {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tab.active {
+    background: #0e1726 !important;
+    color: #cdc832 !important;
+    border: 2px solid white !important;
+    border-bottom: 2px solid #0e1726 !important;
+    z-index: 11;
+    font-weight: bold;
+}
+
+.torneo-section {
+    border: 2px solid white !important;
+    border-top: none !important;
+    background: #0e1726;
+    border-radius: 0 15px 15px 15px;
+    padding: 30px;
+    margin-top: 0;
+    position: relative;
+    z-index: 5;
+    min-height: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#torneo-section > div {
+    width: 100%;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.torneo-section-canvas {
+    background: #0e1726;
+    border: 1px solid #ffffff;
+    border-radius: 0 10px 10px 10px;
+    padding: 25px;
+    margin-top: 0;
+}
+
+/* --- Tarjeta de Perfil del organizador --- */
+.org-layout {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+}
+
+.org-avatar-frame {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #cdc832;
+    background: #071926;
+}
+
+.org-avatar-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.org-tag {
+    font-size: 0.75rem;
+    color: #cdc832;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.org-link-wrapper:hover .org-avatar-frame {
+    transform: translateX(5px);
+    box-shadow: 0 0 15px rgba(205, 200, 50, 0.4);
+}
+
+.organizador-card {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+}
+
+.organizador-card:hover {
+    border-color: #cdc832;
+    background: rgba(205, 200, 50, 0.05);
+    transform: translateY(-3px);
+}
+
+.organizador-card h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #cdc832;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.organizador-card:hover {
+    border-color: #cdc832;
+    background: rgba(205, 200, 50, 0.05);
+}
+
+.org-link-wrapper {
+    text-decoration: none;
+    transition: transform 0.2s;
+    display: block;
+}
+
+.org-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.org-photo {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #cdc832;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #071926;
+    color: #cdc832;
+    font-weight: bold;
+}
+
+.org-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.org-name {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.data-box {
+    border: 1px solid #939393;
+    padding: 15px;
+    margin-top: 15px;
+    min-height: 100px;
+}
+
+.placeholder-row {
+    height: 30px;
+    border: 1px solid #939393;
+    margin-top: 10px;
+    width: 60%;
+}
+
+/* Barra Lateral (Sidebar) */
+.sidebar-organizador {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.img-placeholder {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #939393;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.loader-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: rgba(255,255,255,0.3);
+    font-style: italic;
+}
+
+/* TABLAS */
 .stats-table-container, .equipos {
     margin-top: 20px;
     border: 1px solid #6b6b6b;
@@ -729,44 +1156,6 @@ tbody a:hover {
     border-top: 1px solid #fff;
 }
 
-/* Otras de organizador */
-.data-box {
-    border: 1px solid #939393;
-    padding: 15px;
-    margin-top: 15px;
-    min-height: 100px;
-}
-
-.placeholder-row {
-    height: 30px;
-    border: 1px solid #939393;
-    margin-top: 10px;
-    width: 60%;
-}
-
-/* Barra Lateral (Sidebar) */
-.sidebar-organizador {
-    flex: 1; /* Columna más estrecha */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.organizador-card {
-    border: 1px solid #939393;
-    padding: 15px;
-}
-
-.img-placeholder {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #939393;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-}
-
 /* Botones específicos del boceto */
 .btn-cta-round {
     border: 1px solid #939393;
@@ -776,45 +1165,131 @@ tbody a:hover {
     color: black;
 }
 
-#unirseliga {
+/** PERFIL DEL USUARIO **/
+
+.profile-avatar-container {
+    position: relative;
+    width: 140px;
+    height: 140px;
+}
+
+.btn-add-photo {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #cdc832;
+    color: #071926;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 8px 10px;
-    border: 2px solid #939393;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    background: #043f29;
-    width: fit-content;
-    color: #fff;
-}
-
-#unirseliga:hover {
-    background: #075e3c;
-}
-
-.btn-fantasy {
-    padding: 10px;
-    border: 1px solid #939393;
     cursor: pointer;
+    border: 3px solid #071926;
     font-weight: bold;
-    display: flex;
-    justify-content: center;
-    border-radius: 10px;
-    text-decoration: none;
-    color: white;
-    background: #082235;
-    width: 100%;
-    a {
-        text-decoration: none;
-        color: #fff;
-    }
+    font-size: 20px;
+    transition: all 0.2s ease;
+    z-index: 10;
 }
 
-.btn-fantasy:hover {
-    background: #04373f;
+.btn-add-photo:hover {
+    transform: scale(1.1);
+    background: #ffffff;
 }
-/*  DISEÑO RESPONSIVO  */
+
+.btn-delete-photo {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ff4d4d;
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border: 2px solid #071926;
+}
+
+.btn-delete-photo {
+    position: absolute; top: 5px; right: 10px;
+    background: #7e0e14; border: 1px solid #939393;
+    border-radius: 50%; width: 25px; height: 25px;
+    color: white; font-size: 12px; cursor: pointer;
+}
+
+/* = FOTO DEL USUARIO EN LA BASE (BARRA DE NAVEGACIÓN)*/
+
+/* Contenedor principal del bloque de usuario */
+.user-nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio entre foto, nombre y botón */
+    background: rgba(255, 255, 255, 0.05); /* Un toque de fondo sutil */
+    padding: 5px 15px;
+    border-radius: 50px; /* Estilo píldora */
+    border: 1px solid rgba(205, 200, 50, 0.2);
+}
+
+/* Enlace que envuelve foto y nombre */
+.user-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.user-link:hover {
+    transform: translateY(-1px);
+}
+
+/* Círculo del Avatar */
+.nav-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #cdc832;
+    background: #071926;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Evita que se aplaste */
+}
+
+.nav-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Texto de bienvenida */
+.user-welcome {
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap; /* Evita que el nombre salte de línea */
+}
+
+#navLogin .btn-secondary:hover {
+    background: #043f29;
+}
+
+#navLogin .btn-secondary.:hover {
+    background: #7e0e14;
+}
+
+#navLogin .btn-secondary:hover a {
+    color: white;
+}
+
+/* == DISEÑO RESPONSIVO == */
 
 /*Menos de 768px */
 @media (max-width: 768px) {
@@ -832,30 +1307,58 @@ tbody a:hover {
     }
 
     .search-container input {
-        width: 100%; /* El buscador se enchanza */
+        width: 100%;
     }
 
-    /*Texto más pequeño */
     .hero-content h1 {
         font-size: 28px;
     }
 
     /*Página de Torneo */
     .main-container-torneo {
-        flex-direction: column; /* La columna lateral baja al final */
+        flex-direction: column;
     }
 
     .torneo-content,
     .sidebar-organizador {
-        flex: none;
-        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 
     /*Pestañas del Torneo: Permitir deslizar horizontal*/
+    .navigator-torneos {
+        margin-bottom: 20px;
+    }
+
     .navigator-torneos ul {
-        overflow-x: auto;
-        white-space: nowrap;
-        padding-bottom: 5px;
+        display: flex;
+        gap: 10px;
+        list-style: none;
+        padding: 0;
+        border-bottom: 1px solid rgba(147, 147, 147, 0.2);
+    }
+
+    .navigator-torneos a {
+        padding: 12px 25px;
+        display: inline-block;
+        text-decoration: none;
+        color: #9fb3c8;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        border-bottom: 3px solid transparent;
+    }
+
+    .navigator-torneos a:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .navigator-torneos a.active {
+        color: #cdc832;
+        border-bottom: 3px solid #cdc832;
+        background: rgba(205, 200, 50, 0.05);
     }
 
     /*Ajustar botones */
@@ -962,3 +1465,37 @@ form[id="formTorneo"] button[type="submit"]:hover {
     padding-top: 20px;
     border-top: 1px solid #939393;
 }
+/* EXTRAS (webkits, arreglos, etc.) */
+
+/* Esto controla el color del fondo y del texto cuando el navegador autocompleta */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #043f29 inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ***ANIMACIONES*** */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+.delay-4 { animation-delay: 0.8s; }
