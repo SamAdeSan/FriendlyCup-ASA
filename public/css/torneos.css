@@ -385,3 +385,26 @@
     text-decoration: none;
     color: black;
 }
+
+/* Enlace Gestionar Disputas */
+.btn-gestionar {
+    display: inline-block;
+    padding: 6px 15px;
+    background: linear-gradient(135deg, #0e1726, #043f29);
+    border: 1px solid #cdc832;
+    border-radius: 6px;
+    color: #cdc832 !important;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-gestionar:hover {
+    background: #cdc832;
+    color: #0e1726 !important;
+    box-shadow: 0 0 15px rgba(205, 200, 50, 0.4);
+    transform: translateY(-2px);
+}

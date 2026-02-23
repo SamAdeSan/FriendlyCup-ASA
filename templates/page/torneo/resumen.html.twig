@@ -21,9 +21,9 @@
 {% for disputa in disputas %}
     <p id="disputa">{{disputa.equipo1.nombre}}: {{disputa.resultado}} {{disputa.equipo2.nombre}}</p>
     {% if app.user == admin %}
-        <a href="{{ path('disputa', {'id': disputa.id}) }}" class="btn btn-sm btn-outline-info">
-    Gestionar
-</a>
+        <a href="{{ path('disputa', {'id': disputa.id}) }}" class="btn-gestionar">
+            Gestionar
+        </a>
     <a class="eliminardisputa btn-danger" href="{{ path('eliminardisputas', {'id': disputa.id}) }}">Eliminar</a>
     {% endif %}
 {% else %}
