@@ -13,8 +13,18 @@
                     <input type="hidden" name="jugador_id" id="input-jugador-id">
                     
                     <div class="mb-3">
-                        <label for="input-cantidad" class="form-label">Cantidad (Goles/Puntos)</label>
-                        <input type="number" name="cantidad" id="input-cantidad" class="form-control bg-secondary text-white" required>
+                        <label for="select-evento" class="form-label">Evento</label>
+                        <select name="evento_id" id="select-evento" class="form-select bg-secondary text-white" required>
+                            <option value="" disabled selected>Selecciona un evento</option>
+                            {% for evento in eventos %}
+                                <option value="{{ evento.id }}">{{ evento.evento }} ({{ evento.puntos }} pts)</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="input-cantidad" class="form-label">Cantidad</label>
+                        <input type="number" name="cantidad" id="input-cantidad" class="form-control bg-secondary text-white" min="1" value="1" required>
                     </div>
                 </div>
                 <div class="modal-footer">

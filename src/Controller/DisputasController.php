@@ -8,8 +8,11 @@ use App\Repository\EquiposRepository;
 use App\Repository\TorneoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Torneo;
+use App\Entity\JugadorEvento;
 use App\Repository\JugadorEventoRepository;
-use App\Repository\FantasyRepository;
+use App\Repository\EventoRepository;
+use App\Repository\JugadoresRepository;
+use App\Repository\EquipoFantasyRepository;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,19 +22,48 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class DisputasController extends AbstractController
 {
-    #[Route('/anadircantidad/{id}/{cantidad}', name: 'anadircantidad')]
-    public function anadircantidad(int $id, int $cantidad, EntityManagerInterface $entityManager, JugadorEventoRepository $jugadoreventoRepository): JsonResponse
-    {
-        $jugadorevento = $jugadoreventoRepository->find($id);
+    #[Route('/anadircantidad/{jugador_id}/{evento_id}/{cantidad}', name: 'anadircantidad', methods: ['POST'])]
+    public function anadircantidad(
+        int $jugador_id, 
+        int $evento_id, 
+        int $cantidad, 
+        EntityManagerInterface $entityManager, 
+        JugadorEventoRepository $jugadoreventoRepository,
+        JugadoresRepository $jugadoresRepository,
+        EventoRepository $eventoRepository
+    ): JsonResponse {
+        $jugador = $jugadoresRepository->find($jugador_id);
+        $evento = $eventoRepository->find($evento_id);
+
+        if (!$jugador || !$evento) {
+            return new JsonResponse(['error' => 'Jugador o Evento no encontrado'], 404);
+        }
+
+        // Buscamos si ya existe la relación Jugador-Evento
+        $jugadorevento = $jugadoreventoRepository->findOneBy([
+            'jugador' => $jugador,
+            'evento' => $evento
+        ]);
+
+        if (!$jugadorevento) {
+            $jugadorevento = new JugadorEvento();
+            $jugadorevento->setJugador($jugador);
+            $jugadorevento->setEvento($evento);
+            $jugadorevento->setCantidad(0);
+        }
+
         $jugadorevento->setCantidad($jugadorevento->getCantidad() + $cantidad);
-        $puntos = $cantidad*$jugadorevento->getEvento()->getPuntos();
-        foreach ($jugadorevento->getJugador()->getEquipoFantasies() as $fantasy) {
+        $puntos = $cantidad * $evento->getPuntos();
+
+        foreach ($jugador->getEquipoFantasies() as $fantasy) {
             $fantasy->setPuntos($fantasy->getPuntos() + $puntos);
             $entityManager->persist($fantasy);
         }
+
         $entityManager->persist($jugadorevento);
         $entityManager->flush();
-        return new JsonResponse($jugadorevento->getId());
+
+        return new JsonResponse(['status' => 'success', 'id' => $jugadorevento->getId()]);
     }
     #[Route('/disputa/crear', name: 'creardisputas', methods: ['POST'])]
     public function crearDisputas(Request $request, EntityManagerInterface $entityManager, EquiposRepository $equiposRepository, TorneoRepository $torneoRepository): JsonResponse
@@ -93,7 +125,7 @@ final class DisputasController extends AbstractController
         $entityManager->flush();
     }
     #[Route('/disputa/{id}', name: 'disputa')]
-    public function disputaindex(DisputasRepository $disputasRepository, int $id): Response
+    public function disputaindex(DisputasRepository $disputasRepository, EventoRepository $eventoRepository, int $id): Response
 {
     // Buscamos la disputa específica por su ID
     $disputa = $disputasRepository->find($id);
@@ -106,6 +138,7 @@ final class DisputasController extends AbstractController
         'disputa' => $disputa,
         'equipo1' => $disputa->getEquipo1(),
         'equipo2' => $disputa->getEquipo2(),
+        'eventos' => $eventoRepository->findBy(['torneo' => $disputa->getTorneo()]),
     ]);
 }
 }
