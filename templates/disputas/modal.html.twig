@@ -1,0 +1,26 @@
+{# /disputas/modal.html.twig #}
+<div class="modal fade" id="modalEvento" tabindex="-1" aria-labelledby="modalEventoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white" style="border: 1px solid rgba(255,255,255,0.2);">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEventoLabel">Añadir Puntos a <span id="modal-nombre-jugador"></span></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="jugador_id" id="input-jugador-id">
+                    <input type="hidden" name="evento_id" value="{{ disputa.id }}">
+                    
+                    <div class="mb-3">
+                        <label for="input-cantidad" class="form-label">Cantidad (Goles/Puntos)</label>
+                        <input type="number" name="cantidad" id="input-cantidad" class="form-control bg-secondary text-white" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,8 @@ use App\Repository\EquiposRepository;
 use App\Repository\TorneoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Torneo;
+use App\Repository\JugadorEventoRepository;
+use App\Repository\FantasyRepository;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +19,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class DisputasController extends AbstractController
 {
-    #[Route('/disputa', name: 'app_disputas')]
-    public function index(): Response
+    #[Route('/anadircantidad/{id}/{cantidad}', name: 'anadircantidad')]
+    public function anadircantidad(int $id, int $cantidad, EntityManagerInterface $entityManager, JugadorEventoRepository $jugadoreventoRepository): JsonResponse
     {
-        return $this->render('disputas/index.html.twig', [
-            'controller_name' => 'DisputasController',
-        ]);
+        $jugadorevento = $jugadoreventoRepository->find($id);
+        $jugadorevento->setCantidad($jugadorevento->getCantidad() + $cantidad);
+        $puntos = $cantidad*$jugadorevento->getEvento()->getPuntos();
+        foreach ($jugadorevento->getJugador()->getEquipoFantasies() as $fantasy) {
+            $fantasy->setPuntos($fantasy->getPuntos() + $puntos);
+            $entityManager->persist($fantasy);
+        }
+        $entityManager->persist($jugadorevento);
+        $entityManager->flush();
+        return new JsonResponse($jugadorevento->getId());
     }
     #[Route('/disputa/crear', name: 'creardisputas', methods: ['POST'])]
     public function crearDisputas(Request $request, EntityManagerInterface $entityManager, EquiposRepository $equiposRepository, TorneoRepository $torneoRepository): JsonResponse
