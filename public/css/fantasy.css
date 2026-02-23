@@ -1,0 +1,210 @@
+.main-container-fantasy {
+    max-width: 1200px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.fantasy-main {
+    border: 1px solid #bebebe;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: auto;
+}
+
+.fantasy-main form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 12px;
+}
+
+.fantasy-main span {
+    margin: 5px;
+}
+
+.fantasy-main span a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.fantasy-main p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.fantasy-main input {
+    text-decoration: initial;
+    display: inline-block;
+    padding: 6px;
+    margin: 1px 10px;
+    border: 2px solid #939393;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    background: #043f29;
+}
+
+.fantasy-main #formActionButtons {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin: 6px;
+    padding: 10px;
+}
+
+.fantasy-main button {
+    display: flex;
+    justify-content: center;
+    padding: 8px 10px;
+    margin: 1px 10px;
+    border: 2px solid #939393;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    background: #043f29;
+    width: fit-content;
+}
+
+.fantasy-main button:hover {
+    background: #075e3c;
+}
+
+.fantasy-main #cancelar {
+    background: #3f0404;
+    width: 90px;
+}
+
+.fantasy-main #cancelar:hover {
+    background: #710909;
+}
+
+.fantasy-main #volver {
+    background: #04373f;
+    width: 180px;
+}
+
+.fantasy-main #volver:hover {
+    background: #097687;
+}
+
+.fantasy-main #RLCBlock {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.fantasy-main #RLCBlock #text {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.fantasy-main #RLCBlock h1 {
+    font-size: 40pt;
+}
+
+.fantasy-main #RLCForm #ErrInvalid {
+    padding: 8px 10px;
+    margin: 10px 10px;
+    border: 1px solid #939393;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    background: #710909;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+}
+
+.fantasy-main #ErrInvalid {
+    padding: 20px;
+}
+
+#btnmostrarform {
+    margin-bottom: 10px;
+}
+
+#formnuevadisputa {
+    margin-top: 20px;
+    padding: 15px;
+}
+
+#formnuevadisputa select {
+    padding: 10px;
+    border-radius: 5px;
+    border-color: #FFFFFF;
+    background: linear-gradient(-90deg, #0b2233, #0c314d);
+    color: #FFFFFF;
+}
+
+#formnuevadisputa option {
+    color: lightgray;
+    background-color: #0c314d;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #333333;
+}
+
+#formnuevadisputa button {
+    padding: 8px 10px;
+    margin: 1px 10px;
+    border: 2px solid #939393;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    background: #043f29;
+    width: fit-content;
+}
+
+#formnuevadisputa button:hover {
+    background: #075e3c;
+}
+
+.budget-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
+    padding: 12px 35px;
+    width: fit-content;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    color: transparent;
+    font-size: 1.4rem !important;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.budget-text::before {
+    content: "Saldo Disponible";
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+#budget {
+    margin-left: 15px;
+    color: #cdc832;
+    font-weight: 800;
+    font-size: 2rem;
+    text-shadow: 0 0 20px rgba(205, 200, 50, 0.4);
+    font-family: 'Monaco', 'Consolas', monospace;
+}

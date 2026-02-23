@@ -1,0 +1,141 @@
+.stats-table-container,
+.equipos {
+    margin-top: 20px;
+    border: 1px solid #6b6b6b;
+    border-radius: 6px;
+    padding: 15px;
+    background: linear-gradient(135deg, #071926, #0b2233);
+}
+
+.stats-table,
+.editar-equipo {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.stats-table thead th,
+.editar-equipo thead th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #6b6b6b;
+    font-weight: 600;
+    color: #eaeaea;
+}
+
+.stats-table tbody td,
+.editar-equipo tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stats-table tbody tr:last-child td,
+.editar-equipo tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.stats-table tbody tr:hover,
+.editar-equipo tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease-in-out;
+}
+
+tbody a {
+    text-decoration: none;
+    color: #fff;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 3px;
+    width: fit-content;
+}
+
+tbody a:hover {
+    background: #04373f;
+}
+
+.equipos {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #fff;
+}
+
+.puntos-badge {
+    background: rgba(205, 200, 50, 0.1);
+    color: #cdc832;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(205, 200, 50, 0.3);
+    font-weight: bold;
+}
+
+.stats-table-container,
+.equipos {
+    margin-top: 20px;
+    border: 1px solid #6b6b6b;
+    border-radius: 6px;
+    padding: 15px;
+    background: linear-gradient(135deg, #071926, #0b2233);
+}
+
+.stats-table,
+.editar-equipo {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.stats-table thead th,
+.editar-equipo thead th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #6b6b6b;
+    font-weight: 600;
+    color: #eaeaea;
+}
+
+.stats-table tbody td,
+.editar-equipo tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stats-table tbody tr:last-child td,
+.editar-equipo tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.stats-table tbody tr:hover,
+.editar-equipo tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease-in-out;
+}
+
+tbody a {
+    text-decoration: none;
+    color: #fff;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 3px;
+    width: fit-content;
+}
+
+tbody a:hover {
+    background: #04373f;
+}
+
+.equipos {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #fff;
+}
+
+.puntos-badge {
+    background: rgba(205, 200, 50, 0.1);
+    color: #cdc832;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(205, 200, 50, 0.3);
+    font-weight: bold;
+}

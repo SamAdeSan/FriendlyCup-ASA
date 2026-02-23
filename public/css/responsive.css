@@ -1,0 +1,431 @@
+/* ==========================================
+   SISTEMA RESPONSIVO FRIENDLYCUP
+   ========================================== */
+
+/* Clases de Utilidad (Layout Flexible) */
+.flex-column-mobile {
+    display: flex;
+    flex-direction: row;
+}
+
+.w-100-mobile {
+    width: auto;
+}
+
+.hide-mobile {
+    display: block;
+}
+
+/* Tablets y pantallas grandes */
+@media (max-width: 1024px) {
+
+    /* Ajuste de los contenedores principales que tienen anchos fijos */
+    .main-container,
+    .main-container-torneo,
+    .nav-content,
+    .contenedor-principal {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-direction: column !important;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+
+    /* La columna principal y el aside ahora ocupan todo el ancho */
+    .torneo-content,
+    .sidebar-organizador,
+    aside {
+        width: 100% !important;
+        border-right: none !important;
+        padding-right: 0 !important;
+        margin-top: 20px;
+    }
+
+    /* Grid de tarjetas */
+    .grid-layout {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    }
+
+    .lower-sections {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    * {
+        box-sizing: border-box;
+    }
+
+    body,
+    html {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    /* Tipografías */
+    .fc-title h1 {
+        font-size: 2rem;
+        padding: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    /* Títulos */
+    .crear-torneo h2 {
+        font-size: 1.8rem !important;
+        text-align: center;
+    }
+
+    /*Navbar*/
+    .nav-content {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .nav-links {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        font-size: 0.8rem;
+    }
+
+    .search-container {
+        width: 100%;
+        order: 3;
+    }
+
+    .search-container input {
+        width: 100%;
+    }
+
+    .user-nav-wrapper {
+        width: 100%;
+        justify-content: center;
+        padding: 8px;
+    }
+
+    .user-welcome {
+        display: none;
+    }
+
+    /* Layout Principal */
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* Aside */
+    aside {
+        width: 100% !important;
+        margin: 20px 0 0 0 !important;
+    }
+
+    /* Tablas */
+
+    .equipos .stats-table,
+    .equipos .stats-table tbody,
+    .equipos .stats-table tr,
+    .equipos .stats-table td {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .equipos .stats-table tr {
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .equipos .stats-table td {
+        text-align: center !important;
+        padding: 5px 0;
+    }
+
+    .stats-table-container {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .stats-table,
+    .stats-table tbody,
+    .stats-table tr,
+    .stats-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .stats-table thead {
+        display: none;
+    }
+
+    .stats-table tr {
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(147, 147, 147, 0.3);
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .stats-table td {
+        text-align: center !important;
+        border-bottom: none !important;
+        padding: 5px 0;
+    }
+
+    /*Página de Torneo */
+    .main-container-torneo {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .torneo-content {
+        width: 100% !important;
+        order: 1;
+    }
+
+    .sidebar-organizador {
+        width: 100% !important;
+        margin: 30px 0 0 0 !important;
+        order: 2;
+        /* El organizador baja al final */
+        display: block !important;
+    }
+
+    /*Pestañas del Torneo: Permitir deslizar horizontal*/
+    .navigator-torneos {
+        margin-bottom: 20px;
+    }
+
+    .navigator-torneos ul {
+        display: flex !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        padding-bottom: 10px;
+    }
+
+    .navigator-torneos ul::-webkit-scrollbar {
+        display: none;
+    }
+
+    .navigator-torneos li {
+        flex: 0 0 auto;
+    }
+
+    .torneo-header-card {
+        padding: 20px 10px !important;
+    }
+
+    .header-actions {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .header-actions a,
+    .header-actions button {
+        width: 100% !important;
+    }
+
+    .navigator-torneos a {
+        padding: 12px 25px;
+        display: inline-block;
+        text-decoration: none;
+        color: #9fb3c8;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        border-bottom: 3px solid transparent;
+    }
+
+    .navigator-torneos a:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .navigator-torneos a.active {
+        color: #cdc832;
+        border-bottom: 3px solid #cdc832;
+        background: rgba(205, 200, 50, 0.05);
+    }
+
+    .tab {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    /* Formularios Register y Login */
+    .register-page,
+    .login-page,
+    .crear-torneo,
+    .RLC-page {
+        margin: 20px 10px;
+        padding: 20px;
+        width: calc(100% - 20px);
+    }
+
+    /* Ajustar botones */
+    .torneo-header-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .header-actions {
+        align-items: center;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    /* Layout del usuario y sidebar */
+    .main-container {
+        flex-direction: column;
+    }
+
+    .sidebar-organizador {
+        order: 2;
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 30px;
+    }
+
+    .profile-avatar-container {
+        transform: scale(0.9);
+    }
+
+    /* Botones */
+    .hero-cta,
+    .btn-gold,
+    .btn-subir,
+    .vender {
+        width: 100%;
+        padding: 15px;
+        font-size: 1rem;
+        display: block;
+        text-align: center;
+    }
+
+    /* Formularios de Creación/Edición */
+    .crear-torneo,
+    .editar-torneo,
+    .crear-equipo,
+    .crear-jugador,
+    .editar-jugador {
+        width: 95% !important;
+        max-width: 100% !important;
+        margin: 10px auto !important;
+        padding: 20px 15px !important;
+        display: block !important;
+    }
+
+
+    #RLCBlock h1,
+    #RLCBlock h2 {
+        font-size: 1.5rem !important;
+        word-wrap: break-word;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.3;
+    }
+
+    #RLCForm,
+    form[id^="form"] {
+        width: 100% !important;
+    }
+
+    form[id^="form"] input,
+    form[id^="form"] select,
+    form[id^="form"] textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 10px 0 !important;
+    }
+
+    /* Botones de acción apilados */
+    .botones-accion {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .botones-accion button,
+    .botones-accion a,
+    #cancelar,
+    #btn-add-equipo {
+        width: 100% !important;
+        display: block !important;
+        text-align: center;
+        margin: 0 !important;
+        padding: 15px !important;
+    }
+
+    /* 5. Gestión de Disputa (index.html.twig) */
+    .contenedor-principal {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px;
+    }
+
+    .caja-jugadores,
+    .caja-formulario {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    /* Ajuste de márgenes globales */
+    .section-container {
+        padding: 15px;
+        border-radius: 0;
+    }
+
+    footer p {
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .fc-title h1 {
+        font-size: 20pt;
+        padding: 20px;
+    }
+
+    .budget-text {
+        flex-direction: column;
+        border-radius: 20px;
+        padding: 15px;
+    }
+
+    #budget {
+        margin-left: 0;
+        margin-top: 10px;
+        font-size: 1.5rem;
+    }
+
+    .torneo-header-card h1 {
+        font-size: 1.4rem !important;
+    }
+
+    .tab {
+        padding: 10px 8px !important;
+        font-size: 13px !important;
+    }
+
+    .navigator-torneos ul {
+        gap: 5px;
+    }
+
+    .editar-torneo h2 {
+        font-size: 1.2rem !important;
+    }
+}

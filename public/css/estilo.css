@@ -1,6 +1,30 @@
 * {
     box-sizing: border-box;
 }
+
+html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    /* Elimina el recuadro azul feo al tocar botones en móvil */
+}
+
+/* Animación de entrada para que parezca más fluida */
+.animate-fade {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     color: #ffffff;
@@ -13,9 +37,17 @@ body {
 }
 
 @keyframes gradientMove {
-    0% { background-position: 0% 50% }
-    50% { background-position: 100% 50% }
-    100% { background-position: 0% 50% }
+    0% {
+        background-position: 0 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0 50%
+    }
 }
 
 /* Titulo */
@@ -27,6 +59,7 @@ body {
     color: #cdc832;
     font-size: 30pt;
     margin-top: 50px;
+
     h1 {
         padding: 40px 60px;
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -34,8 +67,9 @@ body {
         margin: 20px;
         background: linear-gradient(135deg, rgba(8, 34, 53, 0.9), rgba(2, 31, 20, 0.9));
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
+
     p {
         font-size: 1.2rem;
         color: rgba(255, 255, 255, 0.8);
@@ -55,6 +89,7 @@ body {
     display: flex;
     align-items: center;
 }
+
 /* Navbar */
 .navigator-bar {
     border-bottom: 1px solid rgba(147, 147, 147, 0.3);
@@ -96,7 +131,8 @@ body {
     background: rgba(255, 255, 255, 0.1);
 }
 
-.btn-cta, .btn-secondary {
+.btn-cta,
+.btn-secondary {
     text-decoration: none;
     padding: 10px 20px;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -109,10 +145,11 @@ body {
     transition: all 0.3s ease;
 }
 
-.btn-cta:hover, .btn-secondary:hover {
+.btn-cta:hover,
+.btn-secondary:hover {
     background: #325a8d;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .btn-danger {
@@ -133,10 +170,11 @@ body {
     transform: translateY(-1px);
 }
 
-.btn-secondary a{
+.btn-secondary a {
     color: #eee;
     text-decoration: none;
 }
+
 .btn-danger {
     text-decoration: none;
     padding: 8px 15px;
@@ -147,6 +185,7 @@ body {
     font-size: 14px;
     background: #7e0e14;
 }
+
 /* Hero Section */
 .hero-section {
     padding: 80px 20px;
@@ -188,8 +227,7 @@ body {
     justify-content: space-between;
 }
 
-aside {
-}
+aside {}
 
 .section-container h2 {
     font-size: 18px;
@@ -229,6 +267,7 @@ hr {
     justify-content: center;
     flex-direction: column;
     transition: transform 0.3s ease;
+
     a {
         text-decoration: none;
         color: #fff;
@@ -237,9 +276,11 @@ hr {
         border-radius: 3px;
         width: fit-content;
     }
+
     a:hover {
         background: #04373f;
     }
+
     #tipo {
         border-top: 1px solid #bebebe;
         padding-top: 15px;
@@ -272,6 +313,7 @@ hr {
     align-items: center;
     font-size: 12px;
 }
+
 /* Datos del usuario*/
 #main-data {
     background: rgba(11, 34, 51, 0.6);
@@ -310,7 +352,16 @@ hr {
 }
 
 /* Register y login, creación de torneo */
-.register-page, .login-page, .crear-torneo, .crear-equipo, .crear-jugador, .editar-equipo, .editar-torneo, .editar-jugador, .RLC-page, .crear-liga {
+.register-page,
+.login-page,
+.crear-torneo,
+.crear-equipo,
+.crear-jugador,
+.editar-equipo,
+.editar-torneo,
+.editar-jugador,
+.RLC-page,
+.crear-liga {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -324,6 +375,7 @@ hr {
     border-radius: 20px;
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
+
     form {
         display: flex;
         flex-direction: column;
@@ -332,19 +384,22 @@ hr {
         border: 1px solid;
         border-radius: 12px;
     }
+
     span {
         margin: 5px;
+
         a {
             color: #fff;
             text-decoration: none;
         }
     }
+
     p {
         margin-top: 5px;
         margin-bottom: 5px;
     }
 
-    input{
+    input {
         text-decoration: initial;
         display: inline-block;
         padding: 6px;
@@ -358,6 +413,7 @@ hr {
         background: rgba(4, 63, 41, 0.3);
         border: 1px solid rgba(147, 147, 147, 0.5);
     }
+
     #formActionButtons {
         display: flex;
         justify-content: center;
@@ -365,6 +421,7 @@ hr {
         margin: 6px;
         padding: 10px;
     }
+
     button {
         display: flex;
         justify-content: center;
@@ -378,6 +435,7 @@ hr {
         background: #043f29;
         width: fit-content;
     }
+
     button:hover {
         background: #075e3c;
     }
@@ -405,15 +463,18 @@ hr {
             margin-top: 5px;
             margin-bottom: 5px;
         }
+
         h1 {
             font-size: 40pt;
         }
+
         display: flex;
         justify-content: center;
         align-content: center;
         flex-direction: column;
         width: 500px;
     }
+
     #RLCForm {
         #ErrInvalid {
             padding: 8px 10px;
@@ -430,11 +491,13 @@ hr {
         }
 
     }
+
     #ErrInvalid {
         padding: 20px;
     }
 }
-.botones-accion a{
+
+.botones-accion a {
     color: #fff;
     text-decoration: initial;
 }
@@ -469,6 +532,7 @@ hr {
     justify-content: center;
     flex-wrap: wrap;
     width: auto;
+
     form {
         display: flex;
         flex-direction: column;
@@ -477,19 +541,22 @@ hr {
         border: 1px solid;
         border-radius: 12px;
     }
+
     span {
         margin: 5px;
+
         a {
             color: #fff;
             text-decoration: none;
         }
     }
+
     p {
         margin-top: 5px;
         margin-bottom: 5px;
     }
 
-    input{
+    input {
         text-decoration: initial;
         display: inline-block;
         padding: 6px;
@@ -501,6 +568,7 @@ hr {
         color: white;
         background: #043f29;
     }
+
     #formActionButtons {
         display: flex;
         justify-content: center;
@@ -508,6 +576,7 @@ hr {
         margin: 6px;
         padding: 10px;
     }
+
     button {
         display: flex;
         justify-content: center;
@@ -521,6 +590,7 @@ hr {
         background: #043f29;
         width: fit-content;
     }
+
     button:hover {
         background: #075e3c;
     }
@@ -548,14 +618,17 @@ hr {
             margin-top: 5px;
             margin-bottom: 5px;
         }
+
         h1 {
             font-size: 40pt;
         }
+
         display: flex;
         justify-content: center;
         align-content: center;
         flex-direction: column;
     }
+
     #RLCForm {
         #ErrInvalid {
             padding: 8px 10px;
@@ -572,6 +645,7 @@ hr {
         }
 
     }
+
     #ErrInvalid {
         padding: 20px;
     }
@@ -584,13 +658,15 @@ hr {
 #formnuevadisputa {
     margin-top: 20px;
     padding: 15px;
-    select  {
+
+    select {
         padding: 10px;
         border-radius: 5px;
         border-color: #FFFFFF;
         background: linear-gradient(-90deg, #0b2233, #0c314d);
         color: #FFFFFF;
     }
+
     option {
         color: lightgray;
         background-color: #0c314d;
@@ -611,6 +687,7 @@ hr {
         background: #043f29;
         width: fit-content;
     }
+
     button:hover {
         background: #075e3c;
     }
@@ -618,7 +695,8 @@ hr {
 
 /* Presupuesto del Fantasy */
 
-.budget-text { /* contenedor */
+.budget-text {
+    /* contenedor */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -646,7 +724,8 @@ hr {
     font-weight: 800;
     font-size: 2rem;
     text-shadow: 0 0 20px rgba(205, 200, 50, 0.4);
-    font-family: 'Monaco', 'Consolas', monospace; /* Fuente mono para que los números no bailen */
+    font-family: 'Monaco', 'Consolas', monospace;
+    /* Fuente mono para que los números no bailen */
 }
 
 .budget-text {
@@ -668,7 +747,7 @@ footer {
     height: anchor-size(25%) !important;
     margin-top: 50px;
     background: #070d16;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 footer div {
@@ -759,7 +838,7 @@ footer p {
     padding: 20px;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .link-box h4 {
@@ -884,6 +963,7 @@ footer p {
 .navigator-torneos a.active {
     font-weight: bold;
 }
+
 /************************************/
 .torneo-section {
     min-height: 400px;
@@ -937,17 +1017,24 @@ footer p {
     position: relative;
     z-index: 5;
     min-height: 400px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-#torneo-section > div {
+#torneo-section>div {
     width: 100%;
     animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .torneo-section-canvas {
@@ -1095,12 +1182,13 @@ footer p {
     align-items: center;
     justify-content: center;
     height: 200px;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255, 255, 255, 0.3);
     font-style: italic;
 }
 
 /* TABLAS */
-.stats-table-container, .equipos {
+.stats-table-container,
+.equipos {
     margin-top: 20px;
     border: 1px solid #6b6b6b;
     border-radius: 6px;
@@ -1108,14 +1196,16 @@ footer p {
     background: linear-gradient(135deg, #071926, #0b2233);
 }
 
-.stats-table, .editar-equipo {
+.stats-table,
+.editar-equipo {
     width: 100%;
     border-collapse: collapse;
     color: #ffffff;
     font-size: 15px;
 }
 
-.stats-table thead th, .editar-equipo thead th {
+.stats-table thead th,
+.editar-equipo thead th {
     text-align: left;
     padding: 10px 12px;
     border-bottom: 1px solid #6b6b6b;
@@ -1123,16 +1213,19 @@ footer p {
     color: #eaeaea;
 }
 
-.stats-table tbody td, .editar-equipo tbody td{
+.stats-table tbody td,
+.editar-equipo tbody td {
     padding: 10px 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.stats-table tbody tr:last-child td, .editar-equipo tbody tr:last-child td{
+.stats-table tbody tr:last-child td,
+.editar-equipo tbody tr:last-child td {
     border-bottom: none;
 }
 
-.stats-table tbody tr:hover, .editar-equipo tbody tr:hover {
+.stats-table tbody tr:hover,
+.editar-equipo tbody tr:hover {
     background-color: rgba(255, 255, 255, 0.05);
     transition: background-color 0.2s ease-in-out;
 }
@@ -1217,10 +1310,17 @@ tbody a:hover {
 }
 
 .btn-delete-photo {
-    position: absolute; top: 5px; right: 10px;
-    background: #7e0e14; border: 1px solid #939393;
-    border-radius: 50%; width: 25px; height: 25px;
-    color: white; font-size: 12px; cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: #7e0e14;
+    border: 1px solid #939393;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 /* = FOTO DEL USUARIO EN LA BASE (BARRA DE NAVEGACIÓN)*/
@@ -1229,10 +1329,13 @@ tbody a:hover {
 .user-nav-wrapper {
     display: flex;
     align-items: center;
-    gap: 12px; /* Espacio entre foto, nombre y botón */
-    background: rgba(255, 255, 255, 0.05); /* Un toque de fondo sutil */
+    gap: 12px;
+    /* Espacio entre foto, nombre y botón */
+    background: rgba(255, 255, 255, 0.05);
+    /* Un toque de fondo sutil */
     padding: 5px 15px;
-    border-radius: 50px; /* Estilo píldora */
+    border-radius: 50px;
+    /* Estilo píldora */
     border: 1px solid rgba(205, 200, 50, 0.2);
 }
 
@@ -1260,7 +1363,8 @@ tbody a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0; /* Evita que se aplaste */
+    flex-shrink: 0;
+    /* Evita que se aplaste */
 }
 
 .nav-avatar img {
@@ -1274,7 +1378,8 @@ tbody a:hover {
     color: #ffffff;
     font-size: 0.9rem;
     font-weight: 500;
-    white-space: nowrap; /* Evita que el nombre salte de línea */
+    white-space: nowrap;
+    /* Evita que el nombre salte de línea */
 }
 
 #navLogin .btn-secondary:hover {
@@ -1289,91 +1394,114 @@ tbody a:hover {
     color: white;
 }
 
-/* == DISEÑO RESPONSIVO == */
+/* DISPUTAS */
 
-/*Menos de 768px */
-@media (max-width: 768px) {
-
-    /*Navbar*/
-    .nav-content {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-
-    .search-container {
-        width: 100%;
-        margin: 10px 0;
-    }
-
-    .search-container input {
-        width: 100%;
-    }
-
-    .hero-content h1 {
-        font-size: 28px;
-    }
-
-    /*Página de Torneo */
-    .main-container-torneo {
-        flex-direction: column;
-    }
-
-    .torneo-content,
-    .sidebar-organizador {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    /*Pestañas del Torneo: Permitir deslizar horizontal*/
-    .navigator-torneos {
-        margin-bottom: 20px;
-    }
-
-    .navigator-torneos ul {
-        display: flex;
-        gap: 10px;
-        list-style: none;
-        padding: 0;
-        border-bottom: 1px solid rgba(147, 147, 147, 0.2);
-    }
-
-    .navigator-torneos a {
-        padding: 12px 25px;
-        display: inline-block;
-        text-decoration: none;
-        color: #9fb3c8;
-        font-weight: 600;
-        font-size: 15px;
-        transition: all 0.3s ease;
-        border-bottom: 3px solid transparent;
-    }
-
-    .navigator-torneos a:hover {
-        color: #fff;
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .navigator-torneos a.active {
-        color: #cdc832;
-        border-bottom: 3px solid #cdc832;
-        background: rgba(205, 200, 50, 0.05);
-    }
-
-    /*Ajustar botones */
-    .torneo-header-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .header-actions {
-        align-items: center;
-        width: 100%;
-        margin-top: 15px;
-    }
+.wrapper-centro {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
+
+.contenedor-principal {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    /* Aumentado para que quepan los laterales */
+}
+
+/* Cuadrados de Equipos/Jugadores */
+.caja-jugadores {
+    width: 250px;
+    background: rgba(43, 53, 68, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+}
+
+.caja-jugadores h3 {
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    color: #0d6efd;
+    text-align: center;
+}
+
+.lista-jugadores {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.lista-jugadores li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Caja Central de Gestión */
+.caja-formulario {
+    flex-grow: 1;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.titulo-seccion {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.input-custom {
+    background-color: #2b3544 !important;
+    border: 1px solid #4e5d6d !important;
+    color: white !important;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.btn-enviar {
+    background-color: #0f4d36;
+    border: none;
+    color: white;
+    padding: 10px 40px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn-cancelar {
+    background-color: #8b1e1e;
+    border: none;
+    color: white;
+    padding: 10px 40px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-volver-atras {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+}
+
 /************************************************************/
 /* EXTRAS (webkits, arreglos, etc.) */
 /* Badge para los puntos en la tabla */
@@ -1386,7 +1514,9 @@ tbody a:hover {
     font-weight: bold;
 }
 
-.crear-torneo h2, .crear-equipo h2, .crear-jugador h2 {
+.crear-torneo h2,
+.crear-equipo h2,
+.crear-jugador h2 {
     font-size: 24pt;
     margin-bottom: 10px;
     text-align: center;
@@ -1453,7 +1583,8 @@ form[id="formTorneo"] button[type="submit"]:hover {
 
 /* Botón Cancelar (usando tu estilo rojo de seguridad) */
 #cancelar {
-    background: #7e0e14 !important; /* Rojo oscuro según tu CSS */
+    background: #7e0e14 !important;
+    /* Rojo oscuro según tu CSS */
     padding: 10px 30px;
     border: 1px solid #939393;
     border-radius: 50px;
@@ -1494,6 +1625,7 @@ input:-webkit-autofill:active {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1505,38 +1637,83 @@ input:-webkit-autofill:active {
     animation: fadeInUp 0.8s ease-out forwards;
 }
 
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
-.delay-4 { animation-delay: 0.8s; }
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+.delay-3 {
+    animation-delay: 0.6s;
+}
+
+.delay-4 {
+    animation-delay: 0.8s;
+}
 
 /* --- ESTILOS COMUNES MODALES FRIENDLYCUP --- */
 .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.85);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 9999; backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(3px);
 }
 
 .modal-content {
     background: #071926;
     border: 2px solid #cdc832;
     border-radius: 12px;
-    width: 90%; max-width: 400px;
+    width: 90%;
+    max-width: 400px;
     padding: 25px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
 }
 
 .fc-input {
-    width: 100%; padding: 10px;
-    border-radius: 6px; border: 1px solid #cdc832;
-    background: #0e1726; color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #cdc832;
+    background: #0e1726;
+    color: white;
     box-sizing: border-box;
 }
 
-.modal-footer { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
-.modal-footer button { padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s;}
-.modal-footer .btn-secondary { background: transparent; border: 1px solid #9fb3c8; color: #9fb3c8; }
-.modal-footer .btn-secondary:hover { background: rgba(255,255,255,0.1); }
-.modal-footer .btn-gold:hover { opacity: 0.8; }
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.modal-footer button {
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.modal-footer .btn-secondary {
+    background: transparent;
+    border: 1px solid #9fb3c8;
+    color: #9fb3c8;
+}
+
+.modal-footer .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-footer .btn-gold:hover {
+    opacity: 0.8;
+}

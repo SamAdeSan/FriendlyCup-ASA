@@ -1,0 +1,105 @@
+.wrapper-centro {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.contenedor-principal {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    /* Aumentado para que quepan los laterales */
+}
+
+/* Cuadrados de Equipos/Jugadores */
+.caja-jugadores {
+    width: 250px;
+    background: rgba(43, 53, 68, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+}
+
+.caja-jugadores h3 {
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    color: #0d6efd;
+    text-align: center;
+}
+
+.lista-jugadores {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.lista-jugadores li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Caja Central de Gestión */
+.caja-formulario {
+    flex-grow: 1;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.titulo-seccion {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.input-custom {
+    background-color: #2b3544 !important;
+    border: 1px solid #4e5d6d !important;
+    color: white !important;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.btn-enviar {
+    background-color: #0f4d36;
+    border: none;
+    color: white;
+    padding: 10px 40px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn-cancelar {
+    background-color: #8b1e1e;
+    border: none;
+    color: white;
+    padding: 10px 40px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-volver-atras {
+    position: absolute;
+    top: 80px;
+    left: 40px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+}
