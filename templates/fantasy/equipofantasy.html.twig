@@ -8,9 +8,12 @@
         <section id="RLCBlock">
             <h1 style="margin-bottom: 5px;">Equipo de {{ equipoFantasy.entrenador.name }}</h1>
             <p class="budget-text">
-                Presupuesto:
-                <span id="budget" data-valor="{{ equipoFantasy.presupuesto }}">
-                    {{ equipoFantasy.presupuesto | number_format }} €
+                Tu Presupuesto:
+                <span id="budget" 
+                      data-valor="{{ equipoFantasy2.presupuesto }}" 
+                      data-id-propio="{{ equipoFantasy2.id }}"
+                      data-id-rival="{{ equipoFantasy.id }}">
+                    {{ equipoFantasy2.presupuesto | number_format }} €
                 </span>
             </p>
         </section>

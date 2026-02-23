@@ -24,37 +24,24 @@ final class DisputasController extends AbstractController
 {
     #[Route('/anadircantidad/{jugador_id}/{evento_id}/{cantidad}', name: 'anadircantidad', methods: ['POST'])]
     public function anadircantidad(
-        int $jugador_id, 
-        int $evento_id, 
-        int $cantidad, 
-        EntityManagerInterface $entityManager, 
+        int $jugador_id,
+        int $evento_id,
+        int $cantidad,
+        EntityManagerInterface $entityManager,
         JugadorEventoRepository $jugadoreventoRepository,
         JugadoresRepository $jugadoresRepository,
         EventoRepository $eventoRepository
     ): JsonResponse {
         $jugador = $jugadoresRepository->find($jugador_id);
         $evento = $eventoRepository->find($evento_id);
-
-        if (!$jugador || !$evento) {
-            return new JsonResponse(['error' => 'Jugador o Evento no encontrado'], 404);
-        }
-
         // Buscamos si ya existe la relación Jugador-Evento
         $jugadorevento = $jugadoreventoRepository->findOneBy([
             'jugador' => $jugador,
             'evento' => $evento
         ]);
-
-        if (!$jugadorevento) {
-            $jugadorevento = new JugadorEvento();
-            $jugadorevento->setJugador($jugador);
-            $jugadorevento->setEvento($evento);
-            $jugadorevento->setCantidad(0);
-        }
-
         $jugadorevento->setCantidad($jugadorevento->getCantidad() + $cantidad);
         $puntos = $cantidad * $evento->getPuntos();
-
+        $jugador->setEstadisticas($jugador->getEstadisticas() + $puntos);
         foreach ($jugador->getEquipoFantasies() as $fantasy) {
             $fantasy->setPuntos($fantasy->getPuntos() + $puntos);
             $entityManager->persist($fantasy);
@@ -126,19 +113,19 @@ final class DisputasController extends AbstractController
     }
     #[Route('/disputa/{id}', name: 'disputa')]
     public function disputaindex(DisputasRepository $disputasRepository, EventoRepository $eventoRepository, int $id): Response
-{
-    // Buscamos la disputa específica por su ID
-    $disputa = $disputasRepository->find($id);
+    {
+        // Buscamos la disputa específica por su ID
+        $disputa = $disputasRepository->find($id);
 
-    if (!$disputa) {
-        throw $this->createNotFoundException('No se encontró la disputa con ID: ' . $id);
+        if (!$disputa) {
+            throw $this->createNotFoundException('No se encontró la disputa con ID: ' . $id);
+        }
+
+        return $this->render('disputas/index.html.twig', [
+            'disputa' => $disputa,
+            'equipo1' => $disputa->getEquipo1(),
+            'equipo2' => $disputa->getEquipo2(),
+            'eventos' => $eventoRepository->findBy(['torneo' => $disputa->getTorneo()]),
+        ]);
     }
-
-    return $this->render('disputas/index.html.twig', [
-        'disputa' => $disputa,
-        'equipo1' => $disputa->getEquipo1(),
-        'equipo2' => $disputa->getEquipo2(),
-        'eventos' => $eventoRepository->findBy(['torneo' => $disputa->getTorneo()]),
-    ]);
-}
 }
