@@ -25,7 +25,8 @@ final class FantasyController extends AbstractController
         private EntityManagerInterface $em,
         private EquipoFantasyRepository $equipoRepo,
         private JugadoresRepository $jugadoresRepo
-    ) {}
+    ) {
+    }
 
     #[Route('/crear-fantasy/{id}', name: 'fantasycrear')]
     public function crearDesdeTorneo(Request $request, Torneo $torneo): Response
@@ -66,7 +67,7 @@ final class FantasyController extends AbstractController
     }
 
     #[Route('/liga/delete/{id}', name: 'fantasyterminar')]
-    public function deleteFantasy(ManagerRegistry $doctrine, int $id): Response 
+    public function deleteFantasy(ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
         $liga = $doctrine->getRepository(LigaFantasy::class)->find($id);
@@ -80,7 +81,8 @@ final class FantasyController extends AbstractController
     }
 
     #[Route('/api/equipo/{id}/presupuesto', name: 'api_update_presupuesto', methods: ['POST'])]
-    public function actualizarPresupuesto(EquipoFantasy $equipo,Request $request,JugadoresRepository $jugadoresRepo,EntityManagerInterface $em):JsonResponse{
+    public function actualizarPresupuesto(EquipoFantasy $equipo, Request $request, JugadoresRepository $jugadoresRepo, EntityManagerInterface $em): JsonResponse
+    {
         $data = json_decode($request->getContent(), true);
         $equipo->setPresupuesto($data['presupuesto']);
         $jugador = $jugadoresRepo->find($data['idJugador']);
@@ -89,7 +91,8 @@ final class FantasyController extends AbstractController
         return $this->json($equipo, 200, [], ['groups' => 'equipo:read']);
     }
     #[Route('/api/equipo/{id}/vender', methods: ['POST'])]
-    public function venderJugador(EquipoFantasy $equipo, Request $request, JugadoresRepository $jugadoresRepo, EntityManagerInterface $em): JsonResponse {
+    public function venderJugador(EquipoFantasy $equipo, Request $request, JugadoresRepository $jugadoresRepo, EntityManagerInterface $em): JsonResponse
+    {
         $data = json_decode($request->getContent(), true);
         $jugador = $jugadoresRepo->find($data['idJugador']);
         $nuevoPresupuesto = $equipo->getPresupuesto() + $jugador->getValordemercado();
@@ -99,17 +102,18 @@ final class FantasyController extends AbstractController
         return $this->json(['nuevoPresupuesto' => $nuevoPresupuesto], 200);
     }
     #[Route('/api/liga/unirse', methods: ['POST'])]
-    public function anadirUsuario(LigaFantasyRepository $ligaRepo,EquipoFantasyRepository $equipoRepo,Request $request,UserRepository $userRepo,EntityManagerInterface $em) : JsonResponse{
+    public function anadirUsuario(LigaFantasyRepository $ligaRepo, EquipoFantasyRepository $equipoRepo, Request $request, UserRepository $userRepo, EntityManagerInterface $em): JsonResponse
+    {
         $data = json_decode($request->getContent(), true);
         $clave = $data['clave'] ?? null;
         $usuario = $this->getUser();
         $liga = $ligaRepo->findOneBy(['clave' => $clave]);
         if (!$liga || !$usuario) {
-        return $this->json(['error' => 'Clave o usuario incorrectos'], 400);
+            return $this->json(['error' => 'Clave o usuario incorrectos'], 400);
         }
         $yaExiste = $equipoRepo->findOneBy([
-        'entrenador' => $usuario,
-        'ligafantasy' => $liga
+            'entrenador' => $usuario,
+            'ligafantasy' => $liga
         ]);
         if ($yaExiste) {
             return $this->json(['error' => 'Ya estás unido a esta liga'], 400);
@@ -122,8 +126,8 @@ final class FantasyController extends AbstractController
         $em->persist($nuevoEquipo);
         $em->flush();
         return $this->json([
-        'liga' => $liga->getNombre(),
-        'nombreUsuario' => $usuario->getName()
+            'liga' => $liga->getNombre(),
+            'nombreUsuario' => $usuario->getName()
         ], 200);
     }
     #[Route('/liga/{id}', name: 'fantasy_liga')]
@@ -152,14 +156,12 @@ final class FantasyController extends AbstractController
 
         $mercado = array_filter($todosLosJugadores, fn($jugador) => !in_array($jugador->getId(), $idsOcupados));
 
-        $equiposEnLiga = $this->equipoRepo->findBy(['ligafantasy' => $liga]);
-
         return $this->render('fantasy/index.html.twig', [
             'liga' => $liga,
             'equipo' => $miEquipo,
             'misJugadores' => $misJugadoresObjs,
             'mercado' => $mercado,
-            'equiposEnLiga' => $equiposEnLiga
+            'equiposEnLiga' => $liga->getEquipoFantasies()
         ]);
     }
 }

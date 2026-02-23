@@ -37,6 +37,7 @@ class LigaFantasy
      * @var Collection<int, EquipoFantasy>
      */
     #[ORM\OneToMany(targetEntity: EquipoFantasy::class, mappedBy: 'ligafantasy',cascade: ['remove'])]
+    #[ORM\OrderBy(['puntos' => 'DESC'])]
     private Collection $equipoFantasies;
 
     #[ORM\ManyToOne(targetEntity: User::class)]

@@ -29,6 +29,7 @@ class Evento
      * @var \Doctrine\Common\Collections\Collection<int, JugadorEvento>
      */
     #[ORM\OneToMany(targetEntity: JugadorEvento::class, mappedBy: 'evento')]
+    #[ORM\OrderBy(['cantidad' => 'DESC'])]
     private \Doctrine\Common\Collections\Collection $jugadorEventos;
 
     public function __construct()

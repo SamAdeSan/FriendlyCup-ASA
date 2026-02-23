@@ -164,7 +164,7 @@ final class TorneoController extends AbstractController
     #[Route('/torneo/{id}/estadisticas', name: 'torneo_estadisticas')]
     public function estadisticas(Torneo $torneo, EventoRepository $eventoRepo): Response
     {
-        // Obtenemos todos los eventos (tipos de estadística) de este torneo
+        
         $eventos = $eventoRepo->findBy(['torneo' => $torneo]);
 
         return $this->render('page/torneo/estadisticas.html.twig', [
