@@ -87,10 +87,10 @@
                 {% endfor %}
             </ul>
         </div>
-        <a href="{{ path('torneo', {'id': disputa.torneo.id}) }}" class="btn-volver-atras">
+    </div>
+    <a href="{{ path('torneo', {'id': disputa.torneo.id}) }}" class="btn-volver-atras">
         ❮ Volver al Resumen
     </a>
-    </div>
 </div>
 {{ include('/disputas/modal.html.twig') }}
 {% endblock %}
