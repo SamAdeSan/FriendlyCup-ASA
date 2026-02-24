@@ -28,19 +28,19 @@ class Torneo
     /**
      * @var Collection<int, Equipos>
      */
-    #[ORM\OneToMany(targetEntity: Equipos::class, mappedBy: 'torneo',cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Equipos::class, mappedBy: 'torneo', cascade: ['persist', 'remove'])]
     private Collection $equipos;
 
     /**
      * @var Collection<int, Disputas>
      */
-    #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'torneo',cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Disputas::class, mappedBy: 'torneo', cascade: ['persist', 'remove'])]
     private Collection $disputas;
 
     /**
      * @var Collection<int, LigaFantasy>
      */
-    #[ORM\OneToMany(targetEntity: LigaFantasy::class, mappedBy: 'torneo',cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: LigaFantasy::class, mappedBy: 'torneo', cascade: ['persist', 'remove'])]
     private Collection $ligaFantasies;
 
     #[ORM\Column]
@@ -55,12 +55,19 @@ class Torneo
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagen = null;
 
+    /**
+     * @var Collection<int, Evento>
+     */
+    #[ORM\OneToMany(targetEntity: Evento::class, mappedBy: 'torneo', cascade: ['persist', 'remove'])]
+    private Collection $puntajeEventos;
+
     public function __construct()
     {
         $this->equipos = new ArrayCollection();
         $this->disputas = new ArrayCollection();
         $this->ligaFantasies = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->puntajeEventos = new ArrayCollection();
         $this->seguidores = 0;
     }
 
@@ -242,6 +249,36 @@ class Torneo
     public function setImagen(?string $imagen): static
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Evento>
+     */
+    public function getPuntajeEventos(): Collection
+    {
+        return $this->puntajeEventos;
+    }
+
+    public function addPuntajeEvento(Evento $evento): static
+    {
+        if (!$this->puntajeEventos->contains($evento)) {
+            $this->puntajeEventos->add($evento);
+            $evento->setTorneo($this);
+        }
+
+        return $this;
+    }
+
+    public function removePuntajeEvento(Evento $evento): static
+    {
+        if ($this->puntajeEventos->removeElement($evento)) {
+            // set the owning side to null (unless already changed)
+            if ($evento->getTorneo() === $this) {
+                $evento->setTorneo(null);
+            }
+        }
 
         return $this;
     }

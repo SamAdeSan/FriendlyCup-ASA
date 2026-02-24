@@ -54,7 +54,6 @@
                 <table class="stats-table">
                     <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Acciones</th>
                     </tr>
@@ -62,7 +61,6 @@
                     <tbody>
                     {% for jugador in jugadores %}
                         <tr>
-                            <td>{{ jugador.id }}</td>
                             <td>{{ jugador.nombre }}</td>
                             <td>
                                 <a href="{{ path('jugadoreliminado', {'id': jugador.id}) }}"class="btn-danger">Eliminar</a>

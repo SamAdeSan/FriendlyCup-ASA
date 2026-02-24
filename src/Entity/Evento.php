@@ -28,7 +28,7 @@ class Evento
     /**
      * @var \Doctrine\Common\Collections\Collection<int, JugadorEvento>
      */
-    #[ORM\OneToMany(targetEntity: JugadorEvento::class, mappedBy: 'evento')]
+    #[ORM\OneToMany(targetEntity: JugadorEvento::class, mappedBy: 'evento', cascade: ['persist', 'remove'])]
     #[ORM\OrderBy(['cantidad' => 'DESC'])]
     private \Doctrine\Common\Collections\Collection $jugadorEventos;
 

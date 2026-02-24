@@ -57,7 +57,7 @@ final class DisputasController extends AbstractController
         $disputa->setResultado('n-n');
         $equipo1 = $equiposRepository->find($data['equipo1_id']);
         $equipo2 = $equiposRepository->find($data['equipo2_id']);
-        $torneo = $torneoRepository->find($data['torneo_id']) ?? 'aaa';
+        $torneo = $torneoRepository->find($data['torneo_id']);
         $disputa->setEquipo1($equipo1);
         $disputa->setEquipo2($equipo2);
         $disputa->setTorneo($torneo);

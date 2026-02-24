@@ -87,7 +87,7 @@ function vincularEventosDinamicos() {
     }
 
     if (btnGuardar) {
-        btnGuardar.onclick = function() {
+        btnGuardar.onclick = function () {
             const equipo1 = document.getElementById("selectequipo1").value;
             const equipo2 = document.getElementById("selectequipo2").value;
             const torneoId = this.dataset.torneoId;
@@ -97,11 +97,11 @@ function vincularEventosDinamicos() {
                 return;
             }
 
-            fetch('/disputas/crear', {
+            fetch('/disputa/crear', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ equipo1_id: equipo1, equipo2_id: equipo2, torneo_id: torneoId })
-            }).then(res => res.ok ? window.location.reload() : console.error("Error al guardar"));
+            }).then(res => res.ok ? window.location.reload() : res.text().then(text => alert("Error: " + text)));
         };
     }
 }
@@ -199,9 +199,9 @@ function modificaResultado(elemento) {
     const id2 = elemento.dataset.disputaEquipo2;
     let ganador = (parseInt(res1) > parseInt(res2)) ? id1 : (parseInt(res1) < parseInt(res2) ? id2 : null);
 
-    fetch(`/disputas/${id}/modificar`, {
+    fetch(`/disputa/${id}/modificar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resultado: `${res1}-${res2}`, ganador_id: ganador })
-    }).then(() => window.location.reload());
+    }).then(res => res.ok ? window.location.reload() : res.text().then(text => alert("Error: " + text)));
 }

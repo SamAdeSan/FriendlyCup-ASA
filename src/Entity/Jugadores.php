@@ -27,13 +27,13 @@ class Jugadores
     #[ORM\ManyToOne(inversedBy: 'jugadores')]
     private ?Equipos $equipo = null;
 
-    #[ORM\ManyToMany(targetEntity: EquipoFantasy::class, mappedBy: 'titulares',)]
+    #[ORM\ManyToMany(targetEntity: EquipoFantasy::class, mappedBy: 'titulares', )]
     private Collection $equipoFantasies;
 
     /**
      * @var Collection<int, JugadorEvento>
      */
-    #[ORM\OneToMany(targetEntity: JugadorEvento::class, mappedBy: 'jugador')]
+    #[ORM\OneToMany(targetEntity: JugadorEvento::class, mappedBy: 'jugador', cascade: ['persist', 'remove'])]
     private Collection $registroEventos;
 
 
