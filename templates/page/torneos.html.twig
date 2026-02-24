@@ -25,15 +25,15 @@
                 </div>
             </section>
             <nav class="navigator-torneos">
-                <ul>
+                <ul class="tabs-list">
                     <li><a href="#" id="resumen" class="tab active" data-url="{{ path('torneo_resumen', {id: torneo.id}) }}">Resumen</a></li>
                     <li><a href="#" id="clasificacion" class="tab" data-url="{{ path('torneo_clasificacion', {id: torneo.id}) }}">Clasificación</a></li>
                     <li><a href="#" id="estadisticas" class="tab" data-url="{{ path('torneo_estadisticas', {id: torneo.id}) }}">Estadísticas</a></li>
                 </ul>
             </nav>
-            <section id="torneo-section" class="torneo-section">
+            <div id="torneo-section" class="torneo-section">
                 <div class="loader-placeholder">Selecciona una pestaña para ver los datos...</div>
-            </section>
+            </div>
         </main>
 
         <aside class="sidebar-organizador">
