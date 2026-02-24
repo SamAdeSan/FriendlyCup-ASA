@@ -99,20 +99,27 @@ final class FantasyController extends AbstractController
         return $this->json(['nuevoPresupuesto' => $nuevoPresupuesto], 200);
     }
 
-    #[Route('/api/equipo/{id}/presupuesto', name: 'api_update_presupuesto', methods: ['POST'])]
-    public function actualizarPresupuesto(EquipoFantasy $equipo, Request $request, JugadoresRepository $jugadoresRepo, EntityManagerInterface $em): JsonResponse
+    #[Route('/api/equipo/{id}/fichar-mercado', name: 'api_fichar_mercado', methods: ['POST'])]
+    public function ficharMercado(EquipoFantasy $equipo, Request $request, JugadoresRepository $jugadoresRepo, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $equipo->setPresupuesto($data['presupuesto']);
         $jugador = $jugadoresRepo->find($data['idJugador']);
 
         if ($equipo->getTitulares()->count() >= $equipo->getLigafantasy()->getMinimoJugadores()) {
             return $this->json(['error' => 'La plantilla está completa'], 400);
         }
 
+        $coste = $jugador->getValordemercado();
+        if ($equipo->getPresupuesto() < $coste) {
+            return $this->json(['error' => 'No tienes suficiente presupuesto'], 400);
+        }
+
+        $nuevoPresupuesto = $equipo->getPresupuesto() - $coste;
+        $equipo->setPresupuesto($nuevoPresupuesto);
         $equipo->addTitular($jugador);
         $em->flush();
-        return $this->json($equipo, 200, [], ['groups' => 'equipo:read']);
+
+        return $this->json(['nuevoPresupuesto' => $nuevoPresupuesto], 200);
     }
     #[Route('/api/equipo/{id}/vender', methods: ['POST'])]
     public function venderJugador(EquipoFantasy $equipo, Request $request, JugadoresRepository $jugadoresRepo, EntityManagerInterface $em): JsonResponse
