@@ -85,9 +85,9 @@ final class FantasyController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $jugador = $jugadoresRepo->find($data['idJugador']);
         $equipoRival = $equipoRepo->find($idRival);
-        $nuevoPresupuesto = $equipoFantasy->getPresupuesto() - $jugador->getValordemercado()*2;
+        $nuevoPresupuesto = $equipoFantasy->getPresupuesto() - $jugador->getValordemercado() * 2;
         $equipoFantasy->setPresupuesto($nuevoPresupuesto);
-        $equipoRival->setPresupuesto($equipoRival->getPresupuesto() + $jugador->getValordemercado()*2);
+        $equipoRival->setPresupuesto($equipoRival->getPresupuesto() + $jugador->getValordemercado() * 2);
         $equipoFantasy->addTitular($jugador);
         $equipoRival->removeTitular($jugador);
         $em->flush();
@@ -159,7 +159,13 @@ final class FantasyController extends AbstractController
 
         $misJugadoresObjs = $miEquipo->getTitulares()->toArray();
 
-        $todosLosJugadores = $this->jugadoresRepo->findAll();
+        $torneo = $liga->getTorneo();
+        $todosLosJugadores = [];
+        foreach ($torneo->getEquipos() as $equipo) {
+            foreach ($equipo->getJugadores() as $jugador) {
+                $todosLosJugadores[] = $jugador;
+            }
+        }
 
         $idsOcupados = [];
         foreach ($liga->getEquipoFantasies() as $equipoFantasy) {
