@@ -176,7 +176,7 @@ function ejecutarUnirseFantasy() {
     })
         .then(res => res.json())
         .then(data => {
-            if (data.liga) window.location.href = `/`;
+            if (data.id) window.location.href = `/fantasy/liga/${data.id}`;
             else errorMsg.style.display = 'block';
         })
         .catch(err => console.error("Error:", err));

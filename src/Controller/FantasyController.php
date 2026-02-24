@@ -85,6 +85,11 @@ final class FantasyController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $jugador = $jugadoresRepo->find($data['idJugador']);
         $equipoRival = $equipoRepo->find($idRival);
+
+        if ($equipoFantasy->getTitulares()->count() >= $equipoFantasy->getLigafantasy()->getMinimoJugadores()) {
+            return $this->json(['error' => 'La plantilla está completa'], 400);
+        }
+
         $nuevoPresupuesto = $equipoFantasy->getPresupuesto() - $jugador->getValordemercado() * 2;
         $equipoFantasy->setPresupuesto($nuevoPresupuesto);
         $equipoRival->setPresupuesto($equipoRival->getPresupuesto() + $jugador->getValordemercado() * 2);
@@ -100,6 +105,11 @@ final class FantasyController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $equipo->setPresupuesto($data['presupuesto']);
         $jugador = $jugadoresRepo->find($data['idJugador']);
+
+        if ($equipo->getTitulares()->count() >= $equipo->getLigafantasy()->getMinimoJugadores()) {
+            return $this->json(['error' => 'La plantilla está completa'], 400);
+        }
+
         $equipo->addTitular($jugador);
         $em->flush();
         return $this->json($equipo, 200, [], ['groups' => 'equipo:read']);
@@ -140,6 +150,7 @@ final class FantasyController extends AbstractController
         $em->persist($nuevoEquipo);
         $em->flush();
         return $this->json([
+            'id' => $liga->getId(),
             'liga' => $liga->getNombre(),
             'nombreUsuario' => $usuario->getName()
         ], 200);

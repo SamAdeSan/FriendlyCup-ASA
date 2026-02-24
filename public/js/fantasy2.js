@@ -11,6 +11,16 @@ document.querySelectorAll('.fichar').forEach(boton => {
     };
 });
 
+function mostrarModalLimite() {
+    const modal = document.getElementById('modal-limite-jugadores');
+    if (modal) modal.style.display = 'flex';
+}
+
+window.cerrarModalLimite = () => {
+    const modal = document.getElementById('modal-limite-jugadores');
+    if (modal) modal.style.display = 'none';
+};
+
 function fichar() {
     let presupuesto = document.getElementById("budget");
     let presupuestoActual = Number(presupuesto.dataset.valor);
@@ -28,6 +38,14 @@ function fichar() {
             presupuesto.dataset.valor = nuevoSaldo;
             this.disabled = true;
             this.textContent = "Fichado";
+        } else {
+            response.json().then(data => {
+                if (data.error === "La plantilla está completa") {
+                    mostrarModalLimite();
+                } else {
+                    alert(data.error || "Error al fichar");
+                }
+            });
         }
     });
 }
@@ -48,14 +66,30 @@ function ficharRival(idPropio, idRival) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ idJugador: idJugador })
-    }).then(response => response.json())
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            return response.json().then(data => {
+                if (data.error === "La plantilla está completa") {
+                    mostrarModalLimite();
+                    throw new Error("QUIET_ERROR"); // Error silencioso para el catch
+                }
+                throw new Error(data.error || "Error al fichar");
+            });
+        }
+    })
         .then(data => {
-            if (data.nuevoPresupuesto !== undefined) {
+            if (data && data.nuevoPresupuesto !== undefined) {
                 let nuevoSaldo = data.nuevoPresupuesto;
                 presupuesto.textContent = nuevoSaldo.toLocaleString() + " €";
                 presupuesto.dataset.valor = nuevoSaldo;
                 window.location.reload();
             }
+        })
+        .catch(error => {
+            if (error.message !== "QUIET_ERROR") {
+                alert(error.message);
+            }
         });
 }
-
