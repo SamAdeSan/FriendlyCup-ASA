@@ -24,23 +24,27 @@ final class PageController extends AbstractController
     {
         $user = $this->getUser();
         if ($user) {
-            $torneos=$user->getTorneos();
-            $seguidos=$user->getSeguidos();
-            $fantasies=$user->getEquipoFantasies();
-        }else{
+            $torneos = $user->getTorneos();
+            $seguidos = $user->getSeguidos();
+            $fantasies = $user->getEquipoFantasies();
+        } else {
             return $this->redirectToRoute('app_login');
         }
 
         return $this->render('page/index.html.twig', [
-            'torneos'=>$torneos,
-            'seguidos'=>$seguidos,
+            'torneos' => $torneos,
+            'seguidos' => $seguidos,
             'controller_name' => 'PageController',
-            'fantasies'=>$fantasies
+            'fantasies' => $fantasies
         ]);
     }
 
     #[Route('/', name: 'presentation')]
-    public function presentation(){
+    public function presentation()
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('inicio');
+        }
         return $this->render('page/indice.html.twig');
     }
 }
