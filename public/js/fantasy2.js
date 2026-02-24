@@ -1,5 +1,5 @@
 document.querySelectorAll('.fichar').forEach(boton => {
-    boton.addEventListener('click', function () {
+    boton.onclick = function () {
         let budgetElem = document.getElementById("budget");
         let idPropio = budgetElem.dataset.idPropio;
         let idRival = budgetElem.dataset.idRival;
@@ -8,7 +8,7 @@ document.querySelectorAll('.fichar').forEach(boton => {
         } else {
             fichar.call(this);
         }
-    });
+    };
 });
 
 function fichar() {
@@ -56,6 +56,6 @@ function ficharRival(idPropio, idRival) {
                 presupuesto.dataset.valor = nuevoSaldo;
                 window.location.reload();
             }
-        }).catch(error => console.error('Error:', error));
+        });
 }
 

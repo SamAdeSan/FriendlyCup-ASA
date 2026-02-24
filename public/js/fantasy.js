@@ -1,16 +1,16 @@
 /**
  * SELECTORES DE FANTASY
  */
-const presupuesto = document.getElementById("budget");
-const maximo = Number(presupuesto.dataset.minimo);
+let presupuesto = document.getElementById("budget");
+let maximo = Number(presupuesto.dataset.minimo);
 let presupuestoActual = Number(presupuesto.dataset.valor);
-const idEquipo = presupuesto.dataset.id;
+let idEquipo = presupuesto.dataset.id;
 
-const tablas = document.querySelectorAll('.torneo-content .stats-table tbody');
-const tablaJugadores = tablas[0];
-const tablaMercado = tablas[1];
+let tablas = document.querySelectorAll('.torneo-content .stats-table tbody');
+let tablaJugadores = tablas[0];
+let tablaMercado = tablas[1];
 
-const adminBtn = document.getElementById("btnAnadirUsuario");
+let adminBtn = document.getElementById("btnAnadirUsuario");
 
 /**
  * INICIALIZACIÓN
@@ -128,7 +128,7 @@ function actualizarInterfazPresupuesto(nuevoValor) {
 }
 
 function abrirModalAviso(idModal) {
-    const modal = document.getElementById(idModal);
+    let modal = document.getElementById(idModal);
     if (modal) modal.style.display = 'flex';
 }
 
@@ -140,9 +140,9 @@ window.cerrarModalLimite = function() {
  * LÓGICA DEL MODAL CLAVE DE INVITACIÓN
  */
 function abrirModalClave() {
-    const clave = this.dataset.clave;
-    const modal = document.getElementById('modal-ver-clave');
-    const spanClave = document.getElementById('texto-clave-liga');
+    let clave = this.dataset.clave;
+    let modal = document.getElementById('modal-ver-clave');
+    let spanClave = document.getElementById('texto-clave-liga');
 
     if (modal && spanClave) {
         spanClave.innerText = clave;
@@ -151,13 +151,13 @@ function abrirModalClave() {
 }
 
 window.cerrarModalClave = function() {
-    const modal = document.getElementById('modal-ver-clave');
+    let modal = document.getElementById('modal-ver-clave');
     if (modal) {
         modal.style.display = 'none';
     }
 };
 
-const btnAnadirUsuario = document.getElementById("btnAnadirUsuario");
+let btnAnadirUsuario = document.getElementById("btnAnadirUsuario");
 if (btnAnadirUsuario) {
     btnAnadirUsuario.onclick = abrirModalClave;
 }

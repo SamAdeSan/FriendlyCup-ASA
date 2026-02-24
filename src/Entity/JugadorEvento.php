@@ -19,7 +19,7 @@ class JugadorEvento
     private ?Jugadores $jugador = null;
 
     #[ORM\ManyToOne(inversedBy: 'jugadorEventos')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false,onDelete: 'CASCADE')]
     private ?Evento $evento = null;
 
     #[ORM\Column]

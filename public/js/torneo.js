@@ -44,8 +44,8 @@ document.addEventListener("click", (e) => {
  * FUNCIONES: SEGUIMIENTO Y TABS
  */
 function gestionSeguidores() {
-    const idTorneo = this.getAttribute('data-id');
-    const estoySiguiendo = this.classList.contains('btn-danger');
+    let idTorneo = this.getAttribute('data-id');
+    let estoySiguiendo = this.classList.contains('btn-danger');
     let actual = parseInt(selectores.contadorSeguidores.innerText);
 
     if (estoySiguiendo) {
@@ -76,9 +76,9 @@ function cargarContenido(url) {
 }
 
 function vincularEventosDinamicos() {
-    const btnMostrar = document.getElementById("btnmostrarform");
-    const formDisputa = document.getElementById("formnuevadisputa");
-    const btnGuardar = document.getElementById("btn-guardar-disputa");
+    let btnMostrar = document.getElementById("btnmostrarform");
+    let formDisputa = document.getElementById("formnuevadisputa");
+    let btnGuardar = document.getElementById("btn-guardar-disputa");
 
     if (btnMostrar && formDisputa) {
         btnMostrar.onclick = () => {
@@ -88,9 +88,9 @@ function vincularEventosDinamicos() {
 
     if (btnGuardar) {
         btnGuardar.onclick = function () {
-            const equipo1 = document.getElementById("selectequipo1").value;
-            const equipo2 = document.getElementById("selectequipo2").value;
-            const torneoId = this.dataset.torneoId;
+            let equipo1 = document.getElementById("selectequipo1").value;
+            let equipo2 = document.getElementById("selectequipo2").value;
+            let torneoId = this.dataset.torneoId;
 
             if (!equipo1 || !equipo2 || equipo1 === equipo2) {
                 alert("Selecciona dos equipos diferentes.");
@@ -110,7 +110,7 @@ function vincularEventosDinamicos() {
  * FUNCIONES: MODAL CREAR EVENTO
  */
 function abrirModalEvento() {
-    const modal = document.getElementById('modal-crear-evento');
+    let modal = document.getElementById('modal-crear-evento');
     if (modal) {
         modal.style.display = 'flex';
         selectores.btnConfirmarEvento.dataset.id = this.dataset.id;
@@ -119,7 +119,7 @@ function abrirModalEvento() {
 }
 
 window.cerrarModalEvento = () => {
-    const modal = document.getElementById('modal-crear-evento');
+    let modal = document.getElementById('modal-crear-evento');
     if (modal) {
         modal.style.display = 'none';
         document.getElementById('input-evento-nombre').value = '';
@@ -128,9 +128,9 @@ window.cerrarModalEvento = () => {
 };
 
 function ejecutarCrearEvento() {
-    const evento = document.getElementById('input-evento-nombre').value;
-    const puntos = document.getElementById('input-evento-puntos').value;
-    const torneoId = this.dataset.id;
+    let evento = document.getElementById('input-evento-nombre').value;
+    let puntos = document.getElementById('input-evento-puntos').value;
+    let torneoId = this.dataset.id;
 
     if (!evento || !puntos) return;
 
@@ -148,7 +148,7 @@ function ejecutarCrearEvento() {
  * FUNCIONES: MODAL UNIRSE FANTASY
  */
 function abrirModalUnirse() {
-    const modal = document.getElementById('modal-unirse-fantasy');
+    let modal = document.getElementById('modal-unirse-fantasy');
     if (modal) {
         modal.style.display = 'flex';
         document.getElementById('input-fantasy-clave').focus();
@@ -156,7 +156,7 @@ function abrirModalUnirse() {
 }
 
 window.cerrarModalUnirse = () => {
-    const modal = document.getElementById('modal-unirse-fantasy');
+    let modal = document.getElementById('modal-unirse-fantasy');
     if (modal) {
         modal.style.display = 'none';
         document.getElementById('error-clave').style.display = 'none';
@@ -164,8 +164,8 @@ window.cerrarModalUnirse = () => {
 };
 
 function ejecutarUnirseFantasy() {
-    const clave = document.getElementById('input-fantasy-clave').value;
-    const errorMsg = document.getElementById('error-clave');
+    let clave = document.getElementById('input-fantasy-clave').value;
+    let errorMsg = document.getElementById('error-clave');
 
     if (!clave) return;
 
@@ -186,17 +186,17 @@ function ejecutarUnirseFantasy() {
  * FUNCIONES: RESULTADOS (Pendiente de Modal)
  */
 function modificaResultado(elemento) {
-    const id = elemento.dataset.disputaId;
-    const n1 = elemento.dataset.nombreEquipo1;
-    const n2 = elemento.dataset.nombreEquipo2;
+    let id = elemento.dataset.disputaId;
+    let n1 = elemento.dataset.nombreEquipo1;
+    let n2 = elemento.dataset.nombreEquipo2;
 
-    const res1 = prompt(`Puntos de ${n1}`);
+    let res1 = prompt(`Puntos de ${n1}`);
     if (res1 === null) return;
-    const res2 = prompt(`Puntos de ${n2}`);
+    let res2 = prompt(`Puntos de ${n2}`);
     if (res2 === null) return;
 
-    const id1 = elemento.dataset.disputaEquipo1;
-    const id2 = elemento.dataset.disputaEquipo2;
+    let id1 = elemento.dataset.disputaEquipo1;
+    let id2 = elemento.dataset.disputaEquipo2;
     let ganador = (parseInt(res1) > parseInt(res2)) ? id1 : (parseInt(res1) < parseInt(res2) ? id2 : null);
 
     fetch(`/disputa/${id}/modificar`, {

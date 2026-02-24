@@ -1,6 +1,10 @@
 <div class="section-content">
     {% for evento in eventos %}
-        <h3 style="margin-top: 2rem; color: #cdc832;">{{ evento.evento }}</h3>
+        <div class="d-flex justify-content-between align-items-center" style="margin-top: 2rem;">
+            <h3 style="margin: 0; color: #cdc832;">{{ evento.evento }}  {% if app.user == torneo.organizador %}
+                <a href="{{ path('eliminar_evento', {'id': evento.id}) }}" class="btn btn-sm btn-danger" >Eliminar Evento</a>
+            {% endif %}</h3>
+        </div>
         <div class="stats-table-container">
             <table class="stats-table">
                 <thead>

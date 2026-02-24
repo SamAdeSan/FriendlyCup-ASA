@@ -1,24 +1,29 @@
 async function guardarCambios(id, redirectUrl) {
-    const data = {
+    let data = {
         resultado: document.querySelector('input[name="resultado"]').value,
         ganador_id: document.querySelector('select[name="ganador_id"]').value || null
     };
 
-    const response = await fetch(`/disputa/${id}/modificar`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
+    try {
+        let response = await fetch(`/disputa/${id}/modificar`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
 
-    if (response.ok) {
-        window.location.href = redirectUrl;
+        if (response.ok) {
+            window.location.href = redirectUrl;
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
-}// Lógica para abrir modal y cargar datos
-const modalEvento = document.getElementById('modalEvento');
+}
+// Lógica para abrir modal y cargar datos
+let modalEvento = document.getElementById('modalEvento');
 modalEvento.addEventListener('show.bs.modal', function (event) {
-    const button = event.relatedTarget;
-    const id = button.getAttribute('data-jugador-id');
-    const nombre = button.getAttribute('data-jugador-nombre');
+    let button = event.relatedTarget;
+    let id = button.getAttribute('data-jugador-id');
+    let nombre = button.getAttribute('data-jugador-nombre');
 
     modalEvento.querySelector('#input-jugador-id').value = id;
     modalEvento.querySelector('#modal-nombre-jugador').textContent = nombre;
@@ -28,23 +33,27 @@ modalEvento.addEventListener('show.bs.modal', function (event) {
 });
 
 // Manejo del envío de puntos
-document.getElementById('form-puntos-jugador').addEventListener('submit', async function (e) {
+document.getElementById('form-puntos-jugador').onsubmit = async function (e) {
     e.preventDefault();
-    const id = document.getElementById('input-jugador-id').value;
-    const eventoId = document.getElementById('select-evento').value;
-    const cantidad = document.getElementById('input-cantidad').value;
+    let id = document.getElementById('input-jugador-id').value;
+    let eventoId = document.getElementById('select-evento').value;
+    let cantidad = document.getElementById('input-cantidad').value;
 
     if (!eventoId) {
         alert('Por favor, selecciona un evento');
         return;
     }
 
-    // Usamos tu ruta de Symfony actualizada
-    const response = await fetch(`/anadircantidad/${id}/${eventoId}/${cantidad}`, {
-        method: 'POST'
-    });
+    try {
+        // Usamos tu ruta de Symfony actualizada
+        let response = await fetch(`/anadircantidad/${id}/${eventoId}/${cantidad}`, {
+            method: 'POST'
+        });
 
-    if (response.ok) {
-        location.reload(); // Recargamos para ver los puntos actualizados
+        if (response.ok) {
+            location.reload(); // Recargamos para ver los puntos actualizados
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
-});
+};
