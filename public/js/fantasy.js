@@ -34,7 +34,6 @@ function asignarEventosBotones() {
 function comprar() {
     let numJugadoresActuales = tablaJugadores.querySelectorAll('tr').length;
 
-    // 1. Validar límite de jugadores (Modal)
     if (numJugadoresActuales >= maximo) {
         abrirModalAviso('modal-limite-jugadores');
         return;
@@ -46,10 +45,8 @@ function comprar() {
     let valor = Number(this.dataset.valor);
     let puntos = this.dataset.puntos;
 
-    // 2. Validar saldo (Podemos usar un modal de "Sin saldo" o el mismo de aviso)
     if (presupuestoActual < valor) {
         alert("No tienes suficiente saldo para fichar a " + nombre);
-        // Nota: Si creas _sinSaldo.html.twig, cambia este alert por abrirModalAviso
         return;
     }
 
@@ -132,7 +129,7 @@ function abrirModalAviso(idModal) {
     if (modal) modal.style.display = 'flex';
 }
 
-window.cerrarModalLimite = function() {
+window.cerrarModalLimite = function () {
     document.getElementById('modal-limite-jugadores').style.display = 'none';
 };
 
@@ -150,7 +147,7 @@ function abrirModalClave() {
     }
 }
 
-window.cerrarModalClave = function() {
+window.cerrarModalClave = function () {
     let modal = document.getElementById('modal-ver-clave');
     if (modal) {
         modal.style.display = 'none';

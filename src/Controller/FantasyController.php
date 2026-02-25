@@ -109,7 +109,7 @@ final class FantasyController extends AbstractController
             return $this->json(['error' => 'La plantilla está completa'], 400);
         }
 
-        $coste = $jugador->getValordemercado();
+        $coste = $jugador->getValorDeMercado();
         if ($equipo->getPresupuesto() < $coste) {
             return $this->json(['error' => 'No tienes suficiente presupuesto'], 400);
         }
@@ -130,6 +130,7 @@ final class FantasyController extends AbstractController
         $equipo->setPresupuesto($nuevoPresupuesto);
         $equipo->removeTitular($jugador);
         $em->flush();
+
         return $this->json(['nuevoPresupuesto' => $nuevoPresupuesto], 200);
     }
     #[Route('/api/liga/unirse', methods: ['POST'])]

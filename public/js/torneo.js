@@ -93,7 +93,7 @@ function vincularEventosDinamicos() {
             let torneoId = this.dataset.torneoId;
 
             if (!equipo1 || !equipo2 || equipo1 === equipo2) {
-                alert("Selecciona dos equipos diferentes.");
+                console.warn("Selecciona dos equipos diferentes.");
                 return;
             }
 
@@ -101,7 +101,7 @@ function vincularEventosDinamicos() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ equipo1_id: equipo1, equipo2_id: equipo2, torneo_id: torneoId })
-            }).then(res => res.ok ? window.location.reload() : res.text().then(text => alert("Error: " + text)));
+            }).then(res => res.ok ? window.location.reload() : res.text().then(text => console.error("Error: " + text)));
         };
     }
 }
@@ -203,5 +203,5 @@ function modificaResultado(elemento) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resultado: `${res1}-${res2}`, ganador_id: ganador })
-    }).then(res => res.ok ? window.location.reload() : res.text().then(text => alert("Error: " + text)));
+    }).then(res => res.ok ? window.location.reload() : res.text().then(text => console.error("Error: " + text)));
 }

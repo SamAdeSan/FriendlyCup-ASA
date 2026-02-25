@@ -40,7 +40,7 @@ document.getElementById('form-puntos-jugador').onsubmit = async function (e) {
     let cantidad = document.getElementById('input-cantidad').value;
 
     if (!eventoId) {
-        alert('Por favor, selecciona un evento');
+        console.warn('Por favor, selecciona un evento');
         return;
     }
 

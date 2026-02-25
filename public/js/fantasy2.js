@@ -59,15 +59,13 @@ function fichar(idEquipo) {
         })
         .catch(error => {
             if (error.message !== "QUIET_ERROR") {
-                alert(error.message);
+                console.error("Error:", error.message);
             }
         });
 }
 
 function vender(idEquipo) {
     let idJugador = this.dataset.id;
-    if (!confirm(`¿Estás seguro de que quieres vender a ${this.dataset.nombre}?`)) return;
-
     fetch(`/fantasy/api/equipo/${idEquipo}/vender`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -77,9 +75,13 @@ function vender(idEquipo) {
             window.location.reload();
         } else {
             response.json().then(data => {
-                alert(data.error || "Error al vender");
+                console.error("Error al vender:", data.error || "Error desconocido");
+            }).catch(() => {
+                console.error("Error al vender: Error de red o servidor.");
             });
         }
+    }).catch(error => {
+        console.error("Error en la petición de venta:", error);
     });
 }
 
@@ -91,7 +93,7 @@ function ficharRival(idPropio, idRival) {
     let costeSignificativo = valorMercado * 2;
 
     if (presupuestoActual < costeSignificativo) {
-        alert("No tienes suficiente presupuesto (El coste es 2x: " + costeSignificativo.toLocaleString() + " €)");
+        console.warn("Presupuesto insuficiente para fichar rival:", costeSignificativo);
         return;
     }
 
@@ -122,7 +124,35 @@ function ficharRival(idPropio, idRival) {
         })
         .catch(error => {
             if (error.message !== "QUIET_ERROR") {
-                alert(error.message);
+                console.error("Error al fichar rival:", error.message);
             }
         });
 }
+
+/**
+ * LÓGICA DEL MODAL CLAVE DE INVITACIÓN
+ */
+function abrirModalClave() {
+    let clave = this.dataset.clave;
+    let modal = document.getElementById('modal-ver-clave');
+    let spanClave = document.getElementById('texto-clave-liga');
+
+    if (modal && spanClave) {
+        spanClave.innerText = clave;
+        modal.style.display = 'flex';
+    }
+}
+
+window.cerrarModalClave = function () {
+    let modal = document.getElementById('modal-ver-clave');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    let btnAnadirUsuario = document.getElementById("btnAnadirUsuario");
+    if (btnAnadirUsuario) {
+        btnAnadirUsuario.onclick = abrirModalClave;
+    }
+});
